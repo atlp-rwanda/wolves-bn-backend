@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "babel-node src/index.js ",
-    "dev": "nodemon --exec babel-node src/index.js ",
+    "dev": "nodemon --exec babel-node ./src/index.js ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,9 +21,9 @@
   "homepage": "https://github.com/atlp-rwanda/wolves-bn-backend#readme",
   "dependencies": {
     "@babel/cli": "^7.11.6",
-    "@babel/core": "^7.11.6",
     "@babel/node": "^7.10.5",
-    "@babel/preset-env": "^7.11.5",
+    "@babel/plugin-transform-runtime": "^7.11.5",
+    "@babel/register": "^7.11.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "pg": "^8.3.3",
@@ -32,8 +32,14 @@
     "sequelize-cli": "^6.2.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "eslint": "^7.9.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-node": "^4.1.0",
+    "eslint-plugin-node": "^11.1.0",
     "mocha": "^8.1.3",
     "nodemon": "^2.0.4"
   }
