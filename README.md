@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/atlp-rwanda/wolves-bn-backend.svg?branch=develop)](https://travis-ci.org/atlp-rwanda/wolves-bn-backend)
+
 # wolves-bn-backend
 
 # Description
