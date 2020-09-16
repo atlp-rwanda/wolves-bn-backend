@@ -19,6 +19,9 @@
         ],
         "consistent-return": 0,
         "no-console": "off",
-        "no-unused-vars": "off"
+        "no-unused-vars": "off",
+        "no-path-concat": "off",
+        "global-require": "off",
+        "arrow-parens": "off"
     }
 }
