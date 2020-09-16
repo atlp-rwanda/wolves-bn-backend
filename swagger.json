@@ -1,0 +1,43 @@
+{
+  "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Barefoot Nomad APIS",
+      "description": "Testing endpoints"
+    },
+  
+    "schemes": ["http", "https"],
+  
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+      "/user":{
+        "post": {
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }     
+    }
+  },
+    "definitions": {
+      "user": {
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    }
+}
