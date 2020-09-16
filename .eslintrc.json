@@ -18,6 +18,7 @@
             "windows"
         ],
         "consistent-return": 0,
-        "no-console": "off"
+        "no-console": "off",
+        "no-unused-vars": "off"
     }
 }
