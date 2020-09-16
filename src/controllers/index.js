@@ -1,4 +1,5 @@
-import { User } from '../database/models/user';
+/* eslint-disable import/named */
+import { User } from '../database/models';
 
 const createUser = (req, res) => User.create({
   name: req.body.name,
