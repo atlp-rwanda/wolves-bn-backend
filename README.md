@@ -32,3 +32,9 @@ Checking example.env file, you will see the variable examples. You will need to 
 ### Run The Service
 
 To run the app, run the command npm run start inside the folder using the terminal
+
+### Hound Badges
+
+[![Build Status](https://circleci.com/gh/houndci/hound.svg?style=svg)](https://circleci.com/gh/houndci/hound)
+[![codebeat](https://codebeat.co/badges/4d0a821d-1f2c-4e68-90ec-597e533802a4)](https://codebeat.co/projects/github-com-thoughtbot-hound)
+[![Protected by Hound](https://img.shields.io/badge/Protected_by-Hound-a873d1.svg)](https://houndci.com)
