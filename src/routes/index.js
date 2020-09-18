@@ -1,5 +1,3 @@
-/* eslint-disable import/no-named-as-default */
-/* eslint-disable import/no-named-as-default-member */
 import express from 'express';
 import passport from 'passport';
 import { userValidate } from '../validators/userValidation';

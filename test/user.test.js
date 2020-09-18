@@ -32,12 +32,22 @@ describe('POST /api/users/signup', () => {
         response.should.have.status(201);
         token = response.body.token;
         response.should.be.an('object');
+<<<<<<< HEAD
         id = response.body.id;
+=======
+<<<<<<< HEAD
+        id = response.body.user.id;
+        // console.log(id);
+=======
+<<<<<<< HEAD
+>>>>>>> 91ec7bf... adding user registration endpoint
+>>>>>>> acbd2de... adding user registration endpoint
         done();
       });
   });
 });
 
+<<<<<<< HEAD
 it('should NOT POST a new User, validation issue', (done) => {
   const createdUser = {
     firstName: 'Uwimana',
@@ -45,6 +55,20 @@ it('should NOT POST a new User, validation issue', (done) => {
     phone: '0438848439',
     email: 'uwa100gmail.com', // invalid email
     password: '123456',
+=======
+=======
+      });
+    done();
+  });
+>>>>>>> d65c429... adding user registration endpoint
+  it('should NOT POST a new User, validation issue', (done) => {
+    const createdUser = {
+      firstName: 'Uwimana',
+      lastName: 'Anisie',
+      phone: '0438848439',
+      email: 'uwa100gmail.com', // invalid email
+      password: '123456',
+>>>>>>> acbd2de... adding user registration endpoint
 
   };
 
