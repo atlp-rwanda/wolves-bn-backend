@@ -1,43 +1,57 @@
 {
-  "swagger": "2.0",
+    "swagger": "2.0",
     "info": {
-      "version": "1.0.0",
-      "title": "Barefoot Nomad APIS",
-      "description": "Testing endpoints"
+        "version": "1.0.0",
+        "title": "Barefoot Nomad APIS",
+        "description": "Testing endpoints"
     },
-  
+    "host": "localhost:3000",
+    "basePath": "/",
     "schemes": ["http", "https"],
-  
     "consumes": ["application/json"],
     "produces": ["application/json"],
     "paths": {
-      "/user":{
-        "post": {
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/user"
+        "/api/users/signup": {
+            "post": {
+                "tags": ["User"],
+                "summary": "Signup",
+                "description": "Create account",
+                "operationId": "createUser",
+                "parameters": [{
+                    "in": "body",
+                    "name": "body",
+                    "schema": {
+                        "$ref": "#/definitions/user"
+                    }
+                }],
+                "produces": ["application/json"],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    }
+                }
             }
-          }
-        ],
-        "produces": ["application/json"],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
         }
-      }     
-    }
-  },
+    },
     "definitions": {
-      "user": {
-        "properties": {
-          "name": {
-            "type": "string"
-          }
+        "user": {
+            "properties": {
+                "fname": {
+                    "type": "string"
+                },
+                "lname": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
         }
-      }
     }
 }

@@ -13,6 +13,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use('/', router);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use((req, res, next) => res.status(404).send({ message: 'Not found, check well your URL' }));
 app.listen(PORT, () => {
   console.log('Server has started at port', PORT);
 });
