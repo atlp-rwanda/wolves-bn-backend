@@ -8,8 +8,8 @@ chai.use(chaiHttp);
 describe('forgotPassword endpoint', () => {
   it('should create a user first', (done) => {
     const createdUser = {
-      fname: 'carter',
-      lname: 'pappy',
+      firstName: 'carter',
+      lastName: 'pappy',
       phone: '0788314143',
       email: 'pappycarter1@gmail.com',
       password: '123456',

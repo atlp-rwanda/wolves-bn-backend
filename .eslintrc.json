@@ -14,12 +14,13 @@
         "ecmaVersion": 2015,
         "sourceType": "module"
     },
-    "rules": {        
+    "rules": {
         "linebreak-style": [
             "off",
             "windows"
         ],
         "prefer-destructuring": "off",
+        "eol-last": "off",
         "consistent-return": 0,
         "no-console": "off",
         "no-unused-vars": "off",
