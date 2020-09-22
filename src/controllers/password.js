@@ -12,7 +12,7 @@ sgMail.setApiKey(process.env.SENDGRID_APIKEY);
 class Password {
   async forgotPassword(req, res) {
     const { email } = req.body;
-    const user = await models.user.findOne({ where: { email } });
+    const user = await models.users.findOne({ where: { email } });
     if (!user) {
       return res.status(404).json({
         status: 404,
@@ -27,7 +27,7 @@ class Password {
       from: process.env.SENDER_EMAIL,
       subject: 'Password Reset Link',
       html: `
-            <h2>Hello, <b>${user.fname} ${user.lname}</b></h2>
+            <h2>Hello, <b>${user.firstName} ${user.lastName}</b></h2>
             <p>below is the link to reset your password</p>
             <a href=${process.env.URL}/api/users/resetPassword/${token}>Link</a>
             `,
@@ -51,7 +51,7 @@ class Password {
       }
     });
 
-    const user = await models.user.findOne({
+    const user = await models.users.findOne({
       where: { resetLink: req.params.resetLinkToken }
     });
     if (!user) {
