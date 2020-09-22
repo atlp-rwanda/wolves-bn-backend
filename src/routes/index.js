@@ -1,11 +1,12 @@
 import express from 'express';
-import createUser from '../controllers/index';
+import { userValidate } from '../middleware/userValidation';
+import usercontroller from '../controllers/user';
 
 const router = express.Router();
 router.use(express.json());
-// Test if endpoint works
 router.get('/', (req, res) => {
   res.send('Get endpoint is working');
 });
-router.post('/user', createUser);
+router.post('/api/users/signup', userValidate, usercontroller.signup);
+
 export default router;
