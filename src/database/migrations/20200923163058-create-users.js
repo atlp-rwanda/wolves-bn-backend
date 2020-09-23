@@ -14,8 +14,40 @@ module.exports = {
       lastName: {
         type: Sequelize.STRING
       },
-      email: {
+      phone: {
         type: Sequelize.STRING,
+        allowNull: true
+      },
+      profileimage: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      address: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      gender: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      birthdate: {
+        type: Sequelize.DATE,
+        allowNull: true
+      },
+      language: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      currency: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+
+      department: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      email: {
         unique: true
       },
       password: {
@@ -45,6 +77,7 @@ module.exports = {
         allowNull: false,
         defaultValue: '2'
       },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -55,6 +88,70 @@ module.exports = {
       }
 
     });
+    await queryInterface.addColumn(
+      'users',
+      'profileimage', {
+        type: Sequelize.STRING,
+        allowNull: true,
+      }
+    );
+    await queryInterface.addColumn(
+      'users',
+      'address', {
+        type: Sequelize.STRING,
+        allowNull: true,
+      }
+    );
+    await queryInterface.addColumn(
+      'users',
+      'gender', {
+        type: Sequelize.STRING,
+        allowNull: true,
+      }
+
+    );
+    await queryInterface.addColumn(
+      'users',
+      'birthdate', {
+        type: Sequelize.DATE,
+        allowNull: true,
+      }
+    );
+    await queryInterface.addColumn(
+      'users',
+      'language', {
+        type: Sequelize.STRING,
+        allowNull: true,
+      }
+    );
+    await queryInterface.addColumn(
+      'users',
+      'currency', {
+        type: Sequelize.STRING,
+        allowNull: true,
+      }
+    );
+    await queryInterface.addColumn(
+      'users',
+      'department', {
+        type: Sequelize.STRING,
+        allowNull: true,
+      }
+    );
+    await queryInterface.addColumn(
+      'users',
+      'manager', {
+        type: Sequelize.STRING,
+        allowNull: true,
+      }
+    );
+    await queryInterface.addColumn(
+      'users',
+      'role', {
+        type: Sequelize.STRING,
+        allowNull: true,
+      }
+    );
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('users');
