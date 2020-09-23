@@ -36,8 +36,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       role: {
-        type: Sequelize.ENUM('super_admin', 'travel_admin', 'manager', 'requester'),
-        defaultValue: 'requester'
+        type: Sequelize.ENUM('super_admin', 'travel_admin', 'manager', 'requester')
       },
       createdAt: {
         allowNull: false,
