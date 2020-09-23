@@ -12,3 +12,4 @@ export const jwtToken = {
 };
 
 export const hashPassowrd = (password) => bcrypt.hashSync(password, 10);
+export const comparePassword = (password, hash) => bcrypt.compareSync(password, hash);

@@ -23,9 +23,6 @@ module.exports = {
       password: {
         type: Sequelize.STRING
       },
-      resetLink: {
-        type: Sequelize.STRING
-      },
       email: {
         type: Sequelize.STRING
       },
