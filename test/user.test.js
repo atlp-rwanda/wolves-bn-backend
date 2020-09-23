@@ -22,7 +22,6 @@ describe('POST /api/users/signup', () => {
       phone: '0788314143',
       email: 'uwa102@gmail.com',
       password: '123456',
-
     };
 
     chai.request(app)
@@ -66,15 +65,12 @@ describe('POST /api/users/signup', () => {
       .send(createdUser)
       .end((error, response) => {
         response.should.have.status(404);
-        done();
       });
+    done();
   });
 });
 describe('GET /', () => {
-  before(async () => {
-    await cleanAlltables();
-  });
-  it('should retunr Get endpoint is working', (done) => {
+  it('should return Get endpoint is working', (done) => {
     chai.request(app)
       .get('/')
       .end((error, response) => {
