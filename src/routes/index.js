@@ -18,6 +18,8 @@ router.get('/', (req, res) => {
 });
 router.post('/api/users/signup', userValidate, usercontroller.signup);
 router.patch('/api/users/settings', authValidator.verifyAdmin, roleValidate, rolesSettingsRoute.roleController);
+router.get('/api/user/profile', usercontroller.getProfile);
+router.put('/api/user/profile', usercontroller.updateProfile);
 
 router.post('/api/users/forgotPassword', Password.forgotPassword);
 router.post('/api/users/resetPassword/:resetLinkToken', Password.resetPassword);

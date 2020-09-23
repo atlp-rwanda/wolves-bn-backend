@@ -28,6 +28,7 @@ export default class User {
         email,
         password: hash
       });
+      const userId = user.id;
       const token = jwtToken.createToken(user);
       const messaging = sendingMail(user.email);
       return res.status(201).send({
@@ -58,20 +59,68 @@ export default class User {
     }
   }
 
-  static updateUser(req, res) {
-    return users
-      .findOne({ where: { email: req.params.email } })
-      .then(user => {
-        if (!user) {
-          return res.status(404).send({
-            message: 'user Not Found',
+  static async getProfile(req, res) {
+    const { id } = req.params;
+    const profile = await models.user.findOne({ where: { id } });
+    if (profile) {
+      return res.status(200).send(profile);
+    }
+    return res.status(404).send({ message: 'User not found' });
+  }
+
+  static async updateProfile(req, res) {
+    const findUser = await models.user.findOne({ where: { id: req.params.id } });
+    try {
+      const {
+        fname,
+        lname,
+        phone,
+        email,
+        gender,
+        birthdate,
+        language,
+        currency,
+        address,
+        role,
+        department,
+        manager,
+        profileimage
+      } = req.body;
+
+      if (findUser) {
+        const updatedUser = await models.user.update({
+          fname,
+          lname,
+          phone,
+          email,
+          gender,
+          birthdate,
+          language,
+          currency,
+          address,
+          role,
+          department,
+          manager,
+          profileimage
+        }, {
+          where: {
+            id: req.params.id
+          }
+        });
+        if (updatedUser) {
+          return res.status(200).send({
+            status: 200,
+            message: 'User profile is Updated'
           });
         }
-        return user
-          .update({
-            confirmed: true
-          })
-          .then(() => res.status(200).send({ message: 'User confirmed' }));
-      });
+        return res.status(400).send({
+          status: 400,
+          message: 'Bad request'
+        });
+      }
+      return res.status(404).send({ message: 'User not found' });
+    } catch (error) {
+      res.status(500).send(error);
+    }
   }
 }
