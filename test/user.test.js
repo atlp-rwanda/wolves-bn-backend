@@ -15,7 +15,7 @@ describe('POST /api/users/signup', () => {
   before(async () => {
     await cleanAlltables();
   });
-  it('should POST a new User', async (done) => {
+  it('should POST a new User', (done) => {
     const createdUser = {
       fname: 'Uwimana',
       lname: 'Anisie',
@@ -32,9 +32,10 @@ describe('POST /api/users/signup', () => {
         response.should.have.status(201);
         token = response.body.token;
         response.should.be.an('object');
+        done();
       });
-    done();
   });
+
   it('should NOT POST a new User, validation issue', (done) => {
     const createdUser = {
       fname: 'Uwimana',

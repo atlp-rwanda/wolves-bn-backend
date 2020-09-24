@@ -31,7 +31,67 @@
                     }
                 }
             }
+        },
+
+        "/api/users/forgotPassword": {
+            "post": {
+                "tags": ["Password"],
+                "summary": "forgot password",
+                "description": "User forgot password",
+                "operationId": "forgot",
+                "parameters": [{
+                    "in": "body",
+                    "name": "body",
+                    "schema": {
+                        "$ref": "#/definitions/forgotPassword"
+                    }
+                }],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "reset email sent successfully"
+                    },
+                    "404": {
+                        "description": "no associated account found"
+                    }
+                }
+            }
+        },
+
+        "/api/users/resetPassword/{resetLinkToken}": {
+            "post": {
+                "tags": ["Password"],
+                "summary": "reset password",
+                "description": "User reset password",
+                "operationId": "reset",
+                "parameters": [{
+                    "name": "resetLinkToken",
+                    "in": "header",
+                    "required": true,
+                    "type": "string",
+                    "description": "token on the reset link"
+                }, {
+                    "in": "body",
+                    "name": "body",
+                    "schema": {
+                        "$ref": "#/definitions/resetPassword"
+                    }
+                }],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "password reset successfully"
+                    },
+                    "401": {
+                        "description": "Invalid token"
+                    },
+                    "404": {
+                        "description": "reset Link token doesn't exist"
+                    }
+                }
+            }
         }
+
     },
     "definitions": {
         "user": {
@@ -49,6 +109,22 @@
                     "type": "string"
                 },
                 "password": {
+                    "type": "string"
+                }
+            }
+        },
+
+        "forgotPassword": {
+            "properties": {
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+
+        "resetPassword": {
+            "properties": {
+                "newPassword": {
                     "type": "string"
                 }
             }
