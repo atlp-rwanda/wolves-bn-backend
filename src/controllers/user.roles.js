@@ -22,7 +22,7 @@ export default class rolesController {
       res.status(404).send({ message: 'Either User is a a super admin or not registered' });
       return res;
     } catch (error) {
-      return res.status(400).send({ error: 'User role not updated' });
+      return res.status(500).send({ error });
     }
   }
 }

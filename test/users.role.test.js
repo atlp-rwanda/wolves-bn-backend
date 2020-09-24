@@ -10,14 +10,32 @@ chai.use(chaiHTTP);
 const cleanAlltables = async () => {
   await users.destroy({ where: {} });
 };
+let token;
 
 describe('Changing the users roles', () => {
   before(async () => {
     await cleanAlltables();
   });
+  it('should POST a new User', (done) => {
+    const createdUser = {
+      first_name: 'Uwimana',
+      last_name: 'Anisie',
+      phone: '0788314143',
+      email: 'anisie@barefoot.com',
+      password: '123456',
+    };
+    chai.request(app)
+      .post('/api/users/signup')
+      .send(createdUser)
+      .end((error, response) => {
+        response.should.have.status(201);
+        token = response.body.token;
+      });
+    done();
+  });
   it('It should return role successfully updated', (done) => {
     const requestBody = {
-      userEmail: 'sometrue@gmail.com',
+      userEmail: 'anisie@barefoot.com',
       userRole: 'manager'
     };
     chai.request(app)
