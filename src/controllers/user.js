@@ -1,8 +1,10 @@
+import redis from 'redis';
 import sendingMail from './sendMail';
 import models from '../database/models';
 import { hashPassowrd, comparePassword, jwtToken } from '../utils/jwtToken';
 
 const { users } = models;
+export const redisclient = redis.createClient();
 export default class User {
   static async signup(req, res) {
     try {
@@ -139,5 +141,11 @@ export default class User {
           })
           .then(() => res.status(200).send({ message: 'User confirmed' }));
       });
+  }
+
+  static async logout(req, res) {
+    const token = req.header('token');
+    redisclient.set(token, 1);
+    return res.status(200).send({ message: 'User Loged out' });
   }
 }

@@ -254,6 +254,35 @@
                 }
             }
         },
+        "/api/users/logout": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Users can log out",
+                "description": "Log out users",
+                "operationId": "userLogout",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "Token"
+                    }],
+                "responses": {
+                    "200": {
+                        "description": "User successfully logged out"
+                    },
+                    "500": {
+                        "description": "Invalid Token,"
+                    },
+                    "401": {
+                        "description": "Bad requet, User already logout"
+                    }
+                }
+            }
+        },
         "/user/confirmation/{email}": {
             "get": {
                 "tags": [
@@ -618,8 +647,14 @@
                 }
             }
         },
-
-        "users": {
+        "postComment": {
+            "properties": {
+                "comment": {
+                    "type": "string"
+                }
+            }
+        },
+        "userSignUp": {
             "properties": {
                 "firstName": {
                     "type": "string"

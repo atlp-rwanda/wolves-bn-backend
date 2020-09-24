@@ -2,7 +2,6 @@ import models from '../../src/database/models';
 import { hashPassowrd, jwtToken } from '../../src/utils/jwtToken';
 
 const { users } = models;
-
 export const superAdmin = {
   id: 30,
   firstName: 'super',
@@ -61,7 +60,6 @@ export const dummyToken = jwtToken.createToken({
   email: dummyUser.email,
   role: dummyUser.role
 });
-
 export const createSuperAdmin = async () => {
   await users.create({ ...superAdmin, token: superAdminToken });
 };

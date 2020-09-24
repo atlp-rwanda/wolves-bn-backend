@@ -6,6 +6,7 @@ import { userValidate } from '../validators/userValidation';
 import { usersiginValidate } from '../validators/usersiginValidation';
 import validateTrip from '../validators/tripvalidator';
 import roleValidate from '../validators/roleValidator';
+import auth from '../middleware/auth';
 import usercontroller from '../controllers/user';
 import Password from '../controllers/password';
 import userAuth from '../controllers/userAuth';
@@ -25,6 +26,7 @@ router.post('/api/users/signup', userValidate, usercontroller.signup);
 router.patch('/api/users/settings', isAdmin.verifyAdmin, roleValidate, rolesSettingsRoute.roleController);
 router.get('/api/profiles/:id', usercontroller.getProfile);
 router.put('/api/profiles/:id', userValidate, usercontroller.updateProfile);
+router.get('/api/users/logout', auth, usercontroller.logout);
 
 router.post('/api/users/forgotPassword', Password.forgotPassword);
 router.post('/api/users/resetPassword/:resetLinkToken', Password.resetPassword);
