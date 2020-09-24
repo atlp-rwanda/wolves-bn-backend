@@ -10,7 +10,6 @@ chai.use(chaiHTTP);
 const cleanAlltables = async () => {
   await users.destroy({ where: {} });
 };
-let token;
 
 describe('Changing the users roles', () => {
   before(async () => {
@@ -29,7 +28,6 @@ describe('Changing the users roles', () => {
       .send(createdUser)
       .end((error, response) => {
         response.should.have.status(201);
-        token = response.body.token;
       });
     done();
   });
