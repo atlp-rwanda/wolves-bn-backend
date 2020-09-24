@@ -18,6 +18,16 @@ module.exports = {
     password: 'Passwor',
     createdAt: new Date(),
     updatedAt: new Date()
+  },
+  {
+    firstName: 'Anisie',
+    lastName: 'Uwimana',
+    phone: '0785885544',
+    role: 'requester',
+    email: 'anisie@barefoot.com',
+    password: 'Password',
+    createdAt: new Date(),
+    updatedAt: new Date()
   }], {}),
 
   down: async (queryInterface, Sequelize) => {
