@@ -1,8 +1,6 @@
 /* eslint-disable valid-jsdoc */
 /* eslint-disable require-jsdoc */
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class user extends Model {
@@ -23,7 +21,9 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     resetLink: DataTypes.STRING,
     fb_id: DataTypes.STRING,
-    gl_id: DataTypes.STRING
+    gl_id: DataTypes.STRING,
+    isAdmin: DataTypes.BOOLEAN,
+    confirmed: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'user',

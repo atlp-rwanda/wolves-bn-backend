@@ -45,4 +45,5 @@ router.get(
 
 router.post('/api/users/signin', usersiginValidate, usercontroller.signIn);
 
+router.get('/user/confirmation/:email', usercontroller.updateUser);
 export default router;
