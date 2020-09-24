@@ -25,6 +25,12 @@ module.exports = {
       resetLink: {
         type: Sequelize.STRING
       },
+      fb_id: {
+        type: Sequelize.STRING
+      },
+      gl_id: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

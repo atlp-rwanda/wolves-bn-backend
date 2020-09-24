@@ -22,6 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     resetLink: DataTypes.STRING,
+    fb_id: DataTypes.STRING,
+    gl_id: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'user',
