@@ -1,4 +1,5 @@
 import models from '../database/models';
+import sendingMail from './sendMail';
 import { hashPassowrd, comparePassword, jwtToken } from '../utils/jwtToken';
 
 export default class User {
@@ -23,11 +24,18 @@ export default class User {
         lname,
         phone,
         email,
-        password: hash
+        password: hash,
+        isAdmin: false,
+        confirmed: false
       });
       const token = jwtToken.createToken(user);
-      return res.status(201).send({ token, user: { fname, lname, email } });
+      const messaging = sendingMail(user.email);
+      return res.status(200).send({
+        token, user: { fname, lname, email }, messaging, message: 'Please you may go confirm in your email'
+      });
+      // sendingMail(user.email, user.email);
     } catch (error) {
+      console.log(error);
       return res.status(500).send(error);
     }
   }
@@ -45,5 +53,22 @@ export default class User {
     } catch (error) {
       return res.status(500).send(error);
     }
+  }
+
+  static updateUser(req, res) {
+    return models.user
+      .findOne({ where: { email: req.params.email } })
+      .then(user => {
+        if (!user) {
+          return res.status(404).send({
+            message: 'user Not Found',
+          });
+        }
+        return user
+          .update({
+            confirmed: true
+          })
+          .then(() => res.status(200).send({ message: 'User confirmed' }));
+      });
   }
 }

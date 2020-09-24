@@ -139,9 +139,32 @@
                     }
                 }
             }
+        },
+
+"/user/confirmation/{email}":{
+    "get":{
+        "tags": ["User"],
+        "summary": "confirm registrations",
+        "description": "Confirmation of registrations",
+        "operationId": "useremail",
+        "parameters": [{
+            "in": "path",
+                        "name": "email",
+                        "required": true,
+            "schema": {
+                "$ref": "#/definitions/userUpdate"
+            }
+        }],
+        "produces": ["application/json"],
+        "responses": {
+            "200": {
+                "description": "confirmed"
+            }
         }
 
-       
+    }
+}
+
     },
 
     "definitions": {
@@ -179,7 +202,7 @@
                     "type": "string"
                 }
             }
-    
+
       },
       "userLogin": {
         "type": "object",
@@ -193,6 +216,11 @@
                 "required": true
             }
         }
+    },
+        "userUpdate":{
+            "properties":{
+                "email":{"type":"string"}
+            }
         }
     }
 }

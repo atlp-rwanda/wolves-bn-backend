@@ -23,13 +23,19 @@ module.exports = {
       password: {
         type: Sequelize.STRING
       },
-      resetLink: {
-        type: Sequelize.STRING
-      },
       fb_id: {
         type: Sequelize.STRING
       },
       gl_id: {
+        type: Sequelize.STRING
+      },
+      confirmed: {
+        type: Sequelize.BOOLEAN
+      },
+      isAdmin: {
+        type: Sequelize.BOOLEAN
+      },
+      resetLink: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -40,6 +46,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
+
     });
   },
   down: async (queryInterface, Sequelize) => {
