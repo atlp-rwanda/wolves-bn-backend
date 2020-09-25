@@ -122,4 +122,21 @@ export default class User {
       res.status(500).send({ error });
     }
   }
+
+  static updateUser(req, res) {
+    return users
+      .findOne({ where: { email: req.params.email } })
+      .then(user => {
+        if (!user) {
+          return res.status(404).send({
+            message: 'user Not Found',
+          });
+        }
+        return user
+          .update({
+            confirmed: true
+          })
+          .then(() => res.status(200).send({ message: 'User confirmed' }));
+      });
+  }
 }

@@ -5,6 +5,7 @@ import models from '../src/database/models';
 
 let token;
 const { users } = models;
+let id;
 chai.should();
 chai.use(chaiHttp);
 const cleanAlltables = async () => {
@@ -31,6 +32,7 @@ describe('POST /api/users/signup', () => {
         response.should.have.status(200);
         token = response.body.token;
         response.should.be.an('object');
+        id = response.body.id;
         done();
       });
   });
@@ -79,18 +81,25 @@ describe('GET /', () => {
       });
   });
 });
-
-describe('POST /api/user/profile', () => {
+describe('GET /', () => {
+  // before(async () => {
+  //   await cleanAlltables();
+  // });
+  it('should return Get endpoint is working', (done) => {
+    chai.request(app)
+      .get('/')
+      .end(() => {
+        done();
+      });
+  });
+});
+describe('GET /api/profiles/:id', () => {
   // before(async () => {
   //   await cleanAlltables();
   // });
   it('should return the user', (done) => {
-    const email = {
-      email: 'crepin1@test.com'
-    };
     chai.request(app)
-      .post('/api/user/profile')
-      .send(email)
+      .get(`/api/profiles/${id}`)
       .end((err, res) => {
         res.should.have.status(200);
         res.should.be.an('object');
@@ -98,15 +107,13 @@ describe('POST /api/user/profile', () => {
     done();
   });
 });
-
-describe('PUT /api/user/profile', () => {
+describe('PUT /api/profiles/:id', () => {
   it('should update the profile of the user', (done) => {
     const userDetails = {
       fname: 'Crepin',
       lname: 'Bosco',
       phone: '089999999',
       email: 'crepina@test.com',
-      password: 'editedpa',
       profileimage: 'https://www.google.com/search?q=random+image&tbm=isch&source=iu&ictx=1&fir=w_2Xay2IzNC0zM%252CYpYw_trHdY78IM%252C_&vet=1&usg=AI4_-kTvfEe00igI4nEu3c_MRnLncEGZVA&sa=X&ved=2ahUKEwjJ1J_B2YHsAhV1wuYKHaPyC7gQ9QF6BAgKEEQ#imgrc=w_2Xay2IzNC0zM',
       address: 'Kacyiru',
       gender: 'Male',
@@ -117,7 +124,7 @@ describe('PUT /api/user/profile', () => {
       manager: 'David'
     };
     chai.request(app)
-      .put('/api/user/profile')
+      .put(`/api/profiles/${id}`)
       .send(userDetails)
       .end((err, res) => {
         res.should.have.status(200);
@@ -129,7 +136,7 @@ describe('PUT /api/user/profile', () => {
       fname: '',
       lname: 'Bosco',
       phone: '089999999',
-      password: 'editedpa',
+      email: 'crepina@test.com',
       profileimage: 'https://www.google.com/search?q=random+image&tbm=isch&source=iu&ictx=1&fir=w_2Xay2IzNC0zM%252CYpYw_trHdY78IM%252C_&vet=1&usg=AI4_-kTvfEe00igI4nEu3c_MRnLncEGZVA&sa=X&ved=2ahUKEwjJ1J_B2YHsAhV1wuYKHaPyC7gQ9QF6BAgKEEQ#imgrc=w_2Xay2IzNC0zM',
       address: 'Kacyiru',
       gender: 'Male',
@@ -140,7 +147,7 @@ describe('PUT /api/user/profile', () => {
       manager: 'David'
     };
     chai.request(app)
-      .put('/api/user/profile')
+      .put(`/api/profiles/${id}`)
       .send(userDetails)
       .end((err, res) => {
         res.should.have.status(400);

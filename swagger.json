@@ -45,6 +45,36 @@
                 }
             }
         },
+        "/api/users/forgotPassword": {
+            "post": {
+                "tags": [
+                    "Password"
+                ],
+                "summary": "forgot password",
+                "description": "User forgot password",
+                "operationId": "forgot",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/forgotPassword"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "reset email sent successfully"
+                    },
+                    "404": {
+                        "description": "no associated account found"
+                    }
+                }
+            }
+        },
         "/api/profiles/{id}": {
             "get": {
                 "tags": [
@@ -95,36 +125,6 @@
                 "responses": {
                     "200": {
                         "description": "Profile Updated successfully"
-                    }
-                }
-            }
-        },
-        "/api/users/forgotPassword": {
-            "post": {
-                "tags": [
-                    "Password"
-                ],
-                "summary": "forgot password",
-                "description": "User forgot password",
-                "operationId": "forgot",
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "schema": {
-                            "$ref": "#/definitions/forgotPassword"
-                        }
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "reset email sent successfully"
-                    },
-                    "404": {
-                        "description": "no associated account found"
                     }
                 }
             }
@@ -241,133 +241,112 @@
                         }
                     }
                 },
-                "definitions": {
-                    "users": {
-                        "properties": {
-                            "first_name": {
-                                "type": "string"
-                            },
-                            "last_name": {
-                                "type": "string"
-                            },
-                            "phone": {
-                                "type": "string"
-                            },
-                            "email": {
-                                "type": "string"
-                            },
-                            "password": {
-                                "type": "string"
-                            }
+                "forgotPassword": {
+                    "properties": {
+                        "email": {
+                            "type": "string"
                         }
-                    },
-                    "forgotPassword": {
-                        "properties": {
-                            "email": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "resetPassword": {
-                        "properties": {
-                            "newPassword": {
-                                "roles": {
-                                    "properties": {
-                                        "userEmail": {
-                                            "type": "string"
-                                        },
-                                        "userRole": {
-                                            "type": "string"
-                                        }
+                    }
+                },
+                "resetPassword": {
+                    "properties": {
+                        "newPassword": {
+                            "roles": {
+                                "properties": {
+                                    "userEmail": {
+                                        "type": "string"
+                                    },
+                                    "userRole": {
+                                        "type": "string"
                                     }
                                 }
                             }
                         }
-                    },
-                    "userLogin": {
-                        "type": "object",
-                        "properties": {
-                            "email": {
-                                "type": "string",
-                                "required": true
-                            },
-                            "password": {
-                                "type": "string",
-                                "required": true
-                            }
+                    }
+                },
+                "userLogin": {
+                    "type": "object",
+                    "properties": {
+                        "email": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "password": {
+                            "type": "string",
+                            "required": true
                         }
                     }
                 }
             }
-        },
-        "/user/confirmation/{email}": {
-            "get": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "confirm registrations",
-                "description": "Confirmation of registrations",
-                "operationId": "useremail",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "email",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/userUpdate"
-                        }
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "confirmed"
+        }
+    },
+    "/user/confirmation/{email}": {
+        "get": {
+            "tags": [
+                "User"
+            ],
+            "summary": "confirm registrations",
+            "description": "Confirmation of registrations",
+            "operationId": "useremail",
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "email",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/userUpdate"
                     }
                 }
+            ],
+            "produces": [
+                "application/json"
+            ],
+            "responses": {
+                "200": {
+                    "description": "confirmed"
+                }
             }
-        },
-        "/api/users/settings": {
-            "patch": {
-                "tags": [
-                    "SuperAdmin"
-                ],
-                "summary": "change user roles",
-                "description": "change user roles",
-                "operationId": "changeRole",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "token",
-                        "required": true,
-                        "type": "string",
-                        "description": "super admin token to change the role"
-                    },
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "schema": {
-                            "$ref": "#/definitions/userRoleUpdate"
-                        }
+        }
+    },
+    "/api/users/settings": {
+        "patch": {
+            "tags": [
+                "SuperAdmin"
+            ],
+            "summary": "change user roles",
+            "description": "change user roles",
+            "operationId": "changeRole",
+            "parameters": [
+                {
+                    "in": "header",
+                    "name": "token",
+                    "required": true,
+                    "type": "string",
+                    "description": "super admin token to change the role"
+                },
+                {
+                    "in": "body",
+                    "name": "body",
+                    "schema": {
+                        "$ref": "#/definitions/userRoleUpdate"
                     }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "role updated successfully"
-                    },
-                    "401": {
-                        "description": "invalid token"
-                    },
-                    "400": {
-                        "description": "bad request"
-                    },
-                    "404": {
-                        "description": "user not found"
-                    }
+                }
+            ],
+            "produces": [
+                "application/json"
+            ],
+            "responses": {
+                "200": {
+                    "description": "role updated successfully"
+                },
+                "401": {
+                    "description": "invalid token"
+                },
+                "400": {
+                    "description": "bad request"
+                },
+                "404": {
+                    "description": "user not found"
                 }
             }
         }
@@ -440,13 +419,6 @@
                 }
             }
         },
-        "resetPassword": {
-            "properties": {
-                "newPassword": {
-                    "type": "string"
-                }
-            }
-        },
         "userLogin": {
             "type": "object",
             "properties": {
@@ -467,13 +439,39 @@
                 }
             }
         },
-        "userRoleUpdate": {
+        "resetPassword": {
             "properties": {
-                "userEmail": {
-                    "type": "string"
-                },
-                "userRole": {
-                    "type": "string"
+                "newPassword": {
+                    "forgotPassword": {
+                        "properties": {
+                            "email": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "userRoleUpdate": {
+                        "properties": {
+                            "userEmail": {
+                                "type": "string"
+                            },
+                            "userRole": {
+                                "resetPassword": {
+                                    "properties": {
+                                        "newPassword": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "userUpdate": {
+                                    "properties": {
+                                        "email": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
