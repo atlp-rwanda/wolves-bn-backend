@@ -45,6 +45,60 @@
                 }
             }
         },
+        "/api/profiles/{id}": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Get the profile of the user",
+                "description": "Get user's profile",
+                "operationId": "getProfile",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Get the profile of the user",
+                "description": "Get user's profile",
+                "operationId": "updateProfile",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/updateUser"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Profile Updated successfully"
+                    }
+                }
+            }
+        },
         "/api/users/forgotPassword": {
             "post": {
                 "tags": [
@@ -341,6 +395,47 @@
         "forgotPassword": {
             "properties": {
                 "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "getProfile": {
+            "properties": {
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "updateUser": {
+            "properties": {
+                "fname": {
+                    "type": "string"
+                },
+                "lname": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "number"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "profileimage": {
+                    "type": "string"
+                },
+                "address": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "department": {
                     "type": "string"
                 }
             }

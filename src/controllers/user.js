@@ -61,7 +61,7 @@ export default class User {
 
   static async getProfile(req, res) {
     const { id } = req.params;
-    const profile = await models.user.findOne({ where: { id } });
+    const profile = await users.findOne({ where: { id } });
     if (profile) {
       return res.status(200).send(profile);
     }
@@ -69,11 +69,11 @@ export default class User {
   }
 
   static async updateProfile(req, res) {
-    const findUser = await models.user.findOne({ where: { id: req.params.id } });
+    const findUser = await users.findOne({ where: { id: req.params.id } });
     try {
       const {
-        fname,
-        lname,
+        firstName,
+        lastName,
         phone,
         email,
         gender,
@@ -88,9 +88,9 @@ export default class User {
       } = req.body;
 
       if (findUser) {
-        const updatedUser = await models.user.update({
-          fname,
-          lname,
+        const updatedUser = await users.update({
+          firstName,
+          lastName,
           phone,
           email,
           gender,
@@ -118,9 +118,8 @@ export default class User {
           message: 'Bad request'
         });
       }
-      return res.status(404).send({ message: 'User not found' });
     } catch (error) {
-      res.status(500).send(error);
+      res.status(500).send({ error });
     }
   }
 }
