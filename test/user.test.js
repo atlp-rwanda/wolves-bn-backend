@@ -15,7 +15,7 @@ describe('POST /api/users/signup', () => {
   // before(async () => {
   //   await cleanAlltables();
   // });
-  it('should POST a new User', async (done) => {
+  it('should POST a new User', (done) => {
     const createdUser = {
       firstName: 'Uwimana',
       lastName: 'Anisie',
@@ -28,7 +28,7 @@ describe('POST /api/users/signup', () => {
       .post('/api/users/signup')
       .send(createdUser)
       .end((error, response) => {
-        response.should.have.status(201);
+        response.should.have.status(200);
         token = response.body.token;
         response.should.be.an('object');
         done();
