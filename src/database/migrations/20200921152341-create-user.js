@@ -26,10 +26,10 @@ module.exports = {
       resetLink: {
         type: Sequelize.STRING
       },
-      email: {
+      fb_id: {
         type: Sequelize.STRING
       },
-      password: {
+      gl_id: {
         type: Sequelize.STRING
       },
       createdAt: {

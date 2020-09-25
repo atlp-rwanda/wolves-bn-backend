@@ -20,4 +20,12 @@ module.exports = {
     dialect: 'postgres',
     use_env_variable: 'DATABASE_URL',
   },
+  facebook: {
+    clientID: process.env.FB_CLIENT_ID,
+    clientSecret: process.env.FB_CLIENT_SECRET
+  },
+  google: {
+    clientID: process.env.GL_CLIENT_ID,
+    clientSecret: process.env.GL_CLIENT_SECRET
+  }
 };

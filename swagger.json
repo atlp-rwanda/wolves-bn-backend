@@ -91,6 +91,26 @@
                 }
             }
         },
+        "/auth/google/" :{
+            "get": {
+                "tags": ["Platforms Auth"],
+                
+               "responses": {
+                "200": {
+                    "description": "OK"
+                } 
+               } 
+            }
+        },
+        "/auth/facebook/" :{
+            "get": {
+                "tags": ["Platforms Auth"],
+                
+               "responses": {
+                "200": {
+                    "description": "OK"
+                } 
+               } }},
         "/api/users/signin": {
             "post": {
                 "tags": [
