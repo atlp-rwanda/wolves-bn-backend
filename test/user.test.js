@@ -80,13 +80,13 @@ describe('GET /', () => {
   });
 });
 
-describe('GET /api/user/profile', () => {
+describe('POST /api/user/profile', () => {
   // before(async () => {
   //   await cleanAlltables();
   // });
   it('should return the user', (done) => {
     const email = {
-      email: 'crepina@test.com'
+      email: 'crepin1@test.com'
     };
     chai.request(app)
       .post('/api/user/profile')
