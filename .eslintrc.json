@@ -19,6 +19,7 @@
             "off",
             "windows"
         ],
+        "prefer-destructuring": "off",
         "consistent-return": 0,
         "no-console": "off",
         "no-unused-vars": "off",

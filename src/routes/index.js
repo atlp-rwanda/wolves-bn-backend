@@ -1,6 +1,9 @@
+/* eslint-disable import/no-named-as-default */
+/* eslint-disable import/no-named-as-default-member */
 import express from 'express';
 import passport from 'passport';
 import { userValidate } from '../middleware/userValidation';
+import { usersiginValidate } from '../middleware/usersiginValidation';
 import usercontroller from '../controllers/user';
 import Password from '../controllers/password';
 import userAuth from '../controllers/userAuth';
@@ -36,4 +39,10 @@ router.get(
   passport.authenticate('google'),
   userAuth.authUser
 );
+// router.post('/user', createUser);
+
+// signin
+
+router.post('/api/users/signin', usersiginValidate, usercontroller.signIn);
+
 export default router;

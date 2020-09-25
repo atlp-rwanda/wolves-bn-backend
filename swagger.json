@@ -110,11 +110,40 @@
                 "200": {
                     "description": "OK"
                 } 
-               } 
+               } }},
+        "/api/users/signin": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "User Login Endpoint",
+                "description": "sign-in the user",
+                "operationId": "signIn",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User credentials needed to login in",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userLogin"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "user logged in successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
             }
         }
 
+       
     },
+
     "definitions": {
         "user": {
             "properties": {
@@ -150,6 +179,20 @@
                     "type": "string"
                 }
             }
+    
+      },
+      "userLogin": {
+        "type": "object",
+        "properties": {
+            "email": {
+                "type": "string",
+                "required": true
+            },
+            "password": {
+                "type": "string",
+                "required": true
+            }
+        }
         }
     }
 }

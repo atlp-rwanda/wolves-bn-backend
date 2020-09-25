@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-keys */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('users', {
