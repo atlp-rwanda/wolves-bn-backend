@@ -13,11 +13,11 @@ module.exports = {
       lastName: {
         type: Sequelize.STRING
       },
-      email: {
-        type: Sequelize.STRING
-      },
       phone: {
         type: Sequelize.INTEGER
+      },
+      email: {
+        type: Sequelize.STRING
       },
       password: {
         type: Sequelize.STRING
@@ -53,16 +53,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       managerId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: '2'
+        type: Sequelize.INTEGER
       },
       manager: {
         type: Sequelize.STRING
       },
       role: {
-        type: Sequelize.ENUM('super_admin', 'manager', 'travel_admin', 'requester'),
-        defaultValue: 'requester'
+        type: Sequelize.ENUM('super_admin', 'manager', 'travel_admin', 'requester')
       },
       createdAt: {
         allowNull: false,

@@ -16,10 +16,8 @@ router.use(express.json());
 
 router.post('/api/users/signup', userValidate, usercontroller.signup);
 router.patch('/api/users/settings', authValidator.verifyAdmin, roleValidate, rolesSettingsRoute.roleController);
-router.get('/api/user/profile', usercontroller.getProfile);
-router.put('/api/user/profile', usercontroller.updateProfile);
-router.post('/api/user/profile', usercontroller.getProfile);
-router.put('/api/user/profile', userValidate, usercontroller.updateProfile);
+router.get('/api/profiles/:id', usercontroller.getProfile);
+router.put('/api/profiles/:id', userValidate, usercontroller.updateProfile);
 
 router.post('/api/users/forgotPassword', Password.forgotPassword);
 router.post('/api/users/resetPassword/:resetLinkToken', Password.resetPassword);
