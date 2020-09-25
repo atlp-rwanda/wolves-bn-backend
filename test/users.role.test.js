@@ -2,6 +2,7 @@ import chai from 'chai';
 import chaiHTTP from 'chai-http';
 import app from '../src/index';
 import models from '../src/database/models';
+import { superAdminToken, superAdmin } from './fixtures/users';
 
 const { users } = models;
 chai.should();
@@ -17,10 +18,10 @@ describe('Changing the users roles', () => {
   });
   it('should POST a new User', (done) => {
     const createdUser = {
-      firstName: 'Uwimana',
-      lastName: 'Anisie',
-      phone: '0788314143',
-      email: 'anisie@barefoot.com',
+      firstName: 'super',
+      lastName: 'admin',
+      phone: '0788314183',
+      email: 'anisieuwimana12@barefoot.com',
       password: '123456',
     };
     chai.request(app)
@@ -31,29 +32,28 @@ describe('Changing the users roles', () => {
       });
     done();
   });
-  it('should POST a new User', (done) => {
-    const createdUser = {
-      firstName: 'super',
-      lastName: 'admin',
-      phone: '0788314183',
-      email: 'superadmin@barefoot.com',
-      password: 'password',
-    };
-    chai.request(app)
-      .post('/api/users/signup')
-      .send(createdUser)
-      .end((error, response) => {
-        response.should.have.status(201);
+  it('should return 200, ok status and token for a successful user  sign  in', (done) => {
+    chai
+      .request(app)
+      .post('/api/users/signin')
+      .send({
+        email: 'anisieuwimana12@barefoot.com',
+        password: '123456'
+      })
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property('token');
+        done();
       });
-    done();
   });
   it('It should return role successfully updated', (done) => {
     const requestBody = {
-      userEmail: 'anisie@barefoot.com',
+      userEmail: 'anisieuwimana12@barefoot.com',
       userRole: 'manager'
     };
     chai.request(app)
-      .patch('/api/users/admin/settings')
+      .patch('/api/users/settings')
+      .set('token', superAdminToken)
       .send(requestBody)
       .end((err, res) => {
         res.should.have.status(200);
@@ -66,23 +66,39 @@ describe('Changing the users roles', () => {
       userRole: 'jdksjaa'
     };
     chai.request(app)
-      .patch('/api/users/admin/settings')
+      .patch('/api/users/settings')
+      .set('token', superAdminToken)
       .send(requestBody)
       .end((err, res) => {
         res.should.have.status(400);
         done();
       });
   });
-  it('It should return user is super admin', (done) => {
+  it('It should return invalid token', (done) => {
     const requestBody = {
-      userEmail: 'someemail@gmail.com',
-      userRole: 'super_admin'
+      userEmail: 'anisieuwimana12@barefoot.com',
+      userRole: '123456'
     };
     chai.request(app)
-      .patch('/api/users/admin/settings')
+      .patch('/api/users/settings')
+      .set('token', 'jsjjska')
       .send(requestBody)
       .end((err, res) => {
-        res.should.have.status(404);
+        res.should.have.status(400);
+        done();
+      });
+  });
+  it('It should return no token given', (done) => {
+    const requestBody = {
+      userEmail: 'anisieuwimana12@barefoot.com',
+      userRole: '123456'
+    };
+    chai.request(app)
+      .patch('/api/users/settings')
+
+      .send(requestBody)
+      .end((err, res) => {
+        res.should.have.status(400);
         done();
       });
   });

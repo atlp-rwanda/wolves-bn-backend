@@ -147,7 +147,7 @@
                 "summary": "User Login Endpoint",
                 "description": "sign-in the user",
                 "operationId": "signIn",
-                "/api/users/admin/settings": {
+                "/api/users/settings": {
                     "patch": {
                         "tags": [
                             "SuperAdmin"
