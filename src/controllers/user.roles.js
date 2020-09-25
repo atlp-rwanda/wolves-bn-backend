@@ -16,10 +16,8 @@ export default class rolesController {
       if (userFound && userFound.role !== 'super_admin') {
         await updateUser({ email: userEmail }, { role: userRole });
         return res.status(200).send({ message: 'User role successfully updated' });
-      } if (userFound && userFound.role === 'super_admin') {
-        return res.status(404).send({ message: 'Either the user is a super admin or not registered' });
       }
-      res.status(404).send({ message: 'Either User is a a super admin or not registered' });
+      res.status(404).send({ message: 'User not found' });
       return res;
     } catch (error) {
       return res.status(500).send({ error });

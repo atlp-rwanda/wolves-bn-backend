@@ -15,7 +15,7 @@ export default class User {
       } = req.body;
       const existUser = await users.findOne({ where: { email: req.body.email } });
       if (existUser) {
-        return res.json({
+        return res.status(409).json({
           message: 'user already exists'
         });
       }
@@ -24,6 +24,7 @@ export default class User {
         firstName,
         lastName,
         phone,
+        role: 'requester',
         email,
         password: hash
       });
