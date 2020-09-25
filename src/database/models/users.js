@@ -23,7 +23,16 @@ module.exports = (sequelize, DataTypes) => {
     fb_id: DataTypes.STRING,
     gl_id: DataTypes.STRING,
     phone: DataTypes.INTEGER,
-    role: DataTypes.ENUM('super_admin', 'travel_admin', 'manager', 'requester')
+    role: DataTypes.ENUM('super_admin', 'travel_admin', 'manager', 'requester'),
+    profileimage: DataTypes.STRING,
+    address: DataTypes.STRING,
+    gender: DataTypes.STRING,
+    birthdate: DataTypes.DATE,
+    language: DataTypes.STRING,
+    currency: DataTypes.STRING,
+    managerId: DataTypes.INTEGER,
+    department: DataTypes.STRING,
+    manager: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'users',
