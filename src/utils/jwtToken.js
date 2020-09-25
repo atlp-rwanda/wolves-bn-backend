@@ -11,8 +11,12 @@ export const jwtToken = {
       id, email, firstName, lastName, role
     },
     process.env.SECRET_OR_KEY, { expiresIn: '24h' });
-  }
+  },
 };
+export function verifyingToken(token) {
+  const decoded = jwt.verify(token, process.env.SECRET_OR_KEY, { expiresIn: '24h' });
+  return decoded;
+}
 
 export const hashPassowrd = (password) => bcrypt.hashSync(password, 10);
 export const comparePassword = (password, hash) => bcrypt.compareSync(password, hash);
