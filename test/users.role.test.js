@@ -17,11 +17,27 @@ describe('Changing the users roles', () => {
   });
   it('should POST a new User', (done) => {
     const createdUser = {
-      first_name: 'Uwimana',
-      last_name: 'Anisie',
+      firstName: 'Uwimana',
+      lastName: 'Anisie',
       phone: '0788314143',
       email: 'anisie@barefoot.com',
       password: '123456',
+    };
+    chai.request(app)
+      .post('/api/users/signup')
+      .send(createdUser)
+      .end((error, response) => {
+        response.should.have.status(201);
+      });
+    done();
+  });
+  it('should POST a new User', (done) => {
+    const createdUser = {
+      firstName: 'super',
+      lastName: 'admin',
+      phone: '0788314183',
+      email: 'superadmin@barefoot.com',
+      password: 'password',
     };
     chai.request(app)
       .post('/api/users/signup')
