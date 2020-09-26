@@ -2,7 +2,7 @@ import chai from 'chai';
 import chaiHTTP from 'chai-http';
 import app from '../src/index';
 import models from '../src/database/models';
-import { superAdminToken, superAdmin } from './fixtures/users';
+import { superAdminToken, requesterToken } from './fixtures/users';
 
 const { users } = models;
 chai.should();
@@ -74,6 +74,20 @@ describe('Changing the users roles', () => {
         done();
       });
   });
+  it('It should return user not found', (done) => {
+    const requestBody = {
+      userEmail: 'manager@barefoot.com',
+      userRole: 'requester'
+    };
+    chai.request(app)
+      .patch('/api/users/settings')
+      .set('token', superAdminToken)
+      .send(requestBody)
+      .end((err, res) => {
+        res.should.have.status(404);
+        done();
+      });
+  });
   it('It should return invalid token', (done) => {
     const requestBody = {
       userEmail: 'anisieuwimana12@barefoot.com',
@@ -88,14 +102,27 @@ describe('Changing the users roles', () => {
         done();
       });
   });
-  it('It should return no token given', (done) => {
+  it('It should return user not super admin', (done) => {
+    const requestBody = {
+      userEmail: 'anisieuwimana12@barefoot.com',
+      userRole: 'requester'
+    };
+    chai.request(app)
+      .patch('/api/users/settings')
+      .set('token', requesterToken)
+      .send(requestBody)
+      .end((err, res) => {
+        res.should.have.status(403);
+        done();
+      });
+  });
+  it('It should return no token provided', (done) => {
     const requestBody = {
       userEmail: 'anisieuwimana12@barefoot.com',
       userRole: '123456'
     };
     chai.request(app)
       .patch('/api/users/settings')
-
       .send(requestBody)
       .end((err, res) => {
         res.should.have.status(400);
