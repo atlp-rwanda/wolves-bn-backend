@@ -4,7 +4,7 @@ module.exports = {
     lastName: 'Admin',
     phone: '0788885588',
     role: 'super_admin',
-    email: 'superadmin1@barefoot.com',
+    email: 'superadmin@barefoot.com',
     password: '$2a$10$iyFH3/jgULgC0sMJ/VST1uR/.GKnx5IGtVIPsbhpsoz.pxe2yWnL6',
     createdAt: new Date(),
     updatedAt: new Date()
@@ -14,7 +14,7 @@ module.exports = {
     lastName: 'Manager',
     phone: '0788885544',
     role: 'manager',
-    email: 'manager1@gmail.com',
+    email: 'manager1@barefoot.com',
     password: '$2a$10$iyFH3/jgULgC0sMJ/VST1uR/.GKnx5IGtVIPsbhpsoz.pxe2yWnL6',
     createdAt: new Date(),
     updatedAt: new Date()
