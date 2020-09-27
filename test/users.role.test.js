@@ -21,7 +21,7 @@ describe('Changing the users roles', () => {
       firstName: 'super',
       lastName: 'admin',
       phone: '0788314183',
-      email: 'anisieuwimana12@barefoot.com',
+      email: 'manager1@gmail.com',
       password: '123456',
     };
     chai.request(app)
@@ -37,7 +37,7 @@ describe('Changing the users roles', () => {
       .request(app)
       .post('/api/users/signin')
       .send({
-        email: 'anisieuwimana12@barefoot.com',
+        email: 'manager1@gmail.com',
         password: '123456'
       })
       .end((err, res) => {
@@ -48,7 +48,7 @@ describe('Changing the users roles', () => {
   });
   it('It should return role successfully updated', (done) => {
     const requestBody = {
-      userEmail: 'anisieuwimana12@barefoot.com',
+      userEmail: 'manager1@gmail.com',
       userRole: 'manager'
     };
     chai.request(app)
@@ -90,21 +90,21 @@ describe('Changing the users roles', () => {
   });
   it('It should return invalid token', (done) => {
     const requestBody = {
-      userEmail: 'anisieuwimana12@barefoot.com',
-      userRole: '123456'
+      userEmail: 'manager1@gmail.com',
+      userRole: 'manager'
     };
     chai.request(app)
       .patch('/api/users/settings')
       .set('token', 'jsjjska')
       .send(requestBody)
       .end((err, res) => {
-        res.should.have.status(400);
+        res.should.have.status(401);
         done();
       });
   });
   it('It should return user not super admin', (done) => {
     const requestBody = {
-      userEmail: 'anisieuwimana12@barefoot.com',
+      userEmail: 'manager1@gmail.com',
       userRole: 'requester'
     };
     chai.request(app)
@@ -118,11 +118,12 @@ describe('Changing the users roles', () => {
   });
   it('It should return no token provided', (done) => {
     const requestBody = {
-      userEmail: 'anisieuwimana12@barefoot.com',
-      userRole: '123456'
+      userEmail: 'manager1@gmail.com',
+      userRole: 'manager'
     };
     chai.request(app)
       .patch('/api/users/settings')
+      .set('token', '')
       .send(requestBody)
       .end((err, res) => {
         res.should.have.status(400);

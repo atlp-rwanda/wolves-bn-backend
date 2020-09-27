@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "sequelize db:migrate && babel-node src/index.js ",
-    "dev": "sequelize db:migrate && sequelize db:seed:all && nodemon --exec babel-node src/index.js ",
+    "dev": "sequelize db:migrate && nodemon --exec babel-node src/index.js ",
     "test": "nyc --reporter=html --reporter=text mocha --require @babel/register  ./test/*.test.js --timeout 10000 --exit || true",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "type": "module"
