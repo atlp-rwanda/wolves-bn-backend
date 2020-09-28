@@ -273,44 +273,47 @@
                     }
                 }
             }
-        }
-    },
-    "/api/users/settings": {
-        "patch": {
-            "tags": [
-                "SuperAdmin"
-            ],
-            "summary": "change user roles",
-            "description": "change user roles",
-            "operationId": "changeRole",
-            "parameters": [
-                {
-                    "in": "header",
-                    "name": "token",
-                    "required": true,
-                    "type": "string",
-                    "description": "super admin token to change the role"
-                },
-                {
-                    "in": "body",
-                    "name": "body",
-                    "schema": {
-                        "$ref": "#/definitions/userRoleUpdate"
+        },
+        "/api/users/settings": {
+            "patch": {
+                "tags": [
+                    "SuperAdmin"
+                ],
+                "summary": "change user roles",
+                "description": "change user roles",
+                "operationId": "changeRole",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "required": true,
+                        "type": "string",
+                        "description": "super admin token to change the role"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/userRoleUpdate"
+                        }
                     }
-                }
-            ],
-            "produces": [
-                "application/json"
-            ],
-            "responses": {
-                "200": {
-                    "description": "role updated successfully"
-                },
-                "401": {
-                    "description": "Invalid token"
-                },
-                "404": {
-                    "description": "User not found"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "role updated successfully"
+                    },
+                    "401": {
+                        "description": "invalid token"
+                    },
+                    "400": {
+                        "description": "bad request"
+                    },
+                    "404": {
+                        "description": "user not found"
+                    }
                 }
             }
         }
