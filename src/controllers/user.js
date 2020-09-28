@@ -1,41 +1,44 @@
-import models from '../database/models';
 import sendingMail from './sendMail';
+import models from '../database/models';
 import { hashPassowrd, comparePassword, jwtToken } from '../utils/jwtToken';
 
+const { users } = models;
 export default class User {
   static async signup(req, res) {
     try {
       const {
-        fname,
-        lname,
+        firstName,
+        lastName,
         phone,
         email,
         password
       } = req.body;
-      const existUser = await models.user.findOne({ where: { email: req.body.email } });
+      const existUser = await users.findOne({ where: { email: req.body.email } });
       if (existUser) {
-        return res.json({
-          message: 'user already exitsts'
+        return res.status(409).json({
+          message: 'user already exists'
         });
       }
       const hash = hashPassowrd(password);
-      const user = await models.user.create({
-        fname,
-        lname,
+      const user = await users.create({
+        firstName,
+        lastName,
         phone,
+        role: 'requester',
         email,
-        password: hash,
-        isAdmin: false,
-        confirmed: false
+        password: hash
       });
       const token = jwtToken.createToken(user);
       const messaging = sendingMail(user.email);
-      return res.status(200).send({
-        token, user: { fname, lname, email }, messaging, message: 'Please you may go confirm in your email'
+      return res.status(201).send({
+        token,
+        user: {
+          firstName, lastName, email
+        },
+        messaging,
+        message: 'Please you may go confirm in your email'
       });
-      // sendingMail(user.email, user.email);
     } catch (error) {
-      console.log(error);
       return res.status(500).send(error);
     }
   }
@@ -43,7 +46,7 @@ export default class User {
   static async signIn(req, res) {
     try {
       const { email, password } = req.body;
-      const user = await models.user.findOne({ where: { email } });
+      const user = await users.findOne({ where: { email } });
       if (!user) return res.status(400).send({ status: 400, error: "User doesn't exist" });
       if (user && comparePassword(password, user.password)) {
         const token = jwtToken.createToken(user);
@@ -56,7 +59,7 @@ export default class User {
   }
 
   static updateUser(req, res) {
-    return models.user
+    return users
       .findOne({ where: { email: req.params.email } })
       .then(user => {
         if (!user) {

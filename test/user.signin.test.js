@@ -6,13 +6,21 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/index';
+import models from '../src/database/models';
 
 const { expect } = chai;
+const { users } = models;
 chai.use(chaiHttp);
+const cleanAlltables = async () => {
+  await users.destroy({ where: {} });
+};
 
 export let token;
 
 describe('user login', () => {
+  before(async () => {
+    await cleanAlltables();
+  });
   it('should return 400 bad request status when an invalid email is provided', (done) => {
     chai
       .request(app)
@@ -54,32 +62,38 @@ describe('user login', () => {
         done();
       });
   });
-
-  it('should return 200, ok status and token for a successful user  sign  in', (done) => {
+  it('should POST a new User', (done) => {
     const createdUser = {
-      fname: 'Uwimana',
-      lname: 'Anisie',
-      email: 'any3@gmail.com',
-      password: '123456'
+      firstName: 'Uwimana',
+      lastName: 'Anisie',
+      phone: '0788314143',
+      email: 'uwa102@gmail.com',
+      password: '123456',
     };
 
     chai.request(app)
       .post('/api/users/signup')
       .send(createdUser)
       .end((error, response) => {
-        chai
-          .request(app)
-          .post('/api/users/signin')
-          .send({
-            email: 'any3@gmail.com',
-            password: '123456'
-          })
-          .end((err, res) => {
-            expect(res).to.have.status(200);
-            expect(res.body).to.be.have.property('token');
-            token = res.body.token;
-            done();
-          });
+        response.should.have.status(201);
+        token = response.body.token;
+        response.should.be.an('object');
+        done();
+      });
+  });
+  it('should return 200, ok status and token for a successful user  sign  in', (done) => {
+    chai
+      .request(app)
+      .post('/api/users/signin')
+      .send({
+        email: 'uwa102@gmail.com',
+        password: '123456'
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.have.property('token');
+        token = res.body.token;
+        done();
       });
   });
 });

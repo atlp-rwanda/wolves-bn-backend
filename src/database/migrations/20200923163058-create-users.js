@@ -8,17 +8,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      fname: {
+      firstName: {
         type: Sequelize.STRING
       },
-      lname: {
-        type: Sequelize.STRING
-      },
-      phone: {
+      lastName: {
         type: Sequelize.STRING
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
       },
       password: {
         type: Sequelize.STRING
@@ -32,11 +30,20 @@ module.exports = {
       confirmed: {
         type: Sequelize.BOOLEAN
       },
-      isAdmin: {
-        type: Sequelize.BOOLEAN
-      },
       resetLink: {
         type: Sequelize.STRING
+      },
+      phone: {
+        type: Sequelize.INTEGER
+      },
+      role: {
+        type: Sequelize.ENUM('super_admin', 'travel_admin', 'manager', 'requester'),
+        defaultValue: 'requester'
+      },
+      managerId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: '2'
       },
       createdAt: {
         allowNull: false,

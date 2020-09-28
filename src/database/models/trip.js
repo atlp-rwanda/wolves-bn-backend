@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class trip extends Model {
     static associate(models) {
       // define association here
-      trip.belongsTo(models.user, {
+      trip.belongsTo(models.users, {
         foreignKey: 'userId',
         as: 'requester'
       });

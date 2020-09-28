@@ -5,11 +5,11 @@ import models from '../src/database/models';
 
 let token;
 let email;
-const { user } = models;
+const { users } = models;
 chai.should();
 chai.use(chaiHttp);
 const cleanAlltables = async () => {
-  await user.destroy({ where: {} });
+  await users.destroy({ where: {} });
 };
 
 describe('POST /api/users/signup', () => {
@@ -18,8 +18,8 @@ describe('POST /api/users/signup', () => {
   });
   it('should receive a message', (done) => {
     const createdUser = {
-      fname: 'HumanBeing',
-      lname: 'Anisieshere',
+      firstName: 'HumanBeing',
+      lastName: 'Anisieshere',
       email: 'theoneste99@gmail.com',
       password: '123456',
 
@@ -30,7 +30,7 @@ describe('POST /api/users/signup', () => {
       .end((error, response) => {
         email = response.body.user.email;
         console.log(response.body.user.email);
-        response.should.have.status(200);
+        response.should.have.status(201);
         token = response.body.token;
         response.should.be.an('object');
         done();

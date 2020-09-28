@@ -8,6 +8,26 @@ module.exports = {
     travel_reason: 'Going to new Office',
     createdAt: new Date(),
     updatedAt: new Date()
+  },
+  {
+    userId: 2,
+    from: 'Nairobi',
+    to: 'Lagos',
+    travel_date: new Date(),
+    return_date: new Date(),
+    travel_reason: 'New Mission',
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    userId: 3,
+    from: 'Cape Town',
+    to: 'Delhi',
+    travel_date: new Date(),
+    return_date: new Date(),
+    travel_reason: 'Going to take trainings',
+    createdAt: new Date(),
+    updatedAt: new Date()
   }]),
   down: (queryInterface, Sequelize) => queryInterface.bulkDelete('trips', null, {})
 };

@@ -1,6 +1,7 @@
-import { user } from '../database/models';
+import models from '../database/models';
 import { jwtToken } from '../utils/jwtToken';
 
+const { users } = models;
 export default class UserAuth {
   static async authUser(req, res) {
     try {
@@ -9,29 +10,30 @@ export default class UserAuth {
         provider, name, emails, id
       } = req.user;
       if (provider === 'facebook') {
-        user.findOrCreate({
+        users.findOrCreate({
           where: { fb_id: id },
           defaults: {
-            fname: name.givenName,
-            lname: name.familyName,
+            firstName: name.givenName,
+            lastName: name.familyName,
             email: emails[0].value,
           },
         });
       } else if (provider === 'google') {
-        user.findOrCreate({
+        users.findOrCreate({
           where: { gl_id: id },
           defaults: {
-            fname: name.givenName,
-            lname: name.familyName,
+            firstName: name.givenName,
+            lastName: name.familyName,
             email: emails[0].value,
           },
         });
       }
 
       const token = jwtToken.createToken({
-        fname: name.givenName,
-        lname: name.familyName,
+        firstName: name.givenName,
+        lastName: name.familyName,
         email: emails[0].value,
+        role: 'requester'
       });
 
       return res.status(200).send({ token });
