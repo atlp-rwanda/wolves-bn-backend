@@ -273,59 +273,109 @@
                     }
                 }
             }
-        }
-    },
-    "definitions": {
-        "user": {
-            "properties": {
-                "fname": {
-                    "type": "string"
-                },
-                "lname": {
-                    "type": "string"
-                },
-                "phone": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
+        },
+        "/api/users/settings": {
+            "patch": {
+                "tags": [
+                    "SuperAdmin"
+                ],
+                "summary": "change user roles",
+                "description": "change user roles",
+                "operationId": "changeRole",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "required": true,
+                        "type": "string",
+                        "description": "super admin token to change the role"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/userRoleUpdate"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "role updated successfully"
+                    },
+                    "401": {
+                        "description": "Invalid token"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
                 }
             }
         },
-        "forgotPassword": {
-            "properties": {
-                "email": {
-                    "type": "string"
+        "definitions": {
+            "user": {
+                "properties": {
+                    "fname": {
+                        "type": "string"
+                    },
+                    "lname": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
                 }
-            }
-        },
-        "resetPassword": {
-            "properties": {
-                "newPassword": {
-                    "type": "string"
+            },
+            "forgotPassword": {
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    }
                 }
-            }
-        },
-        "userLogin": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string",
-                    "required": true
-                },
-                "password": {
-                    "type": "string",
-                    "required": true
+            },
+            "resetPassword": {
+                "properties": {
+                    "newPassword": {
+                        "type": "string"
+                    }
                 }
-            }
-        },
-        "userUpdate": {
-            "properties": {
-                "email": {
-                    "type": "string"
+            },
+            "userLogin": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "required": true
+                    },
+                    "password": {
+                        "type": "string",
+                        "required": true
+                    }
+                }
+            },
+            "userUpdate": {
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    }
+                }
+            },
+            "userRoleUpdate": {
+                "properties": {
+                    "userEmail": {
+                        "type": "string"
+                    },
+                    "userRole": {
+                        "type": "string"
+                    }
                 }
             }
         }
