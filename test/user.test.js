@@ -34,7 +34,6 @@ describe('POST /api/users/signup', () => {
         response.should.be.an('object');
         id = response.body.id;
         id = response.body.user.id;
-        // console.log(id);
         done();
       });
   });

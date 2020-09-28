@@ -5,8 +5,6 @@
         "title": "Barefoot Nomad APIS",
         "description": "Testing endpoints"
     },
-    "host": "localhost:3000",
-    "basePath": "/",
     "schemes": [
         "http",
         "https"
@@ -45,6 +43,12 @@
                     },
                     "404": {
                         "description": "Invalid URL"
+                    },
+                    "409": {
+                        "description": "user already exists"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
                     }
                 }
             }
