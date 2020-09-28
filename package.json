@@ -6,9 +6,10 @@
   "scripts": {
     "start": "sequelize db:migrate && babel-node src/index.js ",
     "dev": "sequelize db:migrate && nodemon --exec babel-node src/index.js ",
-    "test": "nyc --reporter=html --reporter=text mocha --require @babel/register  ./test/*.test.js --timeout 10000 --exit || true",
+    "test": "npm run createtables:test && cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha --require @babel/register  ./test/*.test.js --timeout 10000 --exit || true && npm run droptables:test",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "type": "module"
+    "createtables:test": "cross-env NODE_ENV=test sequelize db:migrate",
+    "droptables:test": "cross-env NODE_ENV=test sequelize db:migrate:undo:all"
   },
   "repository": {
     "type": "git",
@@ -49,6 +50,7 @@
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "coveralls": "^3.1.0",
+    "cross-env": "^7.0.2",
     "eslint": "^7.9.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-node": "^4.1.0",
