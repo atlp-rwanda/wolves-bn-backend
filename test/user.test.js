@@ -28,7 +28,7 @@ describe('POST /api/users/signup', () => {
       .post('/api/users/signup')
       .send(createdUser)
       .end((error, response) => {
-        response.should.have.status(200);
+        response.should.have.status(201);
         token = response.body.token;
         response.should.be.an('object');
         done();

@@ -5,10 +5,10 @@ const { users } = models;
 export default class UserAuth {
   static async authUser(req, res) {
     try {
-      console.log('req.users', req.users);
+      console.log('req.user', req.user);
       const {
         provider, name, emails, id
-      } = req.users;
+      } = req.user;
       if (provider === 'facebook') {
         users.findOrCreate({
           where: { fb_id: id },
@@ -33,6 +33,7 @@ export default class UserAuth {
         firstName: name.givenName,
         lastName: name.familyName,
         email: emails[0].value,
+        role: 'requester'
       });
 
       return res.status(200).send({ token });
