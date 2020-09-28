@@ -20,7 +20,7 @@ describe('POST /api/users/signup', () => {
       firstName: 'Uwimana',
       lastName: 'Anisie',
       phone: '0788314143',
-      email: 'uwa102@gmail.com',
+      email: 'uwa100@gmail.com',
       password: '123456',
     };
 
@@ -40,7 +40,7 @@ describe('POST /api/users/signup', () => {
       firstName: 'Uwimana',
       lastName: 'Anisie',
       phone: '0438848439',
-      email: 'uwa102gmail.com', // invalid email
+      email: 'uwa100gmail.com', // invalid email
       password: '123456',
 
     };
@@ -56,7 +56,7 @@ describe('POST /api/users/signup', () => {
     const createdUser = {
       firstName: 'Uwimana',
       lastName: 'Anisie',
-      email: 'uwa102@gmail.com',
+      email: 'uwa100@gmail.com',
       password: '123456',
 
     };

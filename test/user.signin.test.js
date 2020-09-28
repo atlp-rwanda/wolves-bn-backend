@@ -69,7 +69,6 @@ describe('user login', () => {
       phone: '0788314143',
       email: 'uwa102@gmail.com',
       password: '123456',
-
     };
 
     chai.request(app)

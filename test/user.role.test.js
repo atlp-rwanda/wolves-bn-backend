@@ -18,8 +18,8 @@ describe('Changing the users roles', () => {
   });
   it('should POST a new User', (done) => {
     const createdUser = {
-      firstName: 'super',
-      lastName: 'admin',
+      firstName: 'rukundo',
+      lastName: 'arcene',
       phone: '0788314183',
       email: 'manager1@gmail.com',
       password: '123456',

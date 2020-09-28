@@ -6,13 +6,14 @@ import models from '../database/models';
 import { jwtToken } from '../utils/jwtToken';
 
 dotenv.config();
+const { users } = models;
 
 sgMail.setApiKey(process.env.SENDGRID_APIKEY);
 
 class Password {
   async forgotPassword(req, res) {
     const { email } = req.body;
-    const user = await models.users.findOne({ where: { email } });
+    const user = await users.findOne({ where: { email } });
     if (!user) {
       return res.status(404).json({
         status: 404,
@@ -51,7 +52,7 @@ class Password {
       }
     });
 
-    const user = await models.users.findOne({
+    const user = await users.findOne({
       where: { resetLink: req.params.resetLinkToken }
     });
     if (!user) {

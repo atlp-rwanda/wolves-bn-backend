@@ -1,5 +1,5 @@
 import models from '../../src/database/models';
-import { hashPassowrd, comparePassword, jwtToken } from '../../src/utils/jwtToken';
+import { hashPassowrd, jwtToken } from '../../src/utils/jwtToken';
 
 const { users } = models;
 
@@ -40,5 +40,8 @@ export const requesterToken = jwtToken.createToken({
 
 export const createSuperAdmin = async () => {
   await users.create({ ...superAdmin, token: superAdminToken });
+};
+export const createRequester = async () => {
+  await users.destroy({ where: {} });
   await users.create({ ...requester, token: requesterToken });
 };
