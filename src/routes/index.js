@@ -13,11 +13,11 @@ import authValidator from '../middleware/auth.middleware';
 
 const router = express.Router();
 router.use(express.json());
-router.get('/', (req, res) => {
-  res.send('Get endpoint is working');
-});
+
 router.post('/api/users/signup', userValidate, usercontroller.signup);
 router.patch('/api/users/settings', authValidator.verifyAdmin, roleValidate, rolesSettingsRoute.roleController);
+router.get('/api/profiles/:id', usercontroller.getProfile);
+router.put('/api/profiles/:id', userValidate, usercontroller.updateProfile);
 
 router.post('/api/users/forgotPassword', Password.forgotPassword);
 router.post('/api/users/resetPassword/:resetLinkToken', Password.resetPassword);

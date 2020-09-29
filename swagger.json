@@ -75,6 +75,60 @@
                 }
             }
         },
+        "/api/profiles/{id}": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Get the profile of the user",
+                "description": "Get user's profile",
+                "operationId": "getProfile",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Get the profile of the user",
+                "description": "Get user's profile",
+                "operationId": "updateProfile",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/updateUser"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Profile Updated successfully"
+                    }
+                }
+            }
+        },
         "/api/users/resetPassword/{resetLinkToken}": {
             "post": {
                 "tags": [
@@ -187,90 +241,112 @@
                         }
                     }
                 },
-                "definitions": {
-                    "users": {
-                        "properties": {
-                            "first_name": {
-                                "type": "string"
-                            },
-                            "last_name": {
-                                "type": "string"
-                            },
-                            "phone": {
-                                "type": "string"
-                            },
-                            "email": {
-                                "type": "string"
-                            },
-                            "password": {
-                                "type": "string"
-                            }
+                "forgotPassword": {
+                    "properties": {
+                        "email": {
+                            "type": "string"
                         }
-                    },
-                    "forgotPassword": {
-                        "properties": {
-                            "email": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "resetPassword": {
-                        "properties": {
-                            "newPassword": {
-                                "roles": {
-                                    "properties": {
-                                        "userEmail": {
-                                            "type": "string"
-                                        },
-                                        "userRole": {
-                                            "type": "string"
-                                        }
+                    }
+                },
+                "resetPassword": {
+                    "properties": {
+                        "newPassword": {
+                            "roles": {
+                                "properties": {
+                                    "userEmail": {
+                                        "type": "string"
+                                    },
+                                    "userRole": {
+                                        "type": "string"
                                     }
                                 }
                             }
                         }
-                    },
-                    "userLogin": {
-                        "type": "object",
-                        "properties": {
-                            "email": {
-                                "type": "string",
-                                "required": true
-                            },
-                            "password": {
-                                "type": "string",
-                                "required": true
-                            }
+                    }
+                },
+                "userLogin": {
+                    "type": "object",
+                    "properties": {
+                        "email": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "password": {
+                            "type": "string",
+                            "required": true
                         }
                     }
                 }
             }
-        },
-        "/user/confirmation/{email}": {
-            "get": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "confirm registrations",
-                "description": "Confirmation of registrations",
-                "operationId": "useremail",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "email",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/userUpdate"
-                        }
+        }
+    },
+    "/user/confirmation/{email}": {
+        "get": {
+            "tags": [
+                "User"
+            ],
+            "summary": "confirm registrations",
+            "description": "Confirmation of registrations",
+            "operationId": "useremail",
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "email",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/userUpdate"
                     }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "confirmed"
+                }
+            ],
+            "produces": [
+                "application/json"
+            ],
+            "responses": {
+                "200": {
+                    "description": "confirmed"
+                }
+            }
+        }
+    },
+    "/api/users/settings": {
+        "patch": {
+            "tags": [
+                "SuperAdmin"
+            ],
+            "summary": "change user roles",
+            "description": "change user roles",
+            "operationId": "changeRole",
+            "parameters": [
+                {
+                    "in": "header",
+                    "name": "token",
+                    "required": true,
+                    "type": "string",
+                    "description": "super admin token to change the role"
+                },
+                {
+                    "in": "body",
+                    "name": "body",
+                    "schema": {
+                        "$ref": "#/definitions/userRoleUpdate"
                     }
+                }
+            ],
+            "produces": [
+                "application/json"
+            ],
+            "responses": {
+                "200": {
+                    "description": "role updated successfully"
+                },
+                "401": {
+                    "description": "invalid token"
+                },
+                "400": {
+                    "description": "bad request"
+                },
+                "404": {
+                    "description": "user not found"
                 }
             }
         }
@@ -302,9 +378,43 @@
                 }
             }
         },
-        "resetPassword": {
+        "getProfile": {
             "properties": {
-                "newPassword": {
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "updateUser": {
+            "properties": {
+                "fname": {
+                    "type": "string"
+                },
+                "lname": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "number"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "profileimage": {
+                    "type": "string"
+                },
+                "address": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "department": {
                     "type": "string"
                 }
             }
@@ -326,6 +436,42 @@
             "properties": {
                 "email": {
                     "type": "string"
+                }
+            }
+        },
+        "resetPassword": {
+            "properties": {
+                "newPassword": {
+                    "forgotPassword": {
+                        "properties": {
+                            "email": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "userRoleUpdate": {
+                        "properties": {
+                            "userEmail": {
+                                "type": "string"
+                            },
+                            "userRole": {
+                                "resetPassword": {
+                                    "properties": {
+                                        "newPassword": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "userUpdate": {
+                                    "properties": {
+                                        "email": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

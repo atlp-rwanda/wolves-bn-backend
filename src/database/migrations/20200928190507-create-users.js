@@ -1,4 +1,3 @@
-/* eslint-disable no-dupe-keys */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('users', {
@@ -14,11 +13,16 @@ module.exports = {
       lastName: {
         type: Sequelize.STRING
       },
+      phone: {
+        type: Sequelize.INTEGER
+      },
       email: {
-        type: Sequelize.STRING,
-        unique: true
+        type: Sequelize.STRING
       },
       password: {
+        type: Sequelize.STRING
+      },
+      resetLink: {
         type: Sequelize.STRING
       },
       fb_id: {
@@ -27,23 +31,35 @@ module.exports = {
       gl_id: {
         type: Sequelize.STRING
       },
-      confirmed: {
-        type: Sequelize.BOOLEAN
-      },
-      resetLink: {
+      profileimage: {
         type: Sequelize.STRING
       },
-      phone: {
-        type: Sequelize.INTEGER
+      address: {
+        type: Sequelize.STRING
       },
-      role: {
-        type: Sequelize.ENUM('super_admin', 'travel_admin', 'manager', 'requester'),
-        defaultValue: 'requester'
+      gender: {
+        type: Sequelize.STRING
+      },
+      birthdate: {
+        type: Sequelize.DATE
+      },
+      language: {
+        type: Sequelize.STRING
+      },
+      currency: {
+        type: Sequelize.STRING
+      },
+      department: {
+        type: Sequelize.STRING
       },
       managerId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: '2'
+        type: Sequelize.INTEGER
+      },
+      manager: {
+        type: Sequelize.STRING
+      },
+      role: {
+        type: Sequelize.ENUM('super_admin', 'manager', 'travel_admin', 'requester')
       },
       createdAt: {
         allowNull: false,
@@ -53,7 +69,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-
     });
   },
   down: async (queryInterface, Sequelize) => {
