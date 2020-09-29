@@ -9,17 +9,17 @@ import usercontroller from '../controllers/user';
 import Password from '../controllers/password';
 import userAuth from '../controllers/userAuth';
 import rolesSettingsRoute from '../controllers/user.roles';
-import authValidator from '../middleware/auth.middleware';
 import checkAuth from '../middleware/checkauth';
 import Trip from '../controllers/tripController';
 import validateTrip from '../validators/tripvalidator';
 import { isRequester } from '../middleware/isRequester';
+import isAdmin from '../middleware/isAdmin';
 
 const router = express.Router();
 router.use(express.json());
 
 router.post('/api/users/signup', userValidate, usercontroller.signup);
-router.patch('/api/users/settings', authValidator.verifyAdmin, roleValidate, rolesSettingsRoute.roleController);
+router.patch('/api/users/settings', isAdmin.verifyAdmin, roleValidate, rolesSettingsRoute.roleController);
 router.get('/api/profiles/:id', usercontroller.getProfile);
 router.put('/api/profiles/:id', userValidate, usercontroller.updateProfile);
 
@@ -47,9 +47,6 @@ router.get(
   passport.authenticate('google'),
   userAuth.authUser
 );
-// router.post('/user', createUser);
-
-// signin
 
 router.post('/api/users/signin', usersiginValidate, usercontroller.signIn);
 
