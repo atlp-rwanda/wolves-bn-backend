@@ -1,8 +1,10 @@
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.bulkInsert('trips', [{
-    userId: 1,
-    from: 'Kigali',
-    to: 'Kampala',
+    requester_id: 1,
+    manager_id: 2,
+    from: 1,
+    to: 2,
+    travel_type: 'one way trip',
     travel_date: new Date(),
     return_date: new Date(),
     travel_reason: 'Going to new Office',
@@ -10,22 +12,26 @@ module.exports = {
     updatedAt: new Date()
   },
   {
-    userId: 2,
-    from: 'Nairobi',
-    to: 'Lagos',
+    requester_id: 3,
+    manager_id: 1,
+    from: 2,
+    to: 1,
+    travel_type: 'one way trip',
     travel_date: new Date(),
     return_date: new Date(),
-    travel_reason: 'New Mission',
+    travel_reason: 'Going to new Office',
     createdAt: new Date(),
     updatedAt: new Date()
   },
   {
-    userId: 3,
-    from: 'Cape Town',
-    to: 'Delhi',
+    requester_id: 2,
+    manager_id: 3,
+    from: 5,
+    to: 3,
+    travel_type: 'one way trip',
     travel_date: new Date(),
     return_date: new Date(),
-    travel_reason: 'Going to take trainings',
+    travel_reason: 'Going to new Office',
     createdAt: new Date(),
     updatedAt: new Date()
   }]),

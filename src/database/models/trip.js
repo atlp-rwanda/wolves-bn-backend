@@ -7,15 +7,17 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       trip.belongsTo(models.users, {
-        foreignKey: 'userId',
+        foreignKey: 'requester_id',
         as: 'requester'
       });
     }
   }
   trip.init({
-    userId: DataTypes.INTEGER,
-    from: DataTypes.STRING,
-    to: DataTypes.STRING,
+    requester_id: DataTypes.INTEGER,
+    manager_id: DataTypes.INTEGER,
+    from: DataTypes.INTEGER,
+    to: DataTypes.INTEGER,
+    travel_type: DataTypes.STRING,
     travel_date: DataTypes.DATE,
     return_date: DataTypes.DATE,
     travel_reason: DataTypes.STRING

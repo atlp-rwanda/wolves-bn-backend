@@ -7,15 +7,23 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      requester_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      manager_id: {
         allowNull: false,
         type: Sequelize.INTEGER
       },
       from: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       to: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      travel_type: {
         allowNull: false,
         type: Sequelize.STRING
       },
