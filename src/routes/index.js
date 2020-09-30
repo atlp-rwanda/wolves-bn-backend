@@ -9,7 +9,7 @@ import usercontroller from '../controllers/user';
 import Password from '../controllers/password';
 import userAuth from '../controllers/userAuth';
 import rolesSettingsRoute from '../controllers/user.roles';
-import checkAuth from '../middleware/checkauth';
+import checkAuth from '../middleware/checkAuth';
 import Trip from '../controllers/tripController';
 import validateTrip from '../validators/tripvalidator';
 import { isRequester } from '../middleware/isRequester';
@@ -49,6 +49,8 @@ router.get(
 );
 
 router.post('/api/users/signin', usersiginValidate, usercontroller.signIn);
+router.get('/api/manager/requests/:id', Trip.managerRequests);
+router.get('/api/users/requests/:id', Trip.userRequests);
 
 router.get('/user/confirmation/:email', usercontroller.updateUser);
 

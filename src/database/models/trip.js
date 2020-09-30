@@ -8,7 +8,16 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       trip.belongsTo(models.users, {
         foreignKey: 'requester_id',
-        as: 'requester'
+        as: 'requester',
+        targetKey: 'id'
+      });
+      trip.belongsTo(models.location, {
+        foreignKey: 'from',
+        as: 'departure'
+      });
+      trip.belongsTo(models.location, {
+        foreignKey: 'to',
+        as: 'destination'
       });
       trip.belongsTo(models.location, {
         foreignKey: 'from',
