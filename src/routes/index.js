@@ -10,10 +10,11 @@ import usercontroller from '../controllers/user';
 import Password from '../controllers/password';
 import userAuth from '../controllers/userAuth';
 import rolesSettingsRoute from '../controllers/user.roles';
-import checkAuth from '../middleware/checkAuth';
+import checkAuth from '../middleware/checkauth';
 import Trip from '../controllers/tripController';
 import { isRequester } from '../middleware/isRequester';
 import isAdmin from '../middleware/isAdmin';
+import search from '../controllers/search';
 
 const router = express.Router();
 router.use(express.json());
@@ -56,5 +57,10 @@ router.patch('/api/trips/:id', checkAuth.verifyUser, isRequester, validateTrip, 
 router.delete('/api/trips/:id', checkAuth.verifyUser, isRequester, Trip.deleteTrip);
 
 router.get('/user/confirmation/:email', usercontroller.updateUser);
+
+router.post('/api/trips', checkAuth, isRequester, validateTrip, Trip.createTrips);
+router.patch('/api/trips/:id', checkAuth, isRequester, validateTrip, Trip.updateTrip);
+router.delete('/api/trips/:id', checkAuth, isRequester, Trip.deleteTrip);
+router.get('/trips/search', search.searchEngine);
 
 export default router;
