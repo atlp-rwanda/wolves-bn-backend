@@ -93,6 +93,48 @@ describe('POST /trip', () => {
   });
 });
 
+describe('Testing the trip appove routes', () => {
+  it('it should 200, approve the requests', (done) => {
+    chai.request(app)
+      .patch(`/api/users/tripRequest/${id}`)
+      .set('token', managerToken)
+      .send(
+        {
+          request_status: 'rejected'
+        })
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+  });
+  it('it should return bad request', (done) => {
+    chai.request(app)
+      .patch(`/api/users/tripRequest/${id}`)
+      .set('token', managerToken)
+      .send(
+        {
+          request_status: 'rejectedetr'
+        })
+      .end((err, res) => {
+        res.should.have.status(400);
+        done();
+      });
+  });
+  it('it should is not managaer', (done) => {
+    chai.request(app)
+      .patch(`/api/users/tripRequest/${id}`)
+      .set('token', token)
+      .send(
+        {
+          request_status: 'rejected'
+        })
+      .end((err, res) => {
+        res.should.have.status(403);
+        done();
+      });
+  });
+});
+
 describe('Testing the get requests routes', () => {
   it('it should return invalid token', (done) => {
     chai.request(app)

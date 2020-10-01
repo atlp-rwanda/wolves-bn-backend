@@ -1,8 +1,3 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable import/no-mutable-exports */
-/* eslint-disable import/prefer-default-export */
-// eslint-disable-next-line import/no-extraneous-dependencies
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/index';
