@@ -6,19 +6,24 @@ import validateTrip from '../validators/tripvalidator';
 import roleValidate from '../validators/roleValidator';
 import auth from '../middleware/auth';
 import usercontroller from '../controllers/user';
+<<<<<<< HEAD
 import statusValidate from '../validators/statusValidator';
 import trip from '../controllers/request';
+=======
+import Accomodation from '../controllers/accomodation';
+>>>>>>> create and update accomodation
 import Password from '../controllers/password';
 import userAuth from '../controllers/userAuth';
 import isManager from '../middleware/isManager';
 import rolesSettingsRoute from '../controllers/user.roles';
+import checkAuth from '../middleware/checkauth';
 import Trip from '../controllers/tripController';
 import { isRequester } from '../middleware/isRequester';
 import isAdmin from '../middleware/isAdmin';
 import search from '../controllers/search';
-// import authValidator from '../middleware/auth.middleware';
+
 import commentController from '../controllers/comment';
-import checkAuth from '../middleware/checkAuth';
+
 import commentValidator from '../validators/commentValidator';
 
 const router = express.Router();
@@ -45,6 +50,9 @@ router.get(
   passport.authenticate('facebook'),
   userAuth.authUser
 );
+router.post('/api/accommodations', checkAuth.verifyUser,
+// multerUploads,
+  Accomodation.createAccommodation);
 
 router.get(
   '/auth/google',
@@ -79,4 +87,8 @@ router.get('/user/confirmation/:email', usercontroller.updateUser);
 // user requesting trip
 router.patch('/api/users/tripRequest/:id', checkAuth.verifyUser, isManager, statusValidate, trip.updateTripRequest);
 
+router.post('/api/trips', checkAuth, isRequester, validateTrip, Trip.createTrips);
+router.patch('/api/trips/:id', checkAuth, isRequester, validateTrip, Trip.updateTrip);
+router.delete('/api/trips/:id', checkAuth, isRequester, Trip.deleteTrip);
+router.put('/api/accomomdations/:acc_id', checkAuth.verifyUser, Accomodation.editAccommodation);
 export default router;
