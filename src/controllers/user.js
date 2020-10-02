@@ -26,7 +26,8 @@ export default class User {
         phone,
         role: 'requester',
         email,
-        password: hash
+        password: hash,
+        managerId: 1,
       });
       const userId = user.id;
       const token = jwtToken.createToken(user);

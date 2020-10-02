@@ -10,6 +10,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'requester_id',
         as: 'requester'
       });
+      trip.belongsTo(models.location, {
+        foreignKey: 'from',
+        as: 'departure'
+      });
+      trip.belongsTo(models.location, {
+        foreignKey: 'to',
+        as: 'destination'
+      });
     }
   }
   trip.init({

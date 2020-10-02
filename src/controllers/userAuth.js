@@ -5,27 +5,27 @@ const { users } = models;
 export default class UserAuth {
   static async authUser(req, res) {
     try {
-      console.log('req.user', req.user);
       const {
         provider, name, emails, id
       } = req.user;
+      console.log(req.user);
+      const user = {
+        firstName: name.givenName,
+        lastName: name.familyName,
+        email: emails[0].value,
+        managerId: 1,
+        role: 'requester'
+      };
       if (provider === 'facebook') {
         users.findOrCreate({
           where: { fb_id: id },
-          defaults: {
-            firstName: name.givenName,
-            lastName: name.familyName,
-            email: emails[0].value,
-          },
+          defaults: user,
         });
-      } else if (provider === 'google') {
+      }
+      if (provider === 'google') {
         users.findOrCreate({
           where: { gl_id: id },
-          defaults: {
-            firstName: name.givenName,
-            lastName: name.familyName,
-            email: emails[0].value,
-          },
+          defaults: user,
         });
       }
 
@@ -33,7 +33,8 @@ export default class UserAuth {
         firstName: name.givenName,
         lastName: name.familyName,
         email: emails[0].value,
-        role: 'requester'
+        managerId: 1,
+        role: 'requester',
       });
 
       return res.status(200).send({ token });
