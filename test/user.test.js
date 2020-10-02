@@ -145,12 +145,14 @@ describe('PUT /api/profiles/:id', () => {
 describe('GET /', () => {
   it('should return Get endpoint is working', (done) => {
     chai.request(app)
-      .get('/')
-      .end(() => {
+      .get('/api/')
+      .end((error, response) => {
+        response.should.have.status(200);
         done();
       });
   });
 });
+
 describe('GET /api/profiles/:id', () => {
   it('should return the user', (done) => {
     chai.request(app)

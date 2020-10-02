@@ -19,6 +19,8 @@ import search from '../controllers/search';
 const router = express.Router();
 router.use(express.json());
 
+router.get('/api/', (req, res) => res.send('Welcome to barefoot Nomad'));
+
 router.post('/api/users/signup', userValidate, usercontroller.signup);
 router.patch('/api/users/settings', isAdmin.verifyAdmin, roleValidate, rolesSettingsRoute.roleController);
 router.get('/api/profiles/:id', usercontroller.getProfile);
@@ -58,9 +60,6 @@ router.delete('/api/trips/:id', checkAuth.verifyUser, isRequester, Trip.deleteTr
 
 router.get('/user/confirmation/:email', usercontroller.updateUser);
 
-router.post('/api/trips', checkAuth, isRequester, validateTrip, Trip.createTrips);
-router.patch('/api/trips/:id', checkAuth, isRequester, validateTrip, Trip.updateTrip);
-router.delete('/api/trips/:id', checkAuth, isRequester, Trip.deleteTrip);
-router.get('/trips/search', search.searchEngine);
+router.get('/api/trips/search', search.searchEngine);
 
 export default router;
