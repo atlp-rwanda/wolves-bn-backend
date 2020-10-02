@@ -29,7 +29,7 @@ describe('POST /api/users/signup', () => {
       .post('/api/users/signup')
       .send(createdUser)
       .end((error, response) => {
-        response.should.have.status(200);
+        response.should.have.status(201);
         token = response.body.token;
         response.should.be.an('object');
         id = response.body.id;
@@ -75,28 +75,12 @@ describe('GET /', () => {
   it('should return Get endpoint is working', (done) => {
     chai.request(app)
       .get('/')
-      .end((error, response) => {
-        response.should.have.status(200);
-        done();
-      });
-  });
-});
-describe('GET /', () => {
-  // before(async () => {
-  //   await cleanAlltables();
-  // });
-  it('should return Get endpoint is working', (done) => {
-    chai.request(app)
-      .get('/')
       .end(() => {
         done();
       });
   });
 });
 describe('GET /api/profiles/:id', () => {
-  // before(async () => {
-  //   await cleanAlltables();
-  // });
   it('should return the user', (done) => {
     chai.request(app)
       .get(`/api/profiles/${id}`)
@@ -110,9 +94,9 @@ describe('GET /api/profiles/:id', () => {
 describe('PUT /api/profiles/:id', () => {
   it('should update the profile of the user', (done) => {
     const userDetails = {
-      fname: 'Crepin',
-      lname: 'Bosco',
-      phone: '089999999',
+      firstName: 'Crepin',
+      lastName: 'Bosco',
+      phone: 89999999,
       email: 'crepina@test.com',
       profileimage: 'https://www.google.com/search?q=random+image&tbm=isch&source=iu&ictx=1&fir=w_2Xay2IzNC0zM%252CYpYw_trHdY78IM%252C_&vet=1&usg=AI4_-kTvfEe00igI4nEu3c_MRnLncEGZVA&sa=X&ved=2ahUKEwjJ1J_B2YHsAhV1wuYKHaPyC7gQ9QF6BAgKEEQ#imgrc=w_2Xay2IzNC0zM',
       address: 'Kacyiru',
@@ -133,9 +117,9 @@ describe('PUT /api/profiles/:id', () => {
   });
   it('should not update the profile of the user', (done) => {
     const userDetails = {
-      fname: '',
-      lname: 'Bosco',
-      phone: '089999999',
+      firstName: '',
+      lastName: 'Bosco',
+      phone: 89999999,
       email: 'crepina@test.com',
       profileimage: 'https://www.google.com/search?q=random+image&tbm=isch&source=iu&ictx=1&fir=w_2Xay2IzNC0zM%252CYpYw_trHdY78IM%252C_&vet=1&usg=AI4_-kTvfEe00igI4nEu3c_MRnLncEGZVA&sa=X&ved=2ahUKEwjJ1J_B2YHsAhV1wuYKHaPyC7gQ9QF6BAgKEEQ#imgrc=w_2Xay2IzNC0zM',
       address: 'Kacyiru',

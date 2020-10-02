@@ -14,7 +14,6 @@ const authMiddleware = {
     } catch (error) {
       return res.status(401).send({ error: 'Invalid Token' });
     }
-  }
+  },
 };
-
 export default authMiddleware;

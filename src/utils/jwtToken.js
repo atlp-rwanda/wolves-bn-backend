@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { config } from 'dotenv';
@@ -5,10 +6,10 @@ import { config } from 'dotenv';
 config();
 export const jwtToken = {
   createToken({
-    id, email, firstName, lastName, role
+    id, email, firstName, lastName, role, managerId
   }) {
     return jwt.sign({
-      id, email, firstName, lastName, role
+      id, email, firstName, lastName, role, managerId
     },
     process.env.SECRET_OR_KEY, { expiresIn: '24h' });
   },

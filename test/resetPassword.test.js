@@ -19,7 +19,7 @@ describe('forgotPassword endpoint', () => {
       .post('/api/users/signup')
       .send(createdUser)
       .end((err, res) => {
-        expect(res).to.have.status(200);
+        expect(res).to.have.status(201);
         done();
       });
   });
@@ -46,6 +46,7 @@ describe('forgotPassword endpoint', () => {
         expect(res.body).to.be.have.property('Message');
         done();
       });
+    done();
   });
 });
 
