@@ -2,17 +2,21 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/index';
 import models from '../src/database/models';
-import { requesterToken, dummyToken } from './fixtures/users';
+import {
+  managerToken, dummyToken, manager, dummyUser
+} from './fixtures/users';
 
 const { trip } = models;
 chai.use(chaiHttp);
 chai.should();
-const reqToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJrd2l6ZXJhc2V0aEBnbWFpbC5jb20iLCJmaXJzdE5hbWUiOiJrd2l6ZXJhIiwibGFzdE5hbWUiOiJzZXRoIiwicm9sZSI6InJlcXVlc3RlciIsImlhdCI6MTYwMTQ4MDk3OCwiZXhwIjoxNjAxNTY3Mzc4fQ.koO7s0uu9zhvMIQFxX3OX8bitz2FubUOaqlIloevAmw';
+const managerId = manager.id;
+const userId = dummyUser.id;
 
 describe('Testing the get requests routes', () => {
+  console.log(managerId);
   it('it should return invalid token', (done) => {
     chai.request(app)
-      .get('/api/manager/requests/4')
+      .get(`/api/manager/trips/${userId}`)
       .set('token', 'adjajd')
       .end((err, res) => {
         res.should.have.status(401);
@@ -21,19 +25,19 @@ describe('Testing the get requests routes', () => {
   });
   it('It should return no token provided', (done) => {
     chai.request(app)
-      .get('/api/manager/requests/4')
+      .get(`/api/manager/trips/${userId}`)
       .set('token', '')
       .end((err, res) => {
         res.should.have.status(400);
         done();
       });
   });
-  it('It should return user not manager', (done) => {
+  it('It should return all the trips for the manager', (done) => {
     chai.request(app)
-      .get('/api/manager/requests/4')
-      .set('token', reqToken)
+      .get(`/api/manager/trips/${managerId}`)
+      .set('token', managerToken)
       .end((err, res) => {
-        res.should.have.status(403);
+        res.should.have.status(200);
         done();
       });
   });

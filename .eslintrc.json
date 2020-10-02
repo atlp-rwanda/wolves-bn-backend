@@ -19,6 +19,7 @@
             "off",
             "windows"
         ],
+        "camelcase": "off",
         "prefer-destructuring": "off",
         "function-paren-newline": "off",
         "eol-last": "off",

@@ -54,7 +54,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       manager_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       manager: {
         type: Sequelize.STRING

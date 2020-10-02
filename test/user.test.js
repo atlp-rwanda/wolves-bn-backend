@@ -142,7 +142,6 @@ describe('PUT /api/profiles/:id', () => {
     done();
   });
 });
-
 describe('GET /', () => {
   it('should return Get endpoint is working', (done) => {
     chai.request(app)
@@ -152,7 +151,6 @@ describe('GET /', () => {
       });
   });
 });
-
 describe('GET /api/profiles/:id', () => {
   it('should return the user', (done) => {
     chai.request(app)
@@ -164,7 +162,6 @@ describe('GET /api/profiles/:id', () => {
     done();
   });
 });
-
 describe('PUT /api/profiles/:id', () => {
   it('should update the profile of the user', (done) => {
     const userDetails = {
