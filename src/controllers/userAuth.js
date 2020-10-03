@@ -25,7 +25,12 @@ export default class UserAuth {
       if (provider === 'google') {
         users.findOrCreate({
           where: { gl_id: id },
-          defaults: user,
+          defaults: {
+            firstName: name.givenName,
+            lastName: name.familyName,
+            email: emails[0].value,
+            role: 'requester'
+          },
         });
       }
 

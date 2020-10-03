@@ -4,6 +4,7 @@ import express from 'express';
 import passport from 'passport';
 import { userValidate } from '../validators/userValidation';
 import { usersiginValidate } from '../validators/usersiginValidation';
+import validateTrip from '../validators/tripvalidator';
 import roleValidate from '../validators/roleValidator';
 import usercontroller from '../controllers/user';
 import Password from '../controllers/password';
@@ -11,7 +12,6 @@ import userAuth from '../controllers/userAuth';
 import rolesSettingsRoute from '../controllers/user.roles';
 import checkAuth from '../middleware/checkAuth';
 import Trip from '../controllers/tripController';
-import validateTrip from '../validators/tripvalidator';
 import { isRequester } from '../middleware/isRequester';
 import isAdmin from '../middleware/isAdmin';
 
@@ -51,6 +51,12 @@ router.get(
 router.post('/api/users/signin', usersiginValidate, usercontroller.signIn);
 router.get('/api/manager/requests/:id', Trip.managerRequests);
 router.get('/api/users/requests/:id', Trip.userRequests);
+router.get('/api/manager/trips/:id', checkAuth.verifyUser, Trip.managerRequests);
+router.get('/api/user/trips', checkAuth.verifyUser, Trip.userRequests);
+
+router.post('/api/user/trips', checkAuth.verifyUser, validateTrip, Trip.createTrips);
+router.patch('/api/user/trips/:id', checkAuth.verifyUser, validateTrip, Trip.updateTrip);
+router.delete('/api/user/trips/:id', checkAuth.verifyUser, Trip.deleteTrip);
 
 router.get('/user/confirmation/:email', usercontroller.updateUser);
 

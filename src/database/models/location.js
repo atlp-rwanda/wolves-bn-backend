@@ -8,11 +8,13 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       location.hasMany(models.trip, {
         foreignKey: 'from',
-        as: 'departure'
+        as: 'departure',
+        targetKey: 'id'
       });
       location.hasMany(models.trip, {
         foreignKey: 'to',
-        as: 'destination'
+        as: 'destination',
+        targetKey: 'id'
       });
     }
   }

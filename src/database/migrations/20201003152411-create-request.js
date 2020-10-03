@@ -1,6 +1,6 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('trips', {
+    await queryInterface.createTable('requests', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -8,36 +8,21 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       requester_id: {
-        allowNull: false,
         type: Sequelize.INTEGER
       },
       manager_id: {
-        allowNull: false,
         type: Sequelize.INTEGER
       },
-      request_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      from: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      to: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      travel_type: {
-        allowNull: false,
+      requesterFname: {
         type: Sequelize.STRING
       },
-      travel_date: {
-        type: Sequelize.DATE
+      requesterLname: {
+        type: Sequelize.STRING
       },
-      return_date: {
-        type: Sequelize.DATE
+      travel_type: {
+        type: Sequelize.STRING
       },
-      travel_reason: {
+      request_status: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -51,6 +36,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('trips');
+    await queryInterface.dropTable('requests');
   }
 };

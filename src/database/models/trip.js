@@ -11,13 +11,20 @@ module.exports = (sequelize, DataTypes) => {
         as: 'requester',
         targetKey: 'id'
       });
+      trip.belongsTo(models.request, {
+        foreignKey: 'request_id',
+        as: 'request',
+        targetKey: 'id'
+      });
       trip.belongsTo(models.location, {
         foreignKey: 'from',
-        as: 'departure'
+        as: 'departure',
+        targetKey: 'id'
       });
       trip.belongsTo(models.location, {
         foreignKey: 'to',
-        as: 'destination'
+        as: 'destination',
+        targetKey: 'id'
       });
       trip.belongsTo(models.location, {
         foreignKey: 'from',
@@ -32,6 +39,7 @@ module.exports = (sequelize, DataTypes) => {
   trip.init({
     requester_id: DataTypes.INTEGER,
     manager_id: DataTypes.INTEGER,
+    request_id: DataTypes.INTEGER,
     from: DataTypes.INTEGER,
     to: DataTypes.INTEGER,
     travel_type: DataTypes.STRING,
