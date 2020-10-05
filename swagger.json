@@ -24,13 +24,15 @@
                 "summary": "Signup",
                 "description": "Create account",
                 "operationId": "createUser",
-                "parameters": [{
-                    "in": "body",
-                    "name": "body",
-                    "schema": {
-                        "$ref": "#/definitions/userSignUp"
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/userSignUp"
+                        }
                     }
-                }],
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -61,13 +63,15 @@
                 "summary": "forgot password",
                 "description": "User forgot password",
                 "operationId": "forgot",
-                "parameters": [{
-                    "in": "body",
-                    "name": "body",
-                    "schema": {
-                        "$ref": "#/definitions/forgotPassword"
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/forgotPassword"
+                        }
                     }
-                }],
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -81,7 +85,6 @@
                 }
             }
         },
-
         "/api/trips/search?": {
             "get": {
                 "tags": [
@@ -90,19 +93,22 @@
                 "summary": "Search Owners of trips",
                 "description": "Search for different fields",
                 "operationId": "search",
-                "parameters": [{
-                    "in": "query",
-                    "name": "departure",
-                    "schema": {
-                        "type": "string"
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "departure",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "destination",
+                        "schema": {
+                            "type": "string"
+                        }
                     }
-                }, {
-                    "in": "query",
-                    "name": "destination",
-                    "schema": {
-                        "type": "string"
-                    }
-                }],
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -116,7 +122,6 @@
                 }
             }
         },
-
         "/api/profiles/{id}": {
             "get": {
                 "tags": [
@@ -125,12 +130,14 @@
                 "summary": "Get the profile of the user",
                 "description": "Get user's profile",
                 "operationId": "getProfile",
-                "parameters": [{
-                    "in": "path",
-                    "name": "id",
-                    "type": "number",
-                    "required": true
-                }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "number",
+                        "required": true
+                    }
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -147,7 +154,8 @@
                 "summary": "Get the profile of the user",
                 "description": "Get user's profile",
                 "operationId": "updateProfile",
-                "parameters": [{
+                "parameters": [
+                    {
                         "in": "path",
                         "name": "id",
                         "type": "number",
@@ -179,7 +187,8 @@
                 "summary": "reset password",
                 "description": "User reset password",
                 "operationId": "reset",
-                "parameters": [{
+                "parameters": [
+                    {
                         "name": "resetLinkToken",
                         "in": "path",
                         "required": true,
@@ -242,15 +251,17 @@
                 "summary": "User Login Endpoint",
                 "description": "sign-in the user",
                 "operationId": "signIn",
-                "parameters": [{
-                    "in": "body",
-                    "name": "body",
-                    "description": "User credentials needed to login in",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/definitions/userLogin"
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User credentials needed to login in",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userLogin"
+                        }
                     }
-                }],
+                ],
                 "responses": {
                     "200": {
                         "description": "user logged in successfully"
@@ -273,7 +284,8 @@
                         "required": true,
                         "type": "string",
                         "description": "Token"
-                    }],
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "User successfully logged out"
@@ -295,14 +307,16 @@
                 "summary": "confirm registrations",
                 "description": "Confirmation of registrations",
                 "operationId": "useremail",
-                "parameters": [{
-                    "in": "path",
-                    "name": "email",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/definitions/userUpdate"
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "email",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userUpdate"
+                        }
                     }
-                }],
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -321,7 +335,8 @@
                 "summary": "change user roles",
                 "description": "change user roles",
                 "operationId": "changeRole",
-                "parameters": [{
+                "parameters": [
+                    {
                         "in": "header",
                         "name": "token",
                         "required": true,
@@ -355,7 +370,56 @@
                 }
             }
         },
-        "/api/trips/list": {
+        "/api/trips/{id}/comment": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "posting comment on travel request",
+                "description": "travel request comment",
+                "operationId": "postComment",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "required": true,
+                        "type": "string",
+                        "description": "from sign in endpoint"
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "from trip table"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/postComment"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "comment submitted successfully"
+                    },
+                    "401": {
+                        "description": "invalid token"
+                    },
+                    "400": {
+                        "description": "bad request"
+                    },
+                    "404": {
+                        "description": "user not found"
+                    }
+                }
+            }
+        },
+        "/api/trips/{id}/comments/{tripId}": {
             "get": {
                 "tags": [
                     "Users"
@@ -363,13 +427,27 @@
                 "summary": "List of comments",
                 "description": "travel request comment",
                 "operationId": "getlist",
-                "parameters": [{
-                    "in": "header",
-                    "name": "token",
-                    "required": true,
-                    "type": "string",
-                    "description": "token"
-                }],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "required": true,
+                        "type": "string",
+                        "description": "from sign in endpoint"
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "from trip table"
+                    },
+                    {
+                        "in": "path",
+                        "name": "tripId",
+                        "required": true,
+                        "description": "is from comment table"
+                    }
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -386,7 +464,7 @@
                 }
             }
         },
-        "/api/trips/delete/{id}": {
+        "/api/trips/{id}/comments": {
             "delete": {
                 "tags": [
                     "Users"
@@ -394,18 +472,19 @@
                 "summary": "delete a comment",
                 "description": "delete a comment",
                 "operationId": "deleteComment",
-                "parameters": [{
+                "parameters": [
+                    {
                         "in": "header",
                         "name": "token",
                         "required": true,
                         "type": "string",
-                        "description": "token"
+                        "description": "from sign in endpoint"
                     },
                     {
                         "in": "path",
                         "name": "id",
-                        "type": "number",
-                        "required": true
+                        "required": true,
+                        "description": "from Comment table"
                     }
                 ],
                 "produces": [
@@ -432,7 +511,8 @@
                 "tags": [
                     "Users"
                 ],
-                "parameters": [{
+                "parameters": [
+                    {
                         "in": "header",
                         "name": "token",
                         "required": true,
@@ -472,13 +552,15 @@
                 "summary": "getting all requests",
                 "description": "users can get trip requests",
                 "operationId": "getRequests",
-                "parameters": [{
-                    "in": "header",
-                    "name": "token",
-                    "required": true,
-                    "type": "string",
-                    "description": "token"
-                }],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "required": true,
+                        "type": "string",
+                        "description": "token"
+                    }
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -500,7 +582,8 @@
                 "tags": [
                     "Users"
                 ],
-                "parameters": [{
+                "parameters": [
+                    {
                         "in": "header",
                         "name": "token",
                         "required": true,
@@ -543,7 +626,8 @@
                 "tags": [
                     "Users"
                 ],
-                "parameters": [{
+                "parameters": [
+                    {
                         "in": "header",
                         "name": "token",
                         "required": true,
@@ -577,7 +661,6 @@
             }
         }
     },
-
     "definitions": {
         "getProfile": {
             "properties": {

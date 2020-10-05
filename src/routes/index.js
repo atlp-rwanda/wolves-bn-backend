@@ -66,8 +66,8 @@ router.get('/user/confirmation/:email', usercontroller.updateUser);
 router.get('/api/trips/search', search.searchEngine);
 // comment
 router.post('/api/trips/:id/comment', checkAuth.verifyUser, commentController.postComment);
-router.get('/api/trips/list', checkAuth.verifyUser, commentController.list);
-router.delete('/api/trips/delete/:id', checkAuth.verifyUser, commentController.deleteComment);
+router.get('/api/trips/:id/comments/:tripId', checkAuth.verifyUser, commentController.list);
+router.delete('/api/trips/:id/comments', checkAuth.verifyUser, commentController.deleteComment);
 router.get('/user/confirmation/:email', usercontroller.updateUser);
 
 export default router;

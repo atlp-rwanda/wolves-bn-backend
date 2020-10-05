@@ -58,6 +58,7 @@ export default class User {
       }
       return res.status(400).send({ status: 400, error: 'invalid email/password combination ' });
     } catch (error) {
+      console.log(error);
       return res.status(500).send(error);
     }
   }
