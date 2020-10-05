@@ -31,7 +31,7 @@
                         "in": "body",
                         "name": "body",
                         "schema": {
-                            "$ref": "#/definitions/users"
+                            "$ref": "#/definitions/userSignUp"
                         }
                     }
                 ],
@@ -365,7 +365,6 @@
                         "description": "token"
                     }
                 ],
-                
                 "produces": [
                     "application/json"
                 ],
@@ -436,7 +435,8 @@
                         "required": true,
                         "type": "string",
                         "description": "token"
-                    },{
+                    },
+                    {
                         "in": "body",
                         "name": "body",
                         "schema": {
@@ -479,8 +479,8 @@
                     {
                         "in": "path",
                         "name": "id",
-                       "type": "number",
-                       "required": true
+                        "type": "number",
+                        "required": true
                     },
                     {
                         "in": "body",
@@ -523,8 +523,8 @@
                     {
                         "in": "path",
                         "name": "id",
-                       "type": "number",
-                       "required": true
+                        "type": "number",
+                        "required": true
                     }
                 ],
                 "produces": [
@@ -667,7 +667,7 @@
                 }
             }
         },
-        "requestTrip":{
+        "requestTrip": {
             "type": "object",
             "properties": {
                 "from": {

@@ -1,12 +1,12 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable require-jsdoc */
 /* eslint-disable import/prefer-default-export */
 import Joi from 'joi';
 
 export function usersiginValidate(req, res, next) {
   const usersigninValiation = Joi.object({
-    email: Joi.string().min(4).required().email(),
+    email: Joi.string().min(4).required().email()
+      .trim(),
     password: Joi.string().min(6).max(8).required()
+      .trim()
 
   });
   const result = usersigninValiation.validate(req.body);

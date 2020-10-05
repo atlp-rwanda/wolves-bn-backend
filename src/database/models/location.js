@@ -9,12 +9,10 @@ module.exports = (sequelize, DataTypes) => {
       location.hasMany(models.trip, {
         foreignKey: 'from',
         as: 'departure',
-        targetKey: 'id'
       });
       location.hasMany(models.trip, {
         foreignKey: 'to',
         as: 'destination',
-        targetKey: 'id'
       });
     }
   }
