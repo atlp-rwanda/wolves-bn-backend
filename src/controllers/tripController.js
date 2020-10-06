@@ -8,14 +8,14 @@ export default class Trip {
     const {
       from, to, travel_date, return_date, travel_reason
     } = req.body;
-    const { id: requester_id, manager_id } = req.user;
+    const { id, manager_id } = req.user;
     let travelType;
 
     if (return_date == null) { travelType = 'One way trip'; } else {
       travelType = 'Return trip';
     }
     await models.trip.create({
-      requester_id,
+      requester_id: id,
       manager_id,
       from,
       to,
@@ -54,7 +54,7 @@ export default class Trip {
           });
         }
 
-        return trip
+        return data
           .update({
             from,
             to,
@@ -74,7 +74,7 @@ export default class Trip {
               }
             ]
           })
-          .then(() => res.status(200).send(trip))
+          .then(() => res.status(200).send(data))
           .catch((error) => res.status(500).send(error));
       })
       .catch((error) => res.status(500).send(error));

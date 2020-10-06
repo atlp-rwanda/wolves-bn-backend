@@ -461,6 +461,37 @@
                         "description": "user not found"
                     }
                 }
+            },
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "getting all requests",
+                "description": "users can get trip requests",
+                "operationId": "getRequests",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "required": true,
+                        "type": "string",
+                        "description": "token"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "trip request retrieved"
+                    },
+                    "401": {
+                        "description": "invalid token"
+                    },
+                    "400": {
+                        "description": "bad request"
+                    }
+                }
             }
         },
         "/api/trips/{id}": {
