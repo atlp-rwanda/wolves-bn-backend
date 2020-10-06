@@ -5,16 +5,14 @@ const {
 
 module.exports = (sequelize, DataTypes) => {
   class users extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       // define association here
       users.hasMany(models.trip, {
         foreignKey: 'requester_id',
         as: 'trips',
+      });
+      users.belongsTo(models.users, {
+        foreignKey: 'manager_id'
       });
     }
   }
@@ -34,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     language: DataTypes.STRING,
     currency: DataTypes.STRING,
     department: DataTypes.STRING,
-    managerId: DataTypes.INTEGER,
+    manager_id: DataTypes.INTEGER,
     manager: DataTypes.STRING,
     role: DataTypes.ENUM('super_admin', 'manager', 'travel_admin', 'requester')
   }, {

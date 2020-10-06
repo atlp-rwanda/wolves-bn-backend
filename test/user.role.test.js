@@ -2,7 +2,7 @@ import chai from 'chai';
 import chaiHTTP from 'chai-http';
 import app from '../src/index';
 import models from '../src/database/models';
-import { superAdminToken, requesterToken } from './fixtures/users';
+import { superAdminToken, managerToken } from './fixtures/users';
 
 const { users } = models;
 chai.should();
@@ -109,7 +109,7 @@ describe('Changing the users roles', () => {
     };
     chai.request(app)
       .patch('/api/users/settings')
-      .set('token', requesterToken)
+      .set('token', managerToken)
       .send(requestBody)
       .end((err, res) => {
         res.should.have.status(403);

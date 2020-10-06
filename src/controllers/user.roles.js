@@ -19,12 +19,12 @@ export default class rolesController {
               return res.status(200).send({ message: 'User role successfully updated' });
             }
           })
-          .catch((error) => res.status(404).send({ error }));
+          .catch((error) => res.status(500).send({ error: 'Server error' }));
       } if (userFound && userFound.role === 'super_admin') {
         return res.status(403).send({ message: 'User is a super admin' });
       } return res.status(404).send({ message: 'User not found' });
     } catch (error) {
-      return res.status(500).send({ error });
+      return res.status(500).send({ error: 'server error' });
     }
   }
 }

@@ -53,8 +53,8 @@ module.exports = {
       department: {
         type: Sequelize.STRING
       },
-      managerId: {
-        type: Sequelize.INTEGER
+      manager_id: {
+        type: Sequelize.INTEGER,
       },
       manager: {
         type: Sequelize.STRING

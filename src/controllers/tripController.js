@@ -1,19 +1,21 @@
 /* eslint-disable camelcase */
 import models from '../database/models';
 
+const { trip, users, location } = models;
+
 export default class Trip {
   static async createTrips(req, res) {
     const {
       from, to, travel_date, return_date, travel_reason
     } = req.body;
-    const { id: requester_id, managerId: manager_id } = req.user;
+    const { id, manager_id } = req.user;
     let travelType;
 
     if (return_date == null) { travelType = 'One way trip'; } else {
       travelType = 'Return trip';
     }
     await models.trip.create({
-      requester_id,
+      requester_id: id,
       manager_id,
       from,
       to,
@@ -45,14 +47,14 @@ export default class Trip {
     }
     return models.trip
       .findByPk(req.params.id)
-      .then(trip => {
-        if (!trip) {
+      .then(data => {
+        if (!data) {
           return res.status(404).send({
             message: 'Trip Not Found',
           });
         }
 
-        return trip
+        return data
           .update({
             from,
             to,
@@ -72,7 +74,7 @@ export default class Trip {
               }
             ]
           })
-          .then(() => res.status(200).send(trip))
+          .then(() => res.status(200).send(data))
           .catch((error) => res.status(500).send(error));
       })
       .catch((error) => res.status(500).send(error));
@@ -87,5 +89,30 @@ export default class Trip {
         if (data) res.status(201).json({ deleted: data, message: 'deleted successfully' });
         else res.status(409).json({ message: 'Nothing to delete' });
       }).catch(error => res.status(409).send(error));
+  }
+
+  static Requests(req, res) {
+    const { id, role } = req.user;
+    const isManager = role === 'manager';
+    const query = isManager ? { manager_id: id } : { requester_id: id };
+    return trip.findAll({
+      where: query,
+      include: [
+        {
+          model: location,
+          as: 'departure'
+        },
+        {
+          model: location,
+          as: 'destination'
+        },
+        {
+          model: users,
+          as: 'requester',
+          attributes: ['firstName', 'lastName', 'email']
+        }]
+    }).then((info) => {
+      res.status(200).send(info);
+    }).catch(err => res.status(409).send(err));
   }
 }

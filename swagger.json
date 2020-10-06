@@ -31,7 +31,7 @@
                         "in": "body",
                         "name": "body",
                         "schema": {
-                            "$ref": "#/definitions/users"
+                            "$ref": "#/definitions/userSignUp"
                         }
                     }
                 ],
@@ -365,7 +365,6 @@
                         "description": "token"
                     }
                 ],
-                
                 "produces": [
                     "application/json"
                 ],
@@ -436,7 +435,8 @@
                         "required": true,
                         "type": "string",
                         "description": "token"
-                    },{
+                    },
+                    {
                         "in": "body",
                         "name": "body",
                         "schema": {
@@ -461,6 +461,37 @@
                         "description": "user not found"
                     }
                 }
+            },
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "getting all requests",
+                "description": "users can get trip requests",
+                "operationId": "getRequests",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "required": true,
+                        "type": "string",
+                        "description": "token"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "trip request retrieved"
+                    },
+                    "401": {
+                        "description": "invalid token"
+                    },
+                    "400": {
+                        "description": "bad request"
+                    }
+                }
             }
         },
         "/api/trips/{id}": {
@@ -479,8 +510,8 @@
                     {
                         "in": "path",
                         "name": "id",
-                       "type": "number",
-                       "required": true
+                        "type": "number",
+                        "required": true
                     },
                     {
                         "in": "body",
@@ -523,8 +554,8 @@
                     {
                         "in": "path",
                         "name": "id",
-                       "type": "number",
-                       "required": true
+                        "type": "number",
+                        "required": true
                     }
                 ],
                 "produces": [
@@ -667,7 +698,7 @@
                 }
             }
         },
-        "requestTrip":{
+        "requestTrip": {
             "type": "object",
             "properties": {
                 "from": {
