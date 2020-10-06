@@ -16,7 +16,7 @@ import search from '../controllers/search';
 // import authValidator from '../middleware/auth.middleware';
 import commentController from '../controllers/comment';
 import checkAuth from '../middleware/checkAuth';
-// import commentValidator from '../validators/commentValidator';
+import commentValidator from '../validators/commentValidator';
 
 const router = express.Router();
 router.use(express.json());
@@ -65,9 +65,8 @@ router.get('/user/confirmation/:email', usercontroller.updateUser);
 
 router.get('/api/trips/search', search.searchEngine);
 // comment
-router.post('/api/trips/:id/comment', checkAuth.verifyUser, commentController.postComment);
+router.post('/api/trips/:id/comment', checkAuth.verifyUser, commentValidator, commentController.postComment);
 router.get('/api/trips/:id/comments/:tripId', checkAuth.verifyUser, commentController.list);
 router.delete('/api/trips/:id/comments', checkAuth.verifyUser, commentController.deleteComment);
-router.get('/user/confirmation/:email', usercontroller.updateUser);
 
 export default router;

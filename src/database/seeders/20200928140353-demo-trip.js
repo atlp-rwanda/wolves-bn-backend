@@ -51,7 +51,7 @@ module.exports = {
     updatedAt: new Date()
   },
   {
-    requester_id: 5,
+    requester_id: 6,
     manager_id: 4,
     from: 2,
     to: 1,

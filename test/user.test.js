@@ -45,15 +45,6 @@ it('should NOT POST a new User, validation issue', (done) => {
     phone: '0438848439',
     email: 'uwa100gmail.com', // invalid email
     password: '123456',
-  };
-});
-it('should NOT POST a new User, validation issue', (done) => {
-  const createdUser = {
-    firstName: 'Uwimana',
-    lastName: 'Anisie',
-    phone: '0438848439',
-    email: 'uwa100gmail.com', // invalid email
-    password: '123456',
 
   };
 

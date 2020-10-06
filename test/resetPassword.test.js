@@ -45,7 +45,6 @@ describe('forgotPassword endpoint', () => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.have.property('Message');
       });
-    done();
   });
 });
 

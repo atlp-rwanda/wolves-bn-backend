@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-import { request } from 'express';
 /* eslint-disable no-shadow */
 /* eslint-disable no-undef */
 import models from '../database/models';
@@ -17,10 +16,10 @@ export default class Comment {
       return res.status(404).send({ status: 404, error: `The Trip Identification(from Trips): ${id} does not match to the specified trip Id from Comments: ${tripId}!` });
     }
     return models.comment.findAll({ where: { tripId } })
-      .then((models) => res.status(200).send(models))
-      .catch((error) => {
-        res.status(404).send(error);
-      });
+      .then((models) => res.status(200).send(models));
+    // .catch((error) => {
+    //   res.status(404).send(error);
+    // });
   }
 
   static async postComment(req, res) {
@@ -30,23 +29,16 @@ export default class Comment {
       const { id } = req.user;
       const tripExist = await models.trip.findOne({ where: { id: tripId } });
       if (!tripExist) {
-        return res.status(404).send({ status: 404, error: `The provided trip Id "${tripId}" doesnot Exist` });
+        return res.status(400).send({ message: ` Trip ID: "${tripId}" does not Exist !` });
       }
-      if (tripExist) {
-        const requester_id = tripExist.requester_id;
-        const manager_id = tripExist.manager_id;
-        if (requester_id == null || requester_id === '' || requester_id === 'undefined') {
-          return res.status(404).send({ status: 404, error: `The provided trip Id "${requester_id}" doesnot belong to any Requester !` });
-        } if ((requester_id !== id) && (manager_id !== id)) {
-          return res.status(400).send({ status: 400, error: `The Trip Id  "${tripId} " which you are commenting on doesnot belong to you !` });
-        }
-        // if (manager_id === 0) {
-        if (manager_id == null || manager_id === '' || manager_id === 'undefined') {
-          return res.status(404).send({ status: 404, error: `The provided trip Id  "${tripId}" is not assigned to any Manager !` });
-        }
+      if ((tripExist.requester_id === id) || (tripExist.manager_id === id)) {
+        console.log(`requester Id :${tripExist.requester_id}`);
+        console.log(`manager Id :${tripExist.manager_id}`);
+        console.log(`logged in user :${id}`);
+        const saveComment = await models.comment.create({ tripId, userId: id, comment });
+        return res.status(201).send({ saveComment, message: `Successfully commented on ${tripId}` });
       }
-      const commentCreate = await models.comment.create({ tripId, userId: id, comment });
-      return res.status(201).send({ commentCreate });
+      return res.status(400).send({ message: ` Please check well, the Trip Id : " ${tripId} "does not belong to you!!!` });
     } catch (error) {
       return res.status(500).send(error);
     }
