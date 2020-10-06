@@ -51,14 +51,10 @@ router.get(
 router.post('/api/users/signin', usersiginValidate, usercontroller.signIn);
 router.get('/api/trips', checkAuth.verifyUser, Trip.Requests);
 
-router.post('/api/trips', checkAuth.verifyUser, validateTrip, Trip.createTrips);
-router.patch('/api/trips/:id', checkAuth.verifyUser, validateTrip, Trip.updateTrip);
-router.delete('/api/trips/:id', checkAuth.verifyUser, Trip.deleteTrip);
+router.post('/api/trips', checkAuth.verifyUser, isRequester, validateTrip, Trip.createTrips);
+router.patch('/api/trips/:id', checkAuth.verifyUser, isRequester, validateTrip, Trip.updateTrip);
+router.delete('/api/trips/:id', checkAuth.verifyUser, isRequester, Trip.deleteTrip);
 
 router.get('/user/confirmation/:email', usercontroller.updateUser);
-
-router.post('/api/trips', checkAuth, isRequester, validateTrip, Trip.createTrips);
-router.patch('/api/trips/:id', checkAuth, isRequester, validateTrip, Trip.updateTrip);
-router.delete('/api/trips/:id', checkAuth, isRequester, Trip.deleteTrip);
 
 export default router;

@@ -5,5 +5,5 @@ const isRequester = (req, res, next) => {
   }
   next();
 };
-// eslint-disable-next-line import/prefer-default-export
+  // eslint-disable-next-line import/prefer-default-export
 export { isRequester };

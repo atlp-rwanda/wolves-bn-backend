@@ -54,15 +54,12 @@ describe('POST /trip', () => {
   it('Should post a trip with status code 201', (done) => {
     chai
       .request(app)
-      .post('/api/user/trips')
+      .post('/api/trips')
       .set('token', token)
       .send(
         {
-          requester_id,
-          manager_id,
-          from: 4,
-          to: 2,
-          travel_type: 'One way trip',
+          from: 5,
+          to: 1,
           travel_date: '2020-9-30',
           return_date: '2020-11-30',
           travel_reason: 'new office'
