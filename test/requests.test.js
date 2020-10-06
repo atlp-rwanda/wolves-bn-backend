@@ -2,7 +2,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/index';
 import models from '../src/database/models';
-import { managerToken, dummyToken } from './fixtures/users';
+import { managerToken } from './fixtures/users';
 
 const { users } = models;
 let token;
