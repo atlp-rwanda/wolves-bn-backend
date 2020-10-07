@@ -23,7 +23,6 @@ describe('forgotPassword endpoint', () => {
         done();
       });
   });
-
   it('should return 404 not found code when account is not found', (done) => {
     chai
       .request(app)
@@ -35,7 +34,6 @@ describe('forgotPassword endpoint', () => {
         done();
       });
   });
-
   it('should return 200 ok status code when an email is sent successfully', (done) => {
     chai
       .request(app)
@@ -45,9 +43,9 @@ describe('forgotPassword endpoint', () => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.have.property('Message');
       });
+    done();
   });
 });
-
 describe('reset Password endpoint', () => {
   it('should return 401 on wrong reset password link', (done) => {
     chai

@@ -17,9 +17,6 @@ export default class Comment {
     }
     return models.comment.findAll({ where: { tripId } })
       .then((models) => res.status(200).send(models));
-    // .catch((error) => {
-    //   res.status(404).send(error);
-    // });
   }
 
   static async postComment(req, res) {
@@ -32,9 +29,6 @@ export default class Comment {
         return res.status(400).send({ message: ` Trip ID: "${tripId}" does not Exist !` });
       }
       if ((tripExist.requester_id === id) || (tripExist.manager_id === id)) {
-        console.log(`requester Id :${tripExist.requester_id}`);
-        console.log(`manager Id :${tripExist.manager_id}`);
-        console.log(`logged in user :${id}`);
         const saveComment = await models.comment.create({ tripId, userId: id, comment });
         return res.status(201).send({ saveComment, message: `Successfully commented on ${tripId}` });
       }
@@ -53,7 +47,6 @@ export default class Comment {
         } else {
           res.status(404).send({ Error: `Cannot delete comment with id=${id}.maybe Not Found in Database` });
         }
-      })
-      .catch(error => res.status(500).send({ error: `Unknown Error when deleting comment with ${id}` }));
+      });
   }
 }
