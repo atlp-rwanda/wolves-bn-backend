@@ -27,8 +27,8 @@ describe('Changing the users roles', () => {
       .send(createdUser)
       .end((error, response) => {
         response.should.have.status(201);
+        done();
       });
-    done();
   });
   it('should return 200, ok status and token for a successful user  sign  in', (done) => {
     chai

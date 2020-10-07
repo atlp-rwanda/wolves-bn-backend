@@ -1,4 +1,3 @@
-/* eslint-disable valid-jsdoc */
 const {
   Model
 } = require('sequelize');

@@ -659,57 +659,55 @@
                     }
                 }
             }
-        }
-    },
+        },
 
-    "/api/users/tripRequest/{id}": {
-        "patch": {
-            "tags": [
-                "Users"
-            ],
-            "parameters": [
-                {
-                    "in": "header",
-                    "name": "token",
-                    "required": true,
-                    "type": "string",
-                    "description": "token"
-                },
-                {
-                    "in": "path",
-                    "name": "id",
-                    "type": "number",
-                    "required": true
-                },
-                {
-                    "in": "body",
-                    "name": "body",
-                    "schema": {
-                        "$ref": "#/definitions/tripApprove"
+        "/api/users/tripRequest/{id}": {
+            "patch": {
+                "tags": [
+                    "Users"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "required": true,
+                        "type": "string",
+                        "description": "token"
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "number",
+                        "required": true
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/tripApprove"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "trip successfully apdated"
+                    },
+                    "401": {
+                        "description": "invalid token"
+                    },
+                    "400": {
+                        "description": "bad request"
+                    },
+                    "404": {
+                        "description": "user not found"
                     }
                 }
-            ],
-            "produces": [
-                "application/json"
-            ],
-            "responses": {
-                "201": {
-                    "description": "trip successfully apdated"
-                },
-                "401": {
-                    "description": "invalid token"
-                },
-                "400": {
-                    "description": "bad request"
-                },
-                "404": {
-                    "description": "user not found"
-                }
             }
-        }
-
+    }
     },
-
     "definitions": {
         "getProfile": {
             "properties": {
@@ -799,6 +797,7 @@
             }
         },
         "userSignUp": {
+            "type":"object",
             "properties": {
                 "firstName": {
                     "type": "string"

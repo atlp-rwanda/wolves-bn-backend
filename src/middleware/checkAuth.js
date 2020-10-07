@@ -15,9 +15,4 @@ const authMiddleware = {
     }
   },
 };
-<<<<<<< HEAD
-
 export default authMiddleware;
-=======
-export default authMiddleware;
->>>>>>> added checkAuth.js

@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import models from '../database/models';
 
 const { trip, users, location } = models;
