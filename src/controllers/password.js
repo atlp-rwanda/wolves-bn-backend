@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable class-methods-use-this */
 import sgMail from '@sendgrid/mail';
 import dotenv from 'dotenv';

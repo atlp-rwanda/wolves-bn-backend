@@ -7,11 +7,9 @@ import { superAdminToken, managerToken } from './fixtures/users';
 const { users } = models;
 chai.should();
 chai.use(chaiHTTP);
-
 const cleanAlltables = async () => {
   await users.destroy({ where: {} });
 };
-
 describe('Changing the users roles', () => {
   before(async () => {
     await cleanAlltables();
