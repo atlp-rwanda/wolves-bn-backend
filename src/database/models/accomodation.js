@@ -1,6 +1,6 @@
 /* eslint-disable valid-jsdoc */
 const {
-  Model
+  Model, Sequelize
 } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -21,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
     latitude: DataTypes.STRING,
     images: DataTypes.ARRAY(DataTypes.STRING),
     facilities: DataTypes.ARRAY(DataTypes.STRING),
-    hostId: DataTypes.INTEGER
+    hostId: DataTypes.INTEGER,
+    locationId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'accomodation',

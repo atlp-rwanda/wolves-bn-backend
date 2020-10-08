@@ -2,6 +2,17 @@ import models from '../../src/database/models';
 import { hashPassowrd, jwtToken } from '../../src/utils/jwtToken';
 
 const { users } = models;
+export const travelAdmin = {
+  firstName: 'travel',
+  lastName: 'admin',
+  email: 'traveladmin@barefoot.com',
+  password: hashPassowrd('1234567'),
+  phone: '1234567898',
+  managerId: '1',
+  role: 'travel_admin',
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};
 export const superAdmin = {
   id: 30,
   firstName: 'super',
@@ -38,6 +49,13 @@ export const dummyUser = {
   createdAt: new Date(),
   updatedAt: new Date(),
 };
+export const travelAdminToken = jwtToken.createToken({
+  id: travelAdmin.id,
+  firstName: travelAdmin.firstName,
+  lastName: travelAdmin.lastName,
+  email: travelAdmin.email,
+  role: travelAdmin.role
+});
 export const superAdminToken = jwtToken.createToken({
   id: superAdmin.id,
   firstName: superAdmin.firstName,
@@ -60,6 +78,9 @@ export const dummyToken = jwtToken.createToken({
   email: dummyUser.email,
   role: dummyUser.role
 });
+export const createTravelAdmin = async () => {
+  await users.create({ ...travelAdmin, token: travelAdminToken });
+};
 export const createSuperAdmin = async () => {
   await users.create({ ...superAdmin, token: superAdminToken });
 };

@@ -577,6 +577,49 @@
                 }
             }
         },
+        "/api/accommodations": {
+            "post": {
+                "tags": [
+                    "Accommodation"
+                ],
+                "summary": "Create an accommodation",
+                "description": "create an accommodation",
+                "operationId": "createAccommodation",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "required": true,
+                        "type": "string",
+                        "description": "token"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/createAccommodation"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Accommodation created"
+                    },
+                    "401": {
+                        "description": "invalid token"
+                    },
+                    "400": {
+                        "description": "bad request"
+                    },
+                    "404": {
+                        "description": "user not found"
+                    }
+                }
+            }
+        },
         "/api/trips/{id}": {
             "patch": {
                 "tags": [
@@ -755,6 +798,28 @@
                 },
                 "department": {
                     "type": "string"
+                }
+            }
+        },
+        "createAccommodation": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "longitude": {
+                    "type": "string"
+                },
+                "latitude": {
+                    "type": "string"
+                },
+                "facilities": {
+                    "type": "array"
+                },
+                "images": {
+                    "type": "array"
                 }
             }
         },

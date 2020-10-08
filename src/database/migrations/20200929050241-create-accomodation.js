@@ -26,7 +26,12 @@ module.exports = {
         type: Sequelize.ARRAY(Sequelize.STRING)
       },
       hostId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        foreignKey: true
+      },
+      locationId: {
+        type: Sequelize.INTEGER,
+        foreignKey: true
       },
       createdAt: {
         allowNull: false,

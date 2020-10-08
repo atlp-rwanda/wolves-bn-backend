@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     type: DataTypes.STRING,
     price: DataTypes.INTEGER,
     accomodationId: DataTypes.INTEGER,
-    images: DataTypes.STRING
+    images: DataTypes.ARRAY(DataTypes.STRING)
   }, {
     sequelize,
     modelName: 'room',

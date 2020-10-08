@@ -2,6 +2,7 @@
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-undef */
 import models from '../database/models';
+import Room from './room';
 
 const cloudinary = require('cloudinary').v2;
 
@@ -10,7 +11,8 @@ cloudinary.config({
   api_key: '496433573193378',
   api_secret: 'MaAH7UVltxv5cqm9V2ByflkhXjM'
 });
-const { accomodation, users } = models;
+const { accomodation, users, room } = models;
+
 class Accommodation {
   async createAccommodation(req, res) {
     try {
@@ -23,11 +25,22 @@ class Accommodation {
       const { id } = req.user;
 
       const user = await users.findOne({ where: { id } });
-      const files = req.files.photo;
+      let files;
+      if (req.files != null) {
+        files = req.files.photo;
+      }
+
       const uploadImages = [];
-      files.forEach(async (file) => {
-        uploadImages.push(cloudinary.uploader.upload(file.tempFilePath));
-      });
+      if (files) {
+        if (Array.isArray(files)) {
+          files.forEach((file) => {
+            uploadImages.push(cloudinary.uploader.upload(file.tempFilePath));
+          });
+        } else {
+          uploadImages.push(cloudinary.uploader.upload(files.tempFilePath));
+        }
+      }
+
       Promise.all(uploadImages)
         .then(images => {
           if (user.role === 'travel_admin') {
@@ -68,11 +81,21 @@ class Accommodation {
       const user = await users.findOne({ where: { id } });
       if (findAccommodation) {
         if (user.role === 'travel_admin') {
-          const files = req.files.photo;
+          let files;
+          if (req.files != null) {
+            files = req.files.photo;
+          }
+
           const uploadImages = [];
-          files.forEach(async (file) => {
-            uploadImages.push(cloudinary.uploader.upload(file.tempFilePath));
-          });
+          if (files) {
+            if (Array.isArray(files)) {
+              files.forEach((file) => {
+                uploadImages.push(cloudinary.uploader.upload(file.tempFilePath));
+              });
+            } else {
+              uploadImages.push(cloudinary.uploader.upload(files.tempFilePath));
+            }
+          }
           Promise.all(uploadImages)
             .then(images => {
               accomodation.update({
@@ -104,5 +127,49 @@ class Accommodation {
       res.status(500).send({ error });
     }
   }
+
+  async deleteAccommodation(req, res) {
+    const findAccommodation = await accomodation.findOne({ where: { id: req.params.acc_id } });
+    try {
+      /**
+       * Get the logged in user by Id
+       * check if the logged in user is travel_admin
+       * Find an accomodation by Id
+       * Delete the accommodation with that Id
+       */
+      const { id } = req.user;
+      const user = await users.findOne({ where: { id } });
+      if (findAccommodation) {
+        if (user.role === 'travel_admin') {
+          return accomodation.destroy({ where: { id: req.params.acc_id } }).then(data => {
+            if (data) {
+              res.status(200).send({
+                status: 200,
+                message: 'Accommodation deleted successfully'
+              });
+            } else {
+              res.status(404).send({
+                status: 404,
+                message: 'You are trying to delete non-existing accommodation'
+              });
+            }
+          }).catch(err => {
+            console.log(err);
+            res.status(409).send(err);
+          });
+        }
+      } else {
+        res.status(404).send({
+          status: 404,
+          message: 'Accommodation not found'
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ error });
+    }
+  }
 }
+Room.belongsTo(Accommodation, { onDelete: 'CASCADE' });
+Accommodation.hasMany(Room);
 export default new Accommodation();
