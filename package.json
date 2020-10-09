@@ -11,7 +11,8 @@
     "createtables": "cross-env NODE_ENV=test sequelize db:migrate",
     "droptables": "cross-env NODE_ENV=test sequelize db:migrate:undo:all",
     "seed": "sequelize db:seed:all",
-    "seed:test": "cross-env NODE_ENV=test sequelize db:seed:all"
+    "seed:test": "cross-env NODE_ENV=test sequelize db:seed:all",
+    "lint": "eslint ./"
   },
   "repository": {
     "type": "git",
@@ -25,10 +26,7 @@
   },
   "homepage": "https://github.com/atlp-rwanda/wolves-bn-backend#readme",
   "dependencies": {
-    "@babel/cli": "^7.11.6",
-    "@babel/node": "^7.10.5",
     "@babel/plugin-transform-runtime": "^7.11.5",
-    "@babel/register": "^7.11.5",
     "@sendgrid/mail": "^7.2.6",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
@@ -47,8 +45,12 @@
     "swagger-ui-express": "^4.1.4"
   },
   "devDependencies": {
+    "@babel/cli": "^7.11.6",
     "@babel/core": "^7.11.6",
+    "@babel/node": "^7.10.5",
+    "@babel/polyfill": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
+    "@babel/register": "^7.11.5",
     "babel-eslint": "^10.1.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",

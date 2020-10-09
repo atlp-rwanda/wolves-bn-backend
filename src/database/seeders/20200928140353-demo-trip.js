@@ -49,6 +49,29 @@ module.exports = {
     travel_reason: 'Going to take trainings',
     createdAt: new Date(),
     updatedAt: new Date()
+  },
+  {
+    requester_id: 6,
+    manager_id: 4,
+    from: 2,
+    to: 1,
+    travel_type: 'one way trip',
+    travel_date: new Date(),
+    return_date: new Date(),
+    travel_reason: 'Going to new Office',
+    createdAt: new Date(),
+    updatedAt: new Date()
+  }, {
+    requester_id: 0,
+    manager_id: 0,
+    from: 2,
+    to: 1,
+    travel_type: 'one way trip',
+    travel_date: new Date(),
+    return_date: new Date(),
+    travel_reason: 'Going to new Office by requester',
+    createdAt: new Date(),
+    updatedAt: new Date()
   }]),
   down: (queryInterface, Sequelize) => queryInterface.bulkDelete('trips', null, {})
 };

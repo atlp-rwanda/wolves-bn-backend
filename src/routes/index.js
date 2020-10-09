@@ -1,5 +1,3 @@
-/* eslint-disable import/no-named-as-default */
-/* eslint-disable import/no-named-as-default-member */
 import express from 'express';
 import passport from 'passport';
 import { userValidate } from '../validators/userValidation';
@@ -11,11 +9,14 @@ import usercontroller from '../controllers/user';
 import Password from '../controllers/password';
 import userAuth from '../controllers/userAuth';
 import rolesSettingsRoute from '../controllers/user.roles';
-import checkAuth from '../middleware/checkauth';
 import Trip from '../controllers/tripController';
 import { isRequester } from '../middleware/isRequester';
 import isAdmin from '../middleware/isAdmin';
 import search from '../controllers/search';
+// import authValidator from '../middleware/auth.middleware';
+import commentController from '../controllers/comment';
+import checkAuth from '../middleware/checkAuth';
+import commentValidator from '../validators/commentValidator';
 
 const router = express.Router();
 router.use(express.json());
@@ -63,5 +64,9 @@ router.delete('/api/trips/:id', checkAuth.verifyUser, isRequester, Trip.deleteTr
 router.get('/user/confirmation/:email', usercontroller.updateUser);
 
 router.get('/api/trips/search', search.searchEngine);
+// comment
+router.post('/api/trips/:id/comment', checkAuth.verifyUser, commentValidator, commentController.postComment);
+router.get('/api/trips/:id/comments/:tripId', checkAuth.verifyUser, commentController.list);
+router.delete('/api/trips/:id/comments', checkAuth.verifyUser, commentController.deleteComment);
 
 export default router;

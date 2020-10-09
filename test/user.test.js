@@ -33,11 +33,11 @@ describe('POST /api/users/signup', () => {
         token = response.body.token;
         response.should.be.an('object');
         id = response.body.id;
+        id = response.body.user.id;
         done();
       });
   });
 });
-
 it('should NOT POST a new User, validation issue', (done) => {
   const createdUser = {
     firstName: 'Uwimana',

@@ -54,10 +54,11 @@ export default class User {
       if (!user) return res.status(400).send({ status: 400, error: "User doesn't exist" });
       if (user && comparePassword(password, user.password)) {
         const token = jwtToken.createToken(user);
-        return res.status(200).send({ token });
+        return res.status(200).send({ token, user });
       }
       return res.status(400).send({ status: 400, error: 'invalid email/password combination ' });
     } catch (error) {
+      console.log(error);
       return res.status(500).send(error);
     }
   }
