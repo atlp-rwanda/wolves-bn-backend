@@ -21,7 +21,7 @@ class Room {
      * step 4: Create a room
      */
       const { id } = req.user;
-
+      const findAccommodation = await accomodation.findOne({ where: { id: req.params.acc_id } });
       const user = await users.findOne({ where: { id } });
       let files;
       if (req.files != null) {
@@ -42,15 +42,28 @@ class Room {
       Promise.all(uploadImages)
         .then(images => {
           if (user.role === 'travel_admin') {
-            room.create({
-              type: req.body.type,
-              price: req.body.price,
-              accomodationId: req.body.accomodationId,
-              images: images.map(img => img.url)
+            if (findAccommodation) {
+              room.create({
+                type: req.body.type,
+                price: req.body.price,
+                accomodationId: req.params.acc_id,
+                images: images.map(img => img.url)
 
-            }).then(data => res.send(data)).catch(err => {
-              res.send({ err });
-            });
+              }, {
+                include: [
+                  {
+
+                    model: accomodation,
+                    as: 'accomodation'
+
+                  }
+                ]
+              }).then(data => res.send(data)).catch(err => {
+                res.send({ err });
+              });
+            } else {
+              res.send({ message: 'Accomodation was not found' });
+            }
           } else {
             res.status(400).send({
               status: '400',
@@ -61,6 +74,49 @@ class Room {
     } catch (error) {
       console.log(error);
       return res.status(500).send(error);
+    }
+  }
+
+  async deleteRoom(req, res) {
+    const findAccommodation = await accomodation.findOne({ where: { id: req.params.acc_id } });
+    const findRoom = await room.findOne({ where: { id } });
+    try {
+      /**
+       * Get the logged in user by Id
+       * check if the logged in user is travel_admin
+       * Find an accomodation by Id
+       * Delete the accommodation with that Id
+       */
+      const { id } = req.user;
+      const user = await users.findOne({ where: { id } });
+      if (findAccommodation && findRoom) {
+        if (user.role === 'travel_admin') {
+          return room.destroy({ where: { id } }).then(data => {
+            if (data) {
+              res.status(200).send({
+                status: 200,
+                message: 'Room deleted successfully'
+              });
+            } else {
+              res.status(404).send({
+                status: 404,
+                message: 'You are trying to delete non-existing room'
+              });
+            }
+          }).catch(err => {
+            console.log(err);
+            res.status(409).send(err);
+          });
+        }
+      } else {
+        res.status(404).send({
+          status: 404,
+          message: 'Room not found'
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ error });
     }
   }
 }

@@ -14,6 +14,24 @@ cloudinary.config({
 const { accomodation, users, room } = models;
 
 class Accommodation {
+  async getAccommodations(req, res) {
+    try {
+      return models.accomodation.findAll({
+
+        include: [
+          {
+            model: models.room,
+            as: 'rooms'
+          },
+        ]
+      }).then((info) => {
+        res.status(200).send(info);
+      }).catch(err => res.status(409).send(err));
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+
   async createAccommodation(req, res) {
     try {
       /**
@@ -105,7 +123,8 @@ class Accommodation {
                 latitude: req.body.latitude,
                 images: images.map(img => img.url),
                 facilities: req.body.facilities
-              }, {
+              },
+              {
                 where: {
                   id: req.params.acc_id
                 }
@@ -141,6 +160,7 @@ class Accommodation {
       const user = await users.findOne({ where: { id } });
       if (findAccommodation) {
         if (user.role === 'travel_admin') {
+          room.destroy({ where: { accomodationId: req.params.acc_id } });
           return accomodation.destroy({ where: { id: req.params.acc_id } }).then(data => {
             if (data) {
               res.status(200).send({
@@ -170,6 +190,5 @@ class Accommodation {
     }
   }
 }
-Room.belongsTo(Accommodation, { onDelete: 'CASCADE' });
-Accommodation.hasMany(Room);
+
 export default new Accommodation();

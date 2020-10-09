@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      room.belongsTo(models.accomodation, { foreignKey: 'accomodationId', as: 'accomodation', onDelete: 'cascade' });
     }
   }
   room.init({
