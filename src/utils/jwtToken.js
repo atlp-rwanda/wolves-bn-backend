@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { config } from 'dotenv';

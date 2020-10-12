@@ -6,8 +6,11 @@ import validateTrip from '../validators/tripvalidator';
 import roleValidate from '../validators/roleValidator';
 import auth from '../middleware/auth';
 import usercontroller from '../controllers/user';
+import statusValidate from '../validators/statusValidator';
+import trip from '../controllers/request';
 import Password from '../controllers/password';
 import userAuth from '../controllers/userAuth';
+import isManager from '../middleware/isManager';
 import rolesSettingsRoute from '../controllers/user.roles';
 import Trip from '../controllers/tripController';
 import { isRequester } from '../middleware/isRequester';
@@ -68,5 +71,12 @@ router.get('/api/trips/search', search.searchEngine);
 router.post('/api/trips/:id/comment', checkAuth.verifyUser, commentValidator, commentController.postComment);
 router.get('/api/trips/:id/comments/:tripId', checkAuth.verifyUser, commentController.list);
 router.delete('/api/trips/:id/comments', checkAuth.verifyUser, commentController.deleteComment);
+// signin
+
+router.post('/api/users/signin', usersiginValidate, usercontroller.signIn);
+router.get('/user/confirmation/:email', usercontroller.updateUser);
+
+// user requesting trip
+router.patch('/api/users/tripRequest/:id', checkAuth.verifyUser, isManager, statusValidate, trip.updateTripRequest);
 
 export default router;
