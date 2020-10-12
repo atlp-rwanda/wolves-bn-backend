@@ -98,6 +98,8 @@ router.post('/api/accommodations', checkAuth.verifyUser, validateAccommodation, 
 router.get('/api/accommodations', checkAuth.verifyUser, Accomodation.getAccommodations);
 router.post('/api/accommodations/:acc_id/rooms', checkAuth.verifyUser, validateRoom, Room.createRoom);
 router.delete('/api/accommodations/:acc_id/rooms/:room_id', checkAuth.verifyUser, Room.deleteRoom);
+router.post('/api/users/signin', usersiginValidate, usercontroller.signIn);
+router.get('/user/confirmation/:email', usercontroller.updateUser);
 
 router.get('/api/accommodation/:acc_id/likeOrUnlike', checkAuth.verifyUser, isRequester, like.likeOrUnlike);
 router.post('/api/accommodation/:acc_id/feedback', checkAuth.verifyUser, isRequester, feedbacks.feedback);

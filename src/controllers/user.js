@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import redis from 'redis';
 import sendingMail from './sendMail';
 import models from '../database/models';

@@ -6,11 +6,17 @@ import fileupload from 'express-fileupload';
 import path from 'path';
 import router from './routes/index';
 import NotificationListener from './helpers/notifications/index';
+import socketAuth from './middleware/socketio.auth';
+import chatController from './controllers/chat';
+
 import passport from './config/passport';
 import swaggerDocument from '../swagger.json';
-import { socketSetup } from './helpers/events/socket';
+import { socketSetup, io } from './helpers/events/socket';
 
 const app = express();
+
+// const http = require('http').createServer(app);
+// const io = require('socket.io')(http);
 
 const PORT = process.env.PORT || 3000;
 app.use(passport.initialize());
@@ -22,6 +28,17 @@ app.use(express.json());
 app.use(fileupload({
   useTempFiles: true
 }));
+
+app.get('/testchat', (req, res) => {
+  res.sendFile(`${__dirname}/testchat.html`);
+});
+
+// Access  middleware
+io.use(socketAuth);
+
+// set chat controller
+chatController(io);
+
 app.use('/', router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
