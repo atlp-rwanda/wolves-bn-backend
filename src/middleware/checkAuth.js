@@ -1,6 +1,6 @@
 import { verifyingToken } from '../utils/jwtToken';
 
-const authMiddleware = {
+const checkAuth = {
   verifyUser: (req, res, next) => {
     try {
       const token = req.headers.token;
@@ -15,4 +15,5 @@ const authMiddleware = {
     }
   },
 };
-export default authMiddleware;
+
+export default checkAuth;

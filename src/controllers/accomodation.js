@@ -2,14 +2,13 @@
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-undef */
 import models from '../database/models';
-import Room from './room';
 
 const cloudinary = require('cloudinary').v2;
 
 cloudinary.config({
-  cloud_name: 'nosenti',
-  api_key: '496433573193378',
-  api_secret: 'MaAH7UVltxv5cqm9V2ByflkhXjM'
+  cloud_name: process.env.cloud_name,
+  api_key: process.env.api_key,
+  api_secret: process.env.api_secret
 });
 const { accomodation, users, room } = models;
 
@@ -26,7 +25,7 @@ class Accommodation {
         ]
       }).then((info) => {
         res.status(200).send(info);
-      }).catch(err => res.status(409).send(err));
+      });
     } catch (error) {
       res.status(500).send(error);
     }
@@ -40,7 +39,7 @@ class Accommodation {
      * step 3: Deal with images using cloudinary
      * step 4: Create accommodation
      */
-      const { id } = req.user;
+      const { id, role } = req.user;
 
       const user = await users.findOne({ where: { id } });
       let files;
@@ -61,7 +60,7 @@ class Accommodation {
 
       Promise.all(uploadImages)
         .then(images => {
-          if (user.role === 'travel_admin') {
+          if (role === 'travel_admin') {
             accomodation.create({
               name: req.body.name,
               description: req.body.description,
@@ -69,13 +68,16 @@ class Accommodation {
               latitude: req.body.latitude,
               images: images.map(img => img.url),
               facilities: req.body.facilities
-            }).then(data => res.status(201).send(data)).catch(err => {
+            }).then(data => res.status(201).send({
+              status: 201,
+              data
+            })).catch(err => {
               res.send({ err });
             });
           } else {
-            res.status(400).send({
-              status: '400',
-              message: 'Unauthorized operation'
+            res.status(403).send({
+              status: '403',
+              role: user.role
             });
           }
         });

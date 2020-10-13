@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import Joi from 'joi';
 
 function accommodationValidate(req, res, next) {

@@ -6,9 +6,9 @@ import models from '../database/models';
 const cloudinary = require('cloudinary').v2;
 
 cloudinary.config({
-  cloud_name: 'nosenti',
-  api_key: '496433573193378',
-  api_secret: 'MaAH7UVltxv5cqm9V2ByflkhXjM'
+  cloud_name: process.env.cloud_name,
+  api_key: process.env.api_key,
+  api_secret: process.env.api_secret
 });
 const { accomodation, users, room } = models;
 class Room {
@@ -20,7 +20,7 @@ class Room {
      * step 3: Deal with images using cloudinary
      * step 4: Create a room
      */
-      const { id } = req.user;
+      const { id, role } = req.user;
       const findAccommodation = await accomodation.findOne({ where: { id: req.params.acc_id } });
       const user = await users.findOne({ where: { id } });
       let files;
@@ -41,7 +41,7 @@ class Room {
 
       Promise.all(uploadImages)
         .then(images => {
-          if (user.role === 'travel_admin') {
+          if (role === 'travel_admin') {
             if (findAccommodation) {
               room.create({
                 type: req.body.type,
@@ -58,16 +58,18 @@ class Room {
 
                   }
                 ]
-              }).then(data => res.status(201).send(data)).catch(err => {
+              }).then((data) => {
+                res.status(201).send(data);
+              }).catch(err => {
                 res.send({ err });
               });
             } else {
               res.send({ message: 'Accomodation was not found' });
             }
           } else {
-            res.status(400).send({
-              status: '400',
-              message: 'Unauthorized operation'
+            res.status(403).send({
+              status: 403,
+              message: 'Forbidden'
             });
           }
         });

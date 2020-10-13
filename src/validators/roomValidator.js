@@ -1,4 +1,5 @@
 /* eslint-disable no-multiple-empty-lines */
+/* eslint-disable import/prefer-default-export */
 import Joi from 'joi';
 
 function roomValidate(req, res, next) {
