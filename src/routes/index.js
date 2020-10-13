@@ -85,6 +85,6 @@ router.post('/api/accommodations', checkAuth.verifyUser, validateAccommodation, 
 router.get('/api/accommodations', checkAuth.verifyUser, Accomodation.getAccommodations);
 router.post('/api/accommodations/:acc_id/rooms', checkAuth.verifyUser, validateRoom, Room.createRoom);
 router.delete('/api/accommodations/:acc_id/rooms/:room_id', checkAuth.verifyUser, Room.deleteRoom);
-router.post('/api/trips', checkAuth, isRequester, validateTrip, Trip.createTrips);
+router.post('/api/trips', checkAuth.verifyUser, isRequester, validateTrip, Trip.createTrips);
 router.put('/api/accomomdations/:acc_id', checkAuth.verifyUser, Accomodation.editAccommodation);
 export default router;

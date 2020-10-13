@@ -58,7 +58,7 @@ class Room {
 
                   }
                 ]
-              }).then(data => res.send(data)).catch(err => {
+              }).then(data => res.status(201).send(data)).catch(err => {
                 res.send({ err });
               });
             } else {
@@ -72,14 +72,13 @@ class Room {
           }
         });
     } catch (error) {
-      console.log(error);
       return res.status(500).send(error);
     }
   }
 
   async deleteRoom(req, res) {
     const findAccommodation = await accomodation.findOne({ where: { id: req.params.acc_id } });
-    const findRoom = await room.findOne({ where: { id } });
+    const findRoom = await room.findOne({ where: { id: req.params.room_id } });
     try {
       /**
        * Get the logged in user by Id
@@ -87,11 +86,11 @@ class Room {
        * Find an accomodation by Id
        * Delete the accommodation with that Id
        */
-      const { id } = req.user;
+      const { id, role } = req.user;
       const user = await users.findOne({ where: { id } });
       if (findAccommodation && findRoom) {
-        if (user.role === 'travel_admin') {
-          return room.destroy({ where: { id } }).then(data => {
+        if (role === 'travel_admin') {
+          return room.destroy({ where: { id: room_id } }).then(data => {
             if (data) {
               res.status(200).send({
                 status: 200,
@@ -121,4 +120,3 @@ class Room {
   }
 }
 export default new Room();
-

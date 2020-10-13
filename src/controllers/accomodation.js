@@ -69,7 +69,7 @@ class Accommodation {
               latitude: req.body.latitude,
               images: images.map(img => img.url),
               facilities: req.body.facilities
-            }).then(data => res.send(data)).catch(err => {
+            }).then(data => res.status(201).send(data)).catch(err => {
               res.send({ err });
             });
           } else {
