@@ -68,10 +68,12 @@ class Accommodation {
               latitude: req.body.latitude,
               images: images.map(img => img.url),
               facilities: req.body.facilities
-            }).then(data => res.status(201).send({
-              status: 201,
-              data
-            })).catch(err => {
+            }).then((data) => {
+              res.status(201).send({
+                status: 201,
+                data
+              });
+            }).catch(err => {
               res.send({ err });
             });
           } else {
@@ -80,6 +82,8 @@ class Accommodation {
               role: user.role
             });
           }
+        }).catch(error => {
+          res.send({ error });
         });
     } catch (error) {
       console.log(error);

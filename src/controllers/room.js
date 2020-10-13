@@ -92,7 +92,7 @@ class Room {
       const user = await users.findOne({ where: { id } });
       if (findAccommodation && findRoom) {
         if (role === 'travel_admin') {
-          return room.destroy({ where: { id: room_id } }).then(data => {
+          return room.destroy({ where: { id: req.params.room_id } }).then(data => {
             if (data) {
               res.status(200).send({
                 status: 200,
