@@ -7,7 +7,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      requester_id: {
         type: Sequelize.INTEGER
       },
       message: {
@@ -17,6 +17,9 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       tripId: {
+        type: Sequelize.STRING
+      },
+      type: {
         type: Sequelize.STRING
       },
       createdAt: {

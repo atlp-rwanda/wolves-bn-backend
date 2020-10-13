@@ -1,3 +1,5 @@
+import emitter from '../../helpers/events/events';
+
 const {
   Model
 } = require('sequelize');
@@ -39,6 +41,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'trip',
+  });
+  trip.afterCreate(({ dataValues }) => {
+    emitter.emit('request-created', dataValues);
   });
   return trip;
 };

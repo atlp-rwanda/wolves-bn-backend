@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'to',
         as: 'destination',
       });
+      location.hasMany(models.accomodation, {
+        foreignKey: 'locationId'
+      });
     }
   }
   location.init({

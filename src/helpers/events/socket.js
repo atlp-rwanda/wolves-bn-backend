@@ -3,7 +3,7 @@ import socketJwt from 'socketio-jwt';
 
 const io = require('socket.io')();
 
-const users = {};
+const Users = {};
 
 const socketSetup = (server) => {
   io.attach(server);
@@ -17,14 +17,14 @@ const socketSetup = (server) => {
     .on('authenticated', (socket) => {
       socket.emit('success', socket.decoded_token);
       socket.on('new-user', (user) => {
-        if (users[user.email]) {
+        if (Users[user.email]) {
           disconnect = false;
         }
         userName = user.email;
-        users[user.email] = socket;
+        Users[user.email] = socket;
         socket.broadcast.emit('user-connected', user);
       });
     });
 };
 
-export { socketSetup, io, users };
+export { socketSetup, io, Users };

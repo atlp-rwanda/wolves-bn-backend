@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'rooms'
 
       },
-      accomodation.hasOne(models.location, {
+      accomodation.belongsTo(models.location, {
         foreignKey: 'locationId',
         as: 'city'
       }));

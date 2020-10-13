@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       users.hasMany(models.trip, {
         foreignKey: 'requester_id',
-        as: 'trips',
+        as: 'trips'
       });
       users.belongsTo(models.users, {
         foreignKey: 'manager_id'
