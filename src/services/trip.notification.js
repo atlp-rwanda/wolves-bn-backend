@@ -26,7 +26,7 @@ export default class TripNotification {
         managerNames
       } = await this.findManagerToNotify(trip);
 
-      const { firstName, lastName } = await users.findOne({ where: { id: trip.triper_id } });
+      const { firstName, lastName } = await users.findOne({ where: { id: trip.requester_id } });
       const message = `New ${trip.travel_type} trip have been requested by ${firstName} ${lastName}`;
 
       const notificationData = NotificationService.createNotification({
@@ -36,7 +36,7 @@ export default class TripNotification {
       });
 
       const msg = tripEmailBody(managerNames, message);
-      this.sendNotification(managerEmail, notificationData, msg);
+      this.sendNotifications(managerEmail, notificationData, msg);
     });
   }
 

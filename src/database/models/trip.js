@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
       trip.belongsTo(models.users, {
         foreignKey: 'requester_id',
         as: 'requester',
-        targetKey: 'id'
       });
       trip.belongsTo(models.location, {
         foreignKey: 'from',

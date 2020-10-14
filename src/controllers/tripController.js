@@ -162,6 +162,6 @@ export default class Trip {
         }]
     }).then((info) => {
       res.status(200).send(info);
-    }).catch(err => res.status(409).send(err));
+    }).catch(err => res.status(409).send(console.log(err)));
   }
 }
