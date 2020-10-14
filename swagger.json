@@ -464,7 +464,7 @@
                 }
             }
         },
-        "/api/trips/{id}/comments": {
+        "/api/trips/{tripId}/comments/{id}": {
             "delete": {
                 "tags": [
                     "Users"
@@ -479,6 +479,12 @@
                         "required": true,
                         "type": "string",
                         "description": "from sign in endpoint"
+                    },
+                    {
+                        "in": "path",
+                        "name": "tripId",
+                        "required": true,
+                        "description": "from trip table"
                     },
                     {
                         "in": "path",
@@ -506,7 +512,7 @@
                 }
             }
         },
-        "/api/trips/statistics": {
+        "/api/trips/statistics/{start_time}/{end_time}": {
             "get": {
                 "tags": [
                     "Users"
@@ -526,13 +532,15 @@
                         "in": "path",
                         "name": "start_time",
                         "required": true,
-                        "description": "Enter the Date(YYYY-MM-DD)"
+                        "type": "string",
+                        "description": "Enter the Date"
                     },
                     {
                         "in": "path",
                         "name": "end_time",
                         "required": true,
-                        "description": "Enter the Date(YYYY-MM-DD)"
+                        "type": "string",
+                        "description": "Enter the Date"
                     }
                 ],
                 "produces": [
@@ -748,7 +756,6 @@
                 }
             }
         },
-
         "/api/users/tripRequest/{id}": {
             "put": {
                 "tags": [
@@ -794,7 +801,7 @@
                     }
                 }
             }
-    }
+        }
     },
     "definitions": {
         "getProfile": {
@@ -804,11 +811,11 @@
                 }
             }
         },
-        "tripApprove":{
+        "tripApprove": {
             "type": "object",
-            "properties":{
-                "request_status":{
-                    "type":"string"
+            "properties": {
+                "request_status": {
+                    "type": "string"
                 }
             }
         },
@@ -907,7 +914,7 @@
             }
         },
         "userSignUp": {
-            "type":"object",
+            "type": "object",
             "properties": {
                 "firstName": {
                     "type": "string"
@@ -964,6 +971,9 @@
                 },
                 "travel_reason": {
                     "type": "string"
+                },
+                "accommodation": {
+                    "type": "number"
                 }
             }
         }

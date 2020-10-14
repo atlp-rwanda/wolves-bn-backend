@@ -1,4 +1,4 @@
-import chai from 'chai';
+import chai, { AssertionError } from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/index';
 import { travelAdminToken } from './fixtures/users';
@@ -9,7 +9,10 @@ let token;
 let id;
 let manager_id;
 let accId;
-describe('signUp', () => {
+let start_time = '2020-01-01';
+let end_time = '2022-01-01';
+
+describe('Trip Tests', () => {
   before((done) => {
     const user = {
       firstName: 'Holy',
@@ -69,7 +72,7 @@ describe('signUp', () => {
           to: 1,
           travel_date: '2020-09-30',
           return_date: '2020-11-30',
-          travel_reason: 'new office',
+          travel_reason: 'new office for opening',
           accommodation: accId
         })
         .end((req, res) => {
@@ -78,6 +81,36 @@ describe('signUp', () => {
           res.should.be.a('object');
           done();
         });
+    }); it('Should get stats of trips based on X timeFrame', (done) => {
+      start_time = '2020-01-01';
+      end_time = '2022-01-01';
+      chai
+        .request(app)
+        .get(`/api/trips/statistics/${start_time}/${end_time}`)
+        .set('token', token)
+        .end((req, res) => {
+          console.log(res.body);
+          res.should.have.status(200);
+          res.should.be.a('object');
+          done();
+        });
+    }); it('Should NOT GET stats of trips based on INVALID X timeFrame', (done) => {
+      start_time = '2020-10-50';// INVALID DATE
+      end_time = '2022-01-01';
+      chai
+        .request(app)
+        .get(`/api/trips/statistics/${start_time}/${end_time}`)
+        .set('token', token);
+      done();
+    });
+    it('Should get stats of trips based on X timeFrame', (done) => {
+      start_time = '2030-10-07';// the start Date should be before End Date
+      end_time = '2022-01-01';
+      chai
+        .request(app)
+        .get(`/api/trips/statistics/${start_time}/${end_time}`)
+        .set('token', token);
+      done();
     });
     it('Should not post a trip on when not authorized ', (done) => {
       chai
@@ -182,7 +215,7 @@ describe('signUp', () => {
     });
   });
   // DELETE TRIP
-  describe('DELETE /trip', () => {
+  describe('/DELETE Trip', () => {
     it('Should delete a trip when authorized', (done) => {
       chai
         .request(app)
@@ -217,4 +250,5 @@ describe('signUp', () => {
         });
     });
   });
+  // GET STATS OF TRIPS
 });

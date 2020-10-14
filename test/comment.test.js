@@ -113,16 +113,16 @@ describe('Comments and delete', () => {
   });
   it('It should return 204 when comment is deleted', (done) => {
     chai.request(app)
-      .delete(`/api/trips/${commentId}/comments`)
+      .delete(`/api/trips/${tripId}/comments/${commentId}`)
       .set('token', token)
       .end((err, res) => {
-        res.should.have.status(204);
+        res.should.have.status(200);
         done();
       });
   });
   it('It should return 404 when comment not found, already deleted', (done) => {
     chai.request(app)
-      .delete(`/api/trips/${id}/comments`)
+      .delete(`/api/trips/${tripId}/comments${commentId}`)
       .set('token', token)
       .end((err, res) => {
         res.should.have.status(404);
