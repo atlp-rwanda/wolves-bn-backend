@@ -127,7 +127,6 @@ export default class Trip {
   static deleteTrip(req, res) {
     const { id } = req.params;
     const { id: requester_id } = req.user;
-
     return models.trip
       .destroy({
         where: { id, requester_id }
