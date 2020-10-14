@@ -4,21 +4,23 @@ import { userValidate } from '../validators/userValidation';
 import { usersiginValidate } from '../validators/usersiginValidation';
 import validateTrip from '../validators/tripvalidator';
 import roleValidate from '../validators/roleValidator';
+import validateAccommodation from '../validators/accommodationValidator';
+import validateRoom from '../validators/roomValidator';
 import auth from '../middleware/auth';
 import usercontroller from '../controllers/user';
-import statusValidate from '../validators/statusValidator';
-import trip from '../controllers/request';
+import Accomodation from '../controllers/accomodation';
+import Room from '../controllers/room';
 import Password from '../controllers/password';
 import userAuth from '../controllers/userAuth';
-import isManager from '../middleware/isManager';
 import rolesSettingsRoute from '../controllers/user.roles';
+import checkAuth from '../middleware/checkAuth';
 import Trip from '../controllers/tripController';
 import { isRequester } from '../middleware/isRequester';
 import isAdmin from '../middleware/isAdmin';
 import search from '../controllers/search';
-// import authValidator from '../middleware/auth.middleware';
+
 import commentController from '../controllers/comment';
-import checkAuth from '../middleware/checkAuth';
+
 import commentValidator from '../validators/commentValidator';
 
 const router = express.Router();
@@ -45,6 +47,9 @@ router.get(
   passport.authenticate('facebook'),
   userAuth.authUser
 );
+router.post('/api/accommodations', checkAuth.verifyUser,
+// multerUploads,
+  Accomodation.createAccommodation);
 
 router.get(
   '/auth/google',
@@ -71,12 +76,14 @@ router.get('/api/trips/search', search.searchEngine);
 router.post('/api/trips/:id/comment', checkAuth.verifyUser, commentValidator, commentController.postComment);
 router.get('/api/trips/:id/comments/:tripId', checkAuth.verifyUser, commentController.list);
 router.delete('/api/trips/:id/comments', checkAuth.verifyUser, commentController.deleteComment);
-// signin
 
-router.post('/api/users/signin', usersiginValidate, usercontroller.signIn);
-router.get('/user/confirmation/:email', usercontroller.updateUser);
-
-// user requesting trip
-router.patch('/api/users/tripRequest/:id', checkAuth.verifyUser, isManager, statusValidate, trip.updateTripRequest);
-
+router.post('/api/trips', checkAuth.verifyUser, isRequester, validateTrip, Trip.createTrips);
+router.patch('/api/trips/:id', checkAuth.verifyUser, isRequester, validateTrip, Trip.updateTrip);
+router.delete('/api/trips/:id', checkAuth.verifyUser, isRequester, Trip.deleteTrip);
+router.put('/api/accommodations/:acc_id', checkAuth.verifyUser, validateAccommodation, Accomodation.editAccommodation);
+router.delete('/api/accommodations/:acc_id', checkAuth.verifyUser, Accomodation.deleteAccommodation);
+router.post('/api/accommodations', checkAuth.verifyUser, validateAccommodation, Accomodation.createAccommodation);
+router.get('/api/accommodations', checkAuth.verifyUser, Accomodation.getAccommodations);
+router.post('/api/accommodations/:acc_id/rooms', checkAuth.verifyUser, validateRoom, Room.createRoom);
+router.delete('/api/accommodations/:acc_id/rooms/:room_id', checkAuth.verifyUser, Room.deleteRoom);
 export default router;

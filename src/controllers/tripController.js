@@ -94,19 +94,19 @@ export default class Trip {
     const { id, role } = req.user;
     const isManager = role === 'manager';
     const query = isManager ? { manager_id: id } : { requester_id: id };
-    return trip.findAll({
+    return models.trip.findAll({
       where: query,
       include: [
         {
-          model: location,
+          model: models.location,
           as: 'departure'
         },
         {
-          model: location,
+          model: models.location,
           as: 'destination'
         },
         {
-          model: users,
+          model: models.users,
           as: 'requester',
           attributes: ['firstName', 'lastName', 'email']
         }]

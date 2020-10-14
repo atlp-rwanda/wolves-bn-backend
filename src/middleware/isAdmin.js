@@ -7,8 +7,8 @@ const authMiddleware = {
       if (!token) {
         return res.status(400).send({ error: 'no token provided' });
       }
-      const userToken = verifyingToken(token);
-      if (userToken.role !== 'super_admin') {
+      const user = verifyingToken(token);
+      if (user.role !== 'super_admin') {
         return res.status(403).send({ message: 'User not a super admin' });
       }next();
     } catch (error) {
