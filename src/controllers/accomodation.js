@@ -157,7 +157,7 @@ class Accommodation {
     const findAccommodation = await accomodation.findOne({ where: { id: req.params.acc_id } });
     try {
       if (findAccommodation) {
-        return models.accomodation.findOne({ where: { id: req.params.acc_id } }, {
+        return models.accomodation.findByPk(req.params.acc_id, {
 
           include: [
             {
