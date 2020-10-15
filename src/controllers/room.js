@@ -61,10 +61,10 @@ class Room {
               }).then((data) => {
                 res.status(201).send(data);
               }).catch(err => {
-                res.send({ err });
+                res.status(501).send({ err });
               });
             } else {
-              res.send({ message: 'Accomodation was not found' });
+              res.status(404).send({ message: 'Accomodation was not found' });
             }
           } else {
             res.status(403).send({

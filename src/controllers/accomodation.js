@@ -74,7 +74,7 @@ class Accommodation {
                 data
               });
             }).catch(err => {
-              res.send({ err });
+              res.status(400).send({ error: err.errors[0].message });
             });
           } else {
             res.status(403).send({
@@ -150,6 +150,31 @@ class Accommodation {
       }
     } catch (error) {
       res.status(500).send({ error });
+    }
+  }
+
+  async getAccommodation(req, res) {
+    const findAccommodation = await accomodation.findOne({ where: { id: req.params.acc_id } });
+    try {
+      if (findAccommodation) {
+        return models.accomodation.findOne({ where: { id: req.params.acc_id } }, {
+
+          include: [
+            {
+              model: models.room,
+              as: 'rooms'
+            },
+          ]
+        }).then((info) => {
+          res.status(200).send(info);
+        });
+      }
+      res.status(404).send({
+        status: 404,
+        message: 'Accommodation not found'
+      });
+    } catch (error) {
+      res.status(500).send(error);
     }
   }
 

@@ -85,7 +85,8 @@ router.delete('/api/trips/:id/comments', checkAuth.verifyUser, commentController
 router.post('/api/trips', checkAuth.verifyUser, isRequester, validateTrip, Trip.createTrips);
 router.patch('/api/trips/:id', checkAuth.verifyUser, isRequester, validateTrip, Trip.updateTrip);
 router.delete('/api/trips/:id', checkAuth.verifyUser, isRequester, Trip.deleteTrip);
-router.put('/api/accommodations/:acc_id', checkAuth.verifyUser, Accomodation.editAccommodation);
+router.patch('/api/accommodations/:acc_id', checkAuth.verifyUser, Accomodation.editAccommodation);
+router.get('/api/accommodations/:acc_id', checkAuth.verifyUser, Accomodation.getAccommodation);
 router.delete('/api/accommodations/:acc_id', checkAuth.verifyUser, Accomodation.deleteAccommodation);
 router.post('/api/accommodations', checkAuth.verifyUser, validateAccommodation, Accomodation.createAccommodation);
 router.get('/api/accommodations', checkAuth.verifyUser, Accomodation.getAccommodations);

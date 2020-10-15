@@ -55,15 +55,15 @@ describe('POST /api/accommodations', () => {
 describe('PUT /api/accommodations/:id', () => {
   it('should update an accomodation', (done) => {
     const createdAccomodation = {
-      name: 'Marriot',
-      description: 'Marriot Hotel',
-      longitude: '2.456789',
-      altitude: '1.234455667',
-      images: ['http://res.cloudinary.com/nosenti/image/upload/v1601503825/k2wvp3mkk9ca0b4ksagg.jpg', 'http://res.cloudinary.com/nosenti/image/upload/v1601503823/pezmtvvlcgflcdvx3hx1.png', 'http://res.cloudinary.com/nosenti/image/upload/v1601503824/adv2zbjmjc7xtot3ejyh.png'],
+      name: 'Marriot H',
+      description: 'Marriot Hotel A',
+      longitude: '2.4567892',
+      altitude: '1.2344556673',
+      photo: [],
       facilities: ['Gym', 'Pool']
     };
     chai.request(app)
-      .put(`/api/accommodations/${acc_id}`)
+      .patch(`/api/accommodations/${acc_id}`)
       .set('token', travelAdminToken)
       .send(createdAccomodation)
       .end((error, response) => {
@@ -83,7 +83,7 @@ describe('PUT /api/accommodations/:id', () => {
 
     };
     chai.request(app)
-      .put(`/api/accommodations/${acc_id}`)
+      .patch(`/api/accommodations/${acc_id}`)
       .send(createdAccomodation)
       .end((error, response) => {
         response.should.have.status(400);
@@ -102,13 +102,23 @@ describe('GET /api/accommodations', () => {
     done();
   });
 });
+describe('GET /api/accommodations/:acc_id', () => {
+  it('should get a particular accommodation', (done) => {
+    chai.request(app)
+      .get(`/api/accommodations/${acc_id}`)
+      .set('token', travelAdminToken)
+      .end((error, response) => {
+        response.should.have.status(200);
+      });
+    done();
+  });
+});
 describe('POST /api/accommodations/:acc_id/rooms', () => {
   it('should create a room', (done) => {
     const createdRoom = {
       type: 'King',
       price: 300,
-      accomodationId: acc_id,
-      images: ['http://res.cloudinary.com/nosenti/image/upload/v1601503825/k2wvp3mkk9ca0b4ksagg.jpg', 'http://res.cloudinary.com/nosenti/image/upload/v1601503823/pezmtvvlcgflcdvx3hx1.png', 'http://res.cloudinary.com/nosenti/image/upload/v1601503824/adv2zbjmjc7xtot3ejyh.png']
+      images: ['http://res.cloudinary.com/nosenti/image/upload/v1601503825/k2wvp3mkk9ca0b4ksagg.jpg', 'http://res.cloudinary.com/nosenti/image/upload/v1601503823/pezmtvvlcgflcdvx3hx1.png', 'http://res.cloudinary.com/nosenti/image/upload/v1601503824/adv2zbjmjc7xtot3ejyh.png'],
     };
     chai.request(app)
       .post(`/api/accommodations/${acc_id}/rooms`)
