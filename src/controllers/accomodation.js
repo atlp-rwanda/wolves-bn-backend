@@ -40,7 +40,13 @@ class Accommodation {
      * step 4: Create accommodation
      */
       const { id, role } = req.user;
-
+      const fac = req.body.facilities;
+      const facilitiesArr = [];
+      if (!Array.isArray(fac)) {
+        facilitiesArr.push(fac);
+      } else {
+        facilitiesArr.concat(fac);
+      }
       const user = await users.findOne({ where: { id } });
       let files;
       if (req.files != null) {
@@ -67,14 +73,15 @@ class Accommodation {
               longitude: req.body.longitude,
               latitude: req.body.latitude,
               images: images.map(img => img.url),
-              facilities: req.body.facilities
+              facilities: facilitiesArr
             }).then((data) => {
               res.status(201).send({
                 status: 201,
                 data
               });
             }).catch(err => {
-              res.status(400).send({ error: err.errors[0].message });
+              console.log(err);
+              res.status(400).send({ error: err });
             });
           } else {
             res.status(403).send({
@@ -83,6 +90,7 @@ class Accommodation {
             });
           }
         }).catch(error => {
+          console.log(error);
           res.send({ error });
         });
     } catch (error) {
@@ -101,6 +109,13 @@ class Accommodation {
        * Deal with images with cloudinary
        * Edit the accomodation
        */
+      const fac = req.body.facilities;
+      const facilitiesArr = [];
+      if (!Array.isArray(fac)) {
+        facilitiesArr.push(fac);
+      } else {
+        facilitiesArr.concat(fac);
+      }
       const { id } = req.user;
       const user = await users.findOne({ where: { id } });
       if (findAccommodation) {
@@ -128,7 +143,7 @@ class Accommodation {
                 longitude: req.body.longitude,
                 latitude: req.body.latitude,
                 images: images.map(img => img.url),
-                facilities: req.body.facilities
+                facilities: facilitiesArr
               },
               {
                 where: {
