@@ -16,7 +16,7 @@ module.exports = {
     phone: '0788885544',
     role: 'manager',
     manager_id: '2',
-    email: 'manager1@barefoot.com',
+    email: 'wolvesmanager1@gmail.com',
     password: '$2a$10$iyFH3/jgULgC0sMJ/VST1uR/.GKnx5IGtVIPsbhpsoz.pxe2yWnL6',
     createdAt: new Date(),
     updatedAt: new Date()

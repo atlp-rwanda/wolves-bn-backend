@@ -20,9 +20,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'to',
         as: 'destination'
       });
+<<<<<<< HEAD
       trip.belongsTo(models.accomodation, {
         foreignKey: 'accommodation',
         as: 'place_to_stay'
+=======
+      trip.afterCreate(({ dataValues }) => {
+        emitter.emit('request-created', dataValues);
+>>>>>>> 7fa047f... Adding email notifications
       });
     }
   }
@@ -40,9 +45,6 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'trip',
-  });
-  trip.afterCreate(({ dataValues }) => {
-    emitter.emit('request-created', dataValues);
   });
   return trip;
 };

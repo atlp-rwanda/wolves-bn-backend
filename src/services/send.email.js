@@ -1,19 +1,21 @@
 import sgMail from '@sendgrid/mail';
+import dotenv from 'dotenv';
 
-class SendMail {
-  static sendGridEmail(email, emailBody) {
-    sgMail.setApiKey(process.env.SENDGRID_APIKEY);
-    const msg = {
-      to: `${email}`,
-      from: process.env.SENDER_EMAIL,
-      subject: 'Trip Notification',
-      html: `${emailBody}`
-    };
-    const message = {
-      ...msg,
-    };
-    sgMail.send(message);
-  }
-}
+dotenv.config();
+const BASEURL = process.env.BASEURL || 'localhost';
+const PORT = process.env.PORT || 3000;
+sgMail.setApiKey(process.env.SENDGRID_APIKEY);
 
-export default SendMail;
+// function to send email
+let url;
+const sendGridMail = (email, message) => {
+  const msg = {
+    to: email,
+    from: process.env.SENDER_EMAIL,
+    subject: 'Trip',
+    html: message
+  };
+  sgMail.send(msg);
+};
+
+export default sendGridMail;

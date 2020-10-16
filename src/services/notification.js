@@ -1,5 +1,5 @@
 import models from '../database/models';
-import { Users } from '../helpers/events/socket';
+import { Users } from '../helpers/events/events';
 
 const { Notifications } = models;
 

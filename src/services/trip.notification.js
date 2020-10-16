@@ -1,5 +1,5 @@
 import emitter from '../helpers/events/events';
-import { tripEmailBody } from '../helpers/mails/trip.email';
+import { emailNotification } from '../helpers/mails/trip.email';
 import models from '../database/models';
 import NotificationService from './notification';
 import SendMail from './send.email';
@@ -35,7 +35,7 @@ export default class TripNotification {
         requester_id: id
       });
 
-      const msg = tripEmailBody(managerNames, message);
+      const msg = emailNotification(managerNames, message);
       this.sendNotifications(managerEmail, notificationData, msg);
     });
   }
