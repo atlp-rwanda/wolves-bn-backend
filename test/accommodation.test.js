@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/index';
@@ -149,8 +148,8 @@ describe('DELETE /api/accommodations/:acc_id/rooms/:room_id', () => {
 
       .end((error, response) => {
         response.should.have.status(200);
-        done();
       });
+    done();
   });
 
   it('should NOT delete a room', (done) => {
