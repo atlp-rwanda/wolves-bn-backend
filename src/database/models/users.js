@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       users.belongsTo(models.users, {
         foreignKey: 'manager_id'
       });
+      users.hasOne(models.preferences, {
+        foreignKey: 'requester_id',
+      });
     }
   }
   users.init({

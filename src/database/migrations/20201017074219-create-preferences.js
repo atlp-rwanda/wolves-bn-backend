@@ -1,6 +1,6 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Notifications', {
+    await queryInterface.createTable('preferences', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,18 +10,13 @@ module.exports = {
       requester_id: {
         type: Sequelize.INTEGER
       },
-      message: {
-        type: Sequelize.STRING,
-        allowNull: false
+      emailnotification: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
       },
-      isRead: {
-        type: Sequelize.BOOLEAN
-      },
-      tripId: {
-        type: Sequelize.STRING
-      },
-      type: {
-        type: Sequelize.STRING
+      appnotification: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
       },
       createdAt: {
         allowNull: false,
@@ -34,6 +29,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Notifications');
+    await queryInterface.dropTable('preferences');
   }
 };

@@ -66,7 +66,7 @@ export default class Trip {
     });
   }
 
-  static updateTrip(req, res) {
+  static async updateTrip(req, res) {
     const {
       from, to, travel_date, return_date, travel_reason, accommodation
     } = req.body;
