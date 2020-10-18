@@ -12,7 +12,7 @@ module.exports = {
       },
       emailnotification: {
         type: Sequelize.BOOLEAN,
-        defaultValue: true
+        defaultValue: false
       },
       appnotification: {
         type: Sequelize.BOOLEAN,

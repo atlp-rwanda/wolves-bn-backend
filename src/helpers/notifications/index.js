@@ -1,7 +1,7 @@
-import Notifications from '../../services/notification';
+import Notifications from '../../services/trip.notification';
 
 const NotificationListener = () => {
-  Notifications.sendNotifications();
+  Notifications.sendTripNotification();
 };
 
 export default NotificationListener;

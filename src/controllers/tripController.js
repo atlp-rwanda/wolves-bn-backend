@@ -1,5 +1,5 @@
 import models from '../database/models';
-import emitter from '../helpers/events/events';
+import emitter from '../helpers/events/eventEmitter';
 import sendGridMail from '../services/send.email';
 import { emailNotification } from '../helpers/mails/trip.email';
 

@@ -1,47 +1,50 @@
-import emitter from '../helpers/events/events';
+import dotenv from 'dotenv';
+import emitter from '../helpers/events/eventEmitter';
 import { emailNotification } from '../helpers/mails/trip.email';
 import models from '../database/models';
 import NotificationService from './notification';
-import SendMail from './send.email';
+import SendingMail from './send.email';
 
-const { users } = models;
+dotenv.config();
+
+const { users, trip } = models;
+const BASEURL = process.env.BASEURL || 'localhost';
+const PORT = process.env.PORT || 3000;
 
 export default class TripNotification {
-  static async findManagerToNotify(trip) {
-    const { manager_id } = await users.findOne({ where: { id: trip.manager_id } });
-
-    const manager = await users.findOne({ where: { id: manager_id } });
+  static async findManagerToNotify(tripRequest) {
+    const manager = await users.findOne({ where: { id: tripRequest.manager_id } });
     return {
-      id: manager_id,
       managerEmail: manager.email,
       managerNames: `${manager.firstName} ${manager.lastName}`
     };
   }
 
   static async sendTripNotification() {
-    await emitter.on('request-created', async (trip) => {
+    await emitter.on('request-created', async (tripRequest) => {
       const {
-        id,
         managerEmail,
         managerNames
-      } = await this.findManagerToNotify(trip);
+      } = await this.findManagerToNotify(tripRequest);
 
-      const { firstName, lastName } = await users.findOne({ where: { id: trip.requester_id } });
-      const message = `New ${trip.travel_type} trip have been requested by ${firstName} ${lastName}`;
+      const {
+        firstName, lastName
+      } = await users.findOne({ where: { id: tripRequest.requester_id } });
+      const message = `New ${tripRequest.travel_type} have been requested by ${firstName} ${lastName}`;
 
-      const notificationData = NotificationService.createNotification({
-        type: 'new_request',
+      const notificationData = await NotificationService.createNotification({
         message,
-        requester_id: id
+        requester_id: tripRequest.requester_id,
+        tripId: tripRequest.id
       });
-
-      const msg = emailNotification(managerNames, message);
-      this.sendNotifications(managerEmail, notificationData, msg);
+      const unsubscribeUrl = `http://${BASEURL}:${PORT}/api/notifications`;
+      const msg = emailNotification(managerNames, message, unsubscribeUrl);
+      SendingMail.sendGridMail(managerEmail, msg);
     });
   }
 
-  static async sendNotifications(email, msg, notificationData) {
-    NotificationService.sendNotification(email, notificationData);
-    SendMail.sendGridEmail(email, msg);
-  }
+  // static async sendNotifications(managerEmail, msg, notificationData) {
+  //   console.log('Hello World');
+  //   SendingMail.sendGridMail(managerEmail, msg);
+  // }
 }

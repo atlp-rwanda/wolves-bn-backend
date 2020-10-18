@@ -3,25 +3,23 @@ const {
 } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Notification extends Model {
+  class notification extends Model {
     static associate(models) {
       // define association here
-      Notification.belongsTo(models.users, {
+      notification.belongsTo(models.users, {
         foreignKey: 'requester_id',
-        as: 'Notification',
-        targetKey: 'id'
+        as: 'notification'
       });
     }
   }
-  Notification.init({
+  notification.init({
     requester_id: DataTypes.INTEGER,
     message: DataTypes.STRING,
     isRead: DataTypes.BOOLEAN,
-    tripId: DataTypes.STRING,
-    type: DataTypes.STRING
+    tripId: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Notification',
+    modelName: 'notification',
   });
-  return Notification;
+  return notification;
 };

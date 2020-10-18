@@ -3,7 +3,7 @@ import sendingMail from './sendMail';
 import models from '../database/models';
 import { hashPassowrd, comparePassword, jwtToken } from '../utils/jwtToken';
 
-const { users } = models;
+const { users, preferences } = models;
 export const redisclient = redis.createClient();
 export default class User {
   static async signup(req, res) {
@@ -30,6 +30,11 @@ export default class User {
         email,
         password: hash,
         manager_id: 2
+      });
+      await preferences.create({
+        requester_id: user.id,
+        emailnotification: true,
+        appnotification: true
       });
       const userId = user.id;
       const token = jwtToken.createToken(user);

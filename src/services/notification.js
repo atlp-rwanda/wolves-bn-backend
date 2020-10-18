@@ -1,15 +1,15 @@
 import models from '../database/models';
-import { Users } from '../helpers/events/events';
+import { Users } from '../helpers/events/socket';
 
-const { Notifications } = models;
+const { notification } = models;
 
 export default class NotificationService {
-  static async createNotification(notification) {
-    return Notifications.create(notification);
+  static async createNotification(data) {
+    return notification.create(data);
   }
 
-  static async sendNotifications(receiver, notification) {
+  static async sendNotifications(receiver, data) {
     if (!Users[receiver]) return 0;
-    Users[receiver].emit('new-notification', notification);
+    Users[receiver].emit('new-notification', data);
   }
 }

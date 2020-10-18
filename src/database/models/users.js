@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
       users.hasOne(models.preferences, {
         foreignKey: 'requester_id',
       });
+      users.hasMany(models.notification, {
+        foreignKey: 'requester_id'
+      });
     }
   }
   users.init({
