@@ -1,7 +1,5 @@
 import models from '../database/models';
 import emitter from '../helpers/events/eventEmitter';
-import sendGridMail from '../services/send.email';
-import { emailNotification } from '../helpers/mails/trip.email';
 
 const {
   trip, users, location, accomodation
@@ -12,9 +10,7 @@ export default class Trip {
     const {
       from, to, travel_date, return_date, travel_reason, accommodation
     } = req.body;
-    const {
-      id, firstName, lastName, manager_id
-    } = req.user;
+    const { id, manager_id } = req.user;
     let travelType;
 
     if (return_date == null) { travelType = 'One way trip'; } else {

@@ -1,21 +1,16 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-undef */
 const socket = io.connect('http://localhost:3000');
+const btn = document.getElementById('sendN');
 
-const Notification = window.Notification || window.mozNotification || window.webkitNotification;
+// const Notification = window.Notification || window.mozNotification || window.webkitNotification;
 
-function showNotification() {
+btn.addEventListener('click', () => {
+  socket.emit('new-notification', ({ message: 'Hello You!' }));
+});
+
+socket.on('new-notification', (data) => {
   const notification = new Notification('New Message from Irenee', {
-    body: 'Hey Mate, how are you?'
+    body: data.message
   });
-}
-
-if (Notification.permission === 'granted') {
-  showNotification();
-} else if (Notification.permission !== 'denied') {
-  Notification.requestPermission().then(permission => {
-    if (permission === 'granted') {
-      showNotification();
-    }
-  });
-}
+});

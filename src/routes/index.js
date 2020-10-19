@@ -22,6 +22,7 @@ import isManager from '../middleware/isManager';
 import statusValidate from '../validators/statusValidator';
 import isAdmin from '../middleware/isAdmin';
 import search from '../controllers/search';
+import Notifications from '../controllers/notification';
 
 import commentController from '../controllers/comment';
 
@@ -65,6 +66,8 @@ router.get(
   passport.authenticate('google'),
   userAuth.authUser
 );
+// Notifications
+router.get('/api/notifications', checkAuth.verifyUser, Notifications.getAllNotifications);
 
 router.post('/api/users/signin', usersiginValidate, usercontroller.signIn);
 router.get('/api/trips', checkAuth.verifyUser, Trip.Requests);
@@ -83,14 +86,13 @@ router.post('/api/trips/:id/comment', checkAuth.verifyUser, commentValidator, co
 router.get('/api/trips/:id/comments/:tripId', checkAuth.verifyUser, commentController.list);
 router.delete('/api/trips/:id/comments', checkAuth.verifyUser, commentController.deleteComment);
 
-router.post('/api/trips', checkAuth.verifyUser, isRequester, validateTrip, Trip.createTrips);
-router.patch('/api/trips/:id', checkAuth.verifyUser, isRequester, validateTrip, Trip.updateTrip);
-router.delete('/api/trips/:id', checkAuth.verifyUser, isRequester, Trip.deleteTrip);
 router.patch('/api/accommodations/:acc_id', checkAuth.verifyUser, Accomodation.editAccommodation);
 router.get('/api/accommodations/:acc_id', checkAuth.verifyUser, Accomodation.getAccommodation);
+router.put('/api/accommodations/:acc_id', checkAuth.verifyUser, validateAccommodation, Accomodation.editAccommodation);
 router.delete('/api/accommodations/:acc_id', checkAuth.verifyUser, Accomodation.deleteAccommodation);
 router.post('/api/accommodations', checkAuth.verifyUser, validateAccommodation, Accomodation.createAccommodation);
 router.get('/api/accommodations', checkAuth.verifyUser, Accomodation.getAccommodations);
 router.post('/api/accommodations/:acc_id/rooms', checkAuth.verifyUser, validateRoom, Room.createRoom);
 router.delete('/api/accommodations/:acc_id/rooms/:room_id', checkAuth.verifyUser, Room.deleteRoom);
+
 export default router;

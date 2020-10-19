@@ -1,4 +1,5 @@
 import models from '../database/models';
+import emitter from '../helpers/events/eventEmitter';
 
 const { trip } = models;
 
@@ -11,8 +12,6 @@ module.exports = {
           return res.status(404).send({ message: 'request Not Found' });
         }
         const { id, role } = req.user;
-        console.log(req.user);
-        console.log('This is users here!');
         return trip.update({
           request_status: req.body.request_status,
           manager_id: id,
