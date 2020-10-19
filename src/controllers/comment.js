@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 /* eslint-disable no-shadow */
 /* eslint-disable no-undef */
 import models from '../database/models';

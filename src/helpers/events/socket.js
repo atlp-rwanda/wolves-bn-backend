@@ -10,7 +10,7 @@ const socketSetup = (server) => {
     });
 
     socket.on('new-notification', (data) => {
-      console.log('Holla');
+      console.log(data);
       io.sockets.emit('new-notification', data);
     });
   });

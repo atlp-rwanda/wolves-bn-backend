@@ -11,15 +11,13 @@ module.exports = {
         if (!userRequest) {
           return res.status(404).send({ message: 'request Not Found' });
         }
-        const { id, role } = req.user;
-        return trip.update({
+        return userRequest.update({
           request_status: req.body.request_status,
-          manager_id: id,
-          manager_role: role
         },
         { where: { id: req.params.id } }
         )
           .then((data) => {
+            emitter.emit('request-status-updated', data);
             res.status(200).send({ data, message: 'Request updated' });
           });
       })

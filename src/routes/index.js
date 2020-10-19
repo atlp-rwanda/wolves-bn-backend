@@ -77,8 +77,7 @@ router.patch('/api/trips/:id', checkAuth.verifyUser, isRequester, validateTrip, 
 router.delete('/api/trips/:id', checkAuth.verifyUser, isRequester, Trip.deleteTrip);
 
 router.get('/user/confirmation/:email', usercontroller.updateUser);
-router.put('/api/users/tripRequest/:id', checkAuth.verifyUser, isManager, statusValidate, updateTripRequest
-);
+router.put('/api/users/tripRequest/:id', checkAuth.verifyUser, isManager, statusValidate, updateTripRequest);
 
 router.get('/api/trips/search', search.searchEngine);
 // comment
