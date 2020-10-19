@@ -96,7 +96,7 @@ describe('POST /trip', () => {
 describe('Testing the trip appove routes', () => {
   it('it should 200, approve the requests', (done) => {
     chai.request(app)
-      .patch(`/api/users/tripRequest/${id}`)
+      .put(`/api/users/tripRequest/${id}`)
       .set('token', managerToken)
       .send(
         {
@@ -109,7 +109,7 @@ describe('Testing the trip appove routes', () => {
   });
   it('it should return bad request', (done) => {
     chai.request(app)
-      .patch(`/api/users/tripRequest/${id}`)
+      .put(`/api/users/tripRequest/${id}`)
       .set('token', managerToken)
       .send(
         {
@@ -122,7 +122,7 @@ describe('Testing the trip appove routes', () => {
   });
   it('it should is not managaer', (done) => {
     chai.request(app)
-      .patch(`/api/users/tripRequest/${id}`)
+      .put(`/api/users/tripRequest/${id}`)
       .set('token', token)
       .send(
         {

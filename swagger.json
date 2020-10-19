@@ -705,7 +705,7 @@
         },
 
         "/api/users/tripRequest/{id}": {
-            "patch": {
+            "put": {
                 "tags": [
                     "Users"
                 ],
