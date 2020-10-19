@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable camelcase */
 import models from '../database/models';
 import emitter from '../helpers/events/eventEmitter';
 
@@ -169,5 +171,35 @@ export default class Trip {
     }).then((info) => {
       res.status(200).send(info);
     }).catch(err => res.status(409).send(console.log(err)));
+  }
+
+  // get stats of trips made in the last X timeframe
+
+  static async statsTrips(req, res) {
+    const { id } = req.user;
+    const start_time = req.body.start_time;
+    const end_time = req.body.end_time;
+    const userExist = await models.users.findOne({ where: { id } });
+    const tripExist = await models.trip.count({ where: { requester_id: id } });
+    // const commentTrips = await models.comments.count({ where: { userId: id } });
+    if (!tripExist) {
+      return res.status(404).send({ status: '404', message: `Dear "${userExist.lastName}" you did not request any trip into the system` });
+    }
+    if (start_time > end_time) { return res.status(400).json({ Message: 'End Date should be greater that start Date' }); }
+    const pendingTrips = await models.trip.count({ where: { request_status: 'pending', requester_id: id } });
+    const approvedTrips = await models.trip.count({ where: { request_status: 'approved', requester_id: id } });
+    const rejectedTrips = await models.trip.count({ where: { request_status: 'rejected', requester_id: id } });
+
+    return res.status(200).send({
+      First_Name: userExist.firstName,
+      last_Name: userExist.lastName,
+      phone: userExist.phone,
+      email: userExist.email,
+      tripNumber: tripExist,
+      Pending: pendingTrips,
+      Approved: approvedTrips,
+      Rejected: rejectedTrips,
+      // Comment: commentTrips
+    });
   }
 }

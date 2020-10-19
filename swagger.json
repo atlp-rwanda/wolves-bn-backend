@@ -506,6 +506,51 @@
                 }
             }
         },
+        "/api/trips/statistics": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "getting Stats of trips based on timeframe",
+                "description": "users can get trip requests",
+                "operationId": "tripstasts",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "required": true,
+                        "type": "string",
+                        "description": "token"
+                    },
+                    {
+                        "in": "path",
+                        "name": "start_time",
+                        "required": true,
+                        "description": "Enter the Date(YYYY-MM-DD)"
+                    },
+                    {
+                        "in": "path",
+                        "name": "end_time",
+                        "required": true,
+                        "description": "Enter the Date(YYYY-MM-DD)"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "trip request retrieved"
+                    },
+                    "401": {
+                        "description": "invalid token"
+                    },
+                    "400": {
+                        "description": "bad request"
+                    }
+                }
+            }
+        },
         "/api/trips": {
             "post": {
                 "tags": [

@@ -29,6 +29,7 @@ import commentValidator from '../validators/commentValidator';
 import like from '../controllers/like';
 import feedbacks from '../controllers/feedbacks';
 import rating from '../controllers/rating';
+import statsValidator from '../validators/statsValidator';
 
 const router = express.Router();
 router.use(express.json());
@@ -55,7 +56,7 @@ router.get(
   userAuth.authUser
 );
 router.post('/api/accommodations', checkAuth.verifyUser,
-// multerUploads,
+  // multerUploads,
   Accomodation.createAccommodation);
 
 router.get(
@@ -100,4 +101,6 @@ router.get('/api/accommodation/:acc_id/likeOrUnlike', checkAuth.verifyUser, isRe
 router.post('/api/accommodation/:acc_id/feedback', checkAuth.verifyUser, isRequester, feedbacks.feedback);
 router.post('/api/accommodation/:acc_id/rating', checkAuth.verifyUser, isRequester, rating.rating);
 
+// get stats of trips made in the last X timeframe
+router.get('/api/trips/statistics', checkAuth.verifyUser, statsValidator, Trip.statsTrips);
 export default router;
