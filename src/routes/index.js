@@ -1,3 +1,4 @@
+/* eslint-disable import/named */
 import express from 'express';
 import passport from 'passport';
 import { userValidate } from '../validators/userValidation';

@@ -41,8 +41,8 @@ class Room {
 
       Promise.all(uploadImages)
         .then(images => {
-          if (role === 'travel_admin' && findAccommodation.hostId === id) {
-            if (findAccommodation) {
+          if (role === 'travel_admin') {
+            if (findAccommodation && findAccommodation.hostId === id) {
               room.create({
                 type: req.body.type,
                 price: req.body.price,
