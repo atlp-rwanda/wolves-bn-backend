@@ -17,7 +17,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'accomodationId',
         as: 'rooms'
 
-      });
+      },
+      accomodation.hasOne(models.location, {
+        foreignKey: 'locationId',
+        as: 'city'
+      }));
     }
   }
   accomodation.init({

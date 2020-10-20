@@ -41,7 +41,7 @@ class Room {
 
       Promise.all(uploadImages)
         .then(images => {
-          if (role === 'travel_admin') {
+          if (role === 'travel_admin' && findAccommodation.hostId === id) {
             if (findAccommodation) {
               room.create({
                 type: req.body.type,
@@ -91,7 +91,7 @@ class Room {
       const { id, role } = req.user;
       const user = await users.findOne({ where: { id } });
       if (findAccommodation && findRoom) {
-        if (role === 'travel_admin') {
+        if (role === 'travel_admin' && findAccommodation.hostId === id) {
           return room.destroy({ where: { id: req.params.room_id } }).then(data => {
             if (data) {
               res.status(200).send({

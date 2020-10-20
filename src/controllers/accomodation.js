@@ -41,11 +41,11 @@ class Accommodation {
      */
       const { id, role } = req.user;
       const fac = req.body.facilities;
-      const facilitiesArr = [];
+      let facilitiesArr = [];
       if (!Array.isArray(fac)) {
         facilitiesArr.push(fac);
       } else {
-        facilitiesArr.concat(fac);
+        facilitiesArr = facilitiesArr.concat(fac);
       }
       const user = await users.findOne({ where: { id } });
       let files;
@@ -73,8 +73,18 @@ class Accommodation {
               longitude: req.body.longitude,
               latitude: req.body.latitude,
               images: images.map(img => img.url),
-              facilities: facilitiesArr
-            }).then((data) => {
+              facilities: facilitiesArr,
+              hostId: req.user.id,
+              locationId: req.body.locationId
+            }, {
+              include: [
+                {
+                  model: models.location,
+                  as: 'city'
+                }
+              ]
+            }
+            ).then((data) => {
               res.status(201).send({
                 status: 201,
                 data
@@ -86,7 +96,7 @@ class Accommodation {
           } else {
             res.status(403).send({
               status: '403',
-              role: user.role
+              message: 'Unauthorized access'
             });
           }
         }).catch(error => {
@@ -119,7 +129,7 @@ class Accommodation {
       const { id } = req.user;
       const user = await users.findOne({ where: { id } });
       if (findAccommodation) {
-        if (user.role === 'travel_admin') {
+        if (user.role === 'travel_admin' && findAccommodation.hostId === id) {
           let files;
           if (req.files != null) {
             files = req.files.photo;
@@ -156,6 +166,11 @@ class Accommodation {
                 res.send({ err });
               });
             });
+        } else {
+          res.status(403).send({
+            status: '403',
+            message: 'Unauthorized access'
+          });
         }
       } else {
         res.status(404).send({
@@ -205,7 +220,7 @@ class Accommodation {
       const { id } = req.user;
       const user = await users.findOne({ where: { id } });
       if (findAccommodation) {
-        if (user.role === 'travel_admin') {
+        if (user.role === 'travel_admin' && findAccommodation.hostId === id) {
           room.destroy({ where: { accomodationId: req.params.acc_id } });
           return accomodation.destroy({ where: { id: req.params.acc_id } }).then(data => {
             if (data) {
@@ -224,6 +239,10 @@ class Accommodation {
             res.status(409).send(err);
           });
         }
+        res.status(403).send({
+          status: '403',
+          message: 'Unauthorized access'
+        });
       } else {
         res.status(404).send({
           status: 404,

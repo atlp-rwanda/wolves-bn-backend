@@ -33,6 +33,7 @@ module.exports = {
         foreignKey: true
       },
       locationId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         foreignKey: true
       },
