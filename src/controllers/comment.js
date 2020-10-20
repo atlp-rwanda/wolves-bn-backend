@@ -1,6 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-undef */
 import models from '../database/models';
+import emitter from '../helpers/events/eventEmitter';
 
 export default class Comment {
   static async list(req, res) {
@@ -29,6 +30,7 @@ export default class Comment {
       }
       if ((tripExist.requester_id === id) || (tripExist.manager_id === id)) {
         const saveComment = await models.comment.create({ tripId, userId: id, comment });
+        emitter.emit('comment-created', saveComment);
         return res.status(201).send({ saveComment, message: `Successfully commented on ${tripId}` });
       }
       return res.status(400).send({ message: ` Please check well, the Trip Id : " ${tripId} "does not belong to you!!!` });

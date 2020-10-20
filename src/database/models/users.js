@@ -17,7 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'requester_id',
       });
       users.hasMany(models.notification, {
-        foreignKey: 'requester_id'
+        foreignKey: 'notificationOwner'
+      });
+      users.hasMany(models.comment, {
+        foreignKey: 'userId'
       });
     }
   }

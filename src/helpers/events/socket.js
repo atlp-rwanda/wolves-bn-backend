@@ -1,19 +1,18 @@
+/* eslint-disable no-var */
+/* eslint-disable import/no-mutable-exports */
 const socketio = require('socket.io');
 
 const io = socketio();
+var sock;
 const socketSetup = (server) => {
   io.attach(server);
+
   io.sockets.on('connection', (socket) => {
-    console.log('Hello My Friend', socket.id);
+    sock = socket;
     socket.on('disconnect', () => {
       console.log('User has left');
-    });
-
-    socket.on('new-notification', (data) => {
-      console.log(data);
-      io.sockets.emit('new-notification', data);
     });
   });
 };
 
-export { socketSetup, io };
+export { socketSetup, sock };

@@ -7,13 +7,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       notification.belongsTo(models.users, {
-        foreignKey: 'requester_id',
+        foreignKey: 'notificationOwner',
         as: 'notification'
       });
     }
   }
   notification.init({
-    requester_id: DataTypes.INTEGER,
+    notificationOwner: DataTypes.INTEGER,
     message: DataTypes.STRING,
     isRead: DataTypes.BOOLEAN,
     tripId: DataTypes.INTEGER

@@ -1,5 +1,6 @@
 import models from '../database/models';
 import emitter from '../helpers/events/eventEmitter';
+import { sock } from '../helpers/events/socket';
 
 const {
   trip, users, location, accomodation

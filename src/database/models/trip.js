@@ -1,5 +1,3 @@
-import emitter from '../../helpers/events/eventEmitter';
-
 const {
   Model
 } = require('sequelize');
@@ -22,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       });
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       trip.belongsTo(models.accomodation, {
         foreignKey: 'accommodation',
         as: 'place_to_stay'
@@ -32,6 +31,11 @@ module.exports = (sequelize, DataTypes) => {
       });
 =======
 >>>>>>> fdf55de... Adding trip notifcation email events
+=======
+      trip.hasMany(models.comment, {
+        foreignKey: 'tripId'
+      });
+>>>>>>> 8190752... Adding in app notification
     }
   }
   trip.init({

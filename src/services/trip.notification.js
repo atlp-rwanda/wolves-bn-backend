@@ -4,6 +4,7 @@ import { emailNotification, requestEmail } from '../helpers/mails/trip.email';
 import models from '../database/models';
 import NotificationService from './notification';
 import SendingMail from './send.email';
+import { sock } from '../helpers/events/socket';
 
 dotenv.config();
 
@@ -38,14 +39,14 @@ export default class TripNotification {
 
       const notificationData = await NotificationService.createNotification({
         message,
-        requester_id: tripRequest.manager_id,
+        notificationOwner: tripRequest.manager_id,
         tripId: tripRequest.id
       });
       const unsubscribeUrl = `http://${BASEURL}:${PORT}/api/notifications`;
-      const actionLink = `http://${BASEURL}:${PORT}/api/users/tripRequest/${tripRequest.id}`;
+      const actionLink = `http://${BASEURL}:${PORT}/api/trips/${tripRequest.id}`;
       const msg = emailNotification(managerNames, message, actionLink, unsubscribeUrl);
-      // emitter.emit('new-notification', notificationData);
-      // SendingMail.sendGridMail(managerEmail, msg);
+      sock.broadcast.emit('new-notification', notificationData);
+      SendingMail.sendGridMail(managerEmail, msg);
     });
     await emitter.on('request-updated', async (data) => {
       const {
@@ -60,13 +61,14 @@ export default class TripNotification {
 
       const notificationData = await NotificationService.createNotification({
         message,
-        requester_id: data.manager_id,
+        notificationOwner: data.manager_id,
         tripId: data.id
       });
       const unsubscribeUrl = `http://${BASEURL}:${PORT}/api/notifications`;
-      const actionLink = `http://${BASEURL}:${PORT}/api/users/tripRequest/${data.id}`;
+      const actionLink = `http://${BASEURL}:${PORT}/api/trips/${data.id}`;
       const msg = emailNotification(managerNames, message, actionLink, unsubscribeUrl);
-      // SendingMail.sendGridMail(managerEmail, msg);
+      sock.broadcast.emit('new-notification', notificationData);
+      SendingMail.sendGridMail(managerEmail, msg);
     });
     await emitter.on('request-status-updated', async (data) => {
       const {
@@ -78,11 +80,32 @@ export default class TripNotification {
 
       const notificationData = await NotificationService.createNotification({
         message,
-        requester_id: data.requester_id,
+        notificationOwner: data.requester_id,
         tripId: data.id
       });
       const unsubscribeUrl = `http://${BASEURL}:${PORT}/api/notifications`;
       const msg = requestEmail(userNames, message, unsubscribeUrl);
+      sock.broadcast.emit('new-notification', notificationData);
+      SendingMail.sendGridMail(userEmail, msg);
+    });
+    await emitter.on('comment-created', async (data) => {
+      const { firstName, lastName, email } = await users.findOne({ where: { id: data.userId } });
+      const { travel_type, from, to } = await trip.findOne({ where: { id: data.tripId } });
+
+      const userNames = `${firstName} ${lastName}`;
+      const userEmail = `${email}`;
+      const message = `${userNames} has commented on ${travel_type} from ${from} to ${to}`;
+
+      const notificationData = await NotificationService.createNotification({
+        message,
+        notificationOwner: data.userId,
+        tripId: data.tripId
+      });
+
+      const unsubscribeUrl = `http://${BASEURL}:${PORT}/api/notifications`;
+      const actionLink = `http://${BASEURL}:${PORT}/api/trips/${data.tripId}`;
+      const msg = emailNotification(userNames, message, actionLink, unsubscribeUrl);
+      sock.emit('new-notification', notificationData);
       SendingMail.sendGridMail(userEmail, msg);
     });
   }

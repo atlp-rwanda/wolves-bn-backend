@@ -7,7 +7,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      requester_id: {
+      notificationOwner: {
         type: Sequelize.INTEGER
       },
       message: {

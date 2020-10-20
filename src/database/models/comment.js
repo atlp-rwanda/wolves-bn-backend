@@ -8,8 +8,11 @@ module.exports = (sequelize, DataTypes) => {
   class comment extends Model {
     static associate(models) {
       // define association here
-      comment.afterCreate((data) => {
-        emitter.emit('comment-on-trip', data);
+      comment.belongsTo(models.users, {
+        foreignKey: 'userId'
+      });
+      comment.belongsTo(models.trip, {
+        foreignKey: 'tripId'
       });
     }
   }
