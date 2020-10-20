@@ -8,16 +8,19 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
       },
       description: {
         type: Sequelize.STRING
       },
       longitude: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
       },
       latitude: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
       },
       images: {
         type: Sequelize.ARRAY(Sequelize.STRING)
@@ -30,6 +33,7 @@ module.exports = {
         foreignKey: true
       },
       locationId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         foreignKey: true
       },
