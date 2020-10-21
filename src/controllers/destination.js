@@ -1,8 +1,8 @@
+/* eslint-disable max-len */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-sequences */
 /* eslint-disable class-methods-use-this */
-/* eslint-disable no-restricted-globals */
 /* eslint-disable no-undef */
 import models from '../database/models';
 
@@ -12,7 +12,6 @@ class Destination {
       const destinations = await models.destination.findAll();
       if (destinations) {
         const destinationsName = destinations.map((destObj) => destObj.name);
-        // eslint-disable-next-line max-len
         const countOccurrences = arrO => arrO.reduce((prev, curr) => (prev[curr] = ++prev[curr] || 1, prev), {});
         const destOcc = countOccurrences(destinationsName);
         // eslint-disable-next-line no-inner-declarations
