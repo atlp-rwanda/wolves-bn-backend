@@ -40,6 +40,10 @@ module.exports = {
       travel_reason: {
         type: Sequelize.STRING
       },
+      accommodation: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

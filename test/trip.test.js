@@ -51,7 +51,8 @@ describe('signUp', () => {
           to: 2,
           travel_date: '2020-9-30',
           return_date: '2020-11-30',
-          travel_reason: 'new office'
+          travel_reason: 'new office',
+          accommodation: 1
         })
         .end((req, res) => {
           id = res.body.id;
@@ -96,7 +97,8 @@ describe('signUp', () => {
           to: 4,
           travel_date: '2020-9-30',
           return_date: '2020-11-30',
-          travel_reason: 'new office'
+          travel_reason: 'new office',
+          accommodation: 1
         })
         .end((req, res) => {
           res.should.have.status(200);
@@ -135,7 +137,8 @@ describe('signUp', () => {
           to: 4,
           travel_date: '2020-9-30',
           return_date: '2020-11-30',
-          travel_reason: 'new office'
+          travel_reason: 'new office',
+          accommodation: 1
         })
         .end((err, res) => {
           res.should.have.status(404);
@@ -153,7 +156,8 @@ describe('signUp', () => {
           to: '',
           travel_date: '2020-9-30',
           return_date: '2020-11-30',
-          travel_reason: 'new office'
+          travel_reason: 'new office',
+          accommodation: 1
         })
         .end((req, res) => {
           res.should.have.status(400);
