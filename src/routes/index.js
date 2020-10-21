@@ -11,6 +11,7 @@ import auth from '../middleware/auth';
 import usercontroller from '../controllers/user';
 import Accomodation from '../controllers/accomodation';
 import Room from '../controllers/room';
+import Destination from '../controllers/destination';
 import Password from '../controllers/password';
 import userAuth from '../controllers/userAuth';
 import rolesSettingsRoute from '../controllers/user.roles';
@@ -108,4 +109,5 @@ router.delete('/api/reservations/:booking_id', checkAuth.verifyUser, isRequester
 
 // get stats of trips made in the last X timeframe
 router.get('/api/trips/statistics/:start_time/:end_time', checkAuth.verifyUser, Trip.statsTrips);
+router.get('/api/topdestinations', Destination.mostVisited);
 export default router;
