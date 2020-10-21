@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'to',
         as: 'destination'
       });
+      trip.belongsTo(models.accomodation, {
+        foreignKey: 'accommodation',
+        as: 'place_to_stay'
+      });
     }
   }
   trip.init({
@@ -30,7 +34,8 @@ module.exports = (sequelize, DataTypes) => {
     travel_type: DataTypes.STRING,
     travel_date: DataTypes.DATE,
     return_date: DataTypes.DATE,
-    travel_reason: DataTypes.STRING
+    travel_reason: DataTypes.STRING,
+    accommodation: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'trip',

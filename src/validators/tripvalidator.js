@@ -6,7 +6,8 @@ function tripValidate(req, res, next) {
     to: Joi.number().min(1).required(),
     travel_date: Joi.date().required(),
     return_date: Joi.date(),
-    travel_reason: Joi.string().min(10).trim()
+    travel_reason: Joi.string().min(10).trim(),
+    accommodation: Joi.number().min(1).required()
   });
   const validateTrip = schema.validate(req.body);
   const { error } = validateTrip;
