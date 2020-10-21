@@ -55,7 +55,10 @@ export default class Trip {
                   as: 'destination'
                 }
               ]
-            }).then(data => { res.status(201).send(data); })
+            }).then(data => {
+              emitter.emit('request-created', data);
+              res.status(201).send(data);
+            })
               .catch(error => res.status(400).send(error));
           });
         });
@@ -118,7 +121,10 @@ export default class Trip {
                     }
                   ]
                 })
-                .then(() => { res.status(200).send(data); })
+                .then((result) => {
+                  emitter.emit('request-created', result);
+                  res.status(200).send(data);
+                })
                 .catch((error) => res.status(500).send(error));
             });
           });

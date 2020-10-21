@@ -36,7 +36,7 @@ module.exports = {
     firstName: 'Fourth',
     lastName: 'Manager',
     phone: '0785885549',
-    role: 'manager',
+    role: 'travel_admin',
     manager_id: 4,
     email: 'manager4@barefoot.com',
     password: '$2a$10$iyFH3/jgULgC0sMJ/VST1uR/.GKnx5IGtVIPsbhpsoz.pxe2yWnL6',
