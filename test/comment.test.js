@@ -29,7 +29,7 @@ describe('Comments and delete', () => {
       firstName: 'Holy',
       lastName: 'Name',
       phone: '0878787878',
-      email: 'holy@barefoot.com',
+      email: 'holyghost@barefoot.com',
       password: '123456'
     };
     chai
@@ -44,10 +44,10 @@ describe('Comments and delete', () => {
   before((done) => {
     chai
       .request(app)
-      .post('/api/accommodations/')
+      .post('/api/accommodations')
       .set('token', `${travelAdminToken}`)
       .send({
-        name: 'Mariott Hotel',
+        name: 'Serena Hotels',
         locationId: 1,
       })
       .end((err, response) => {

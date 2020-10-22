@@ -15,7 +15,7 @@ describe('signUp', () => {
       firstName: 'Holy',
       lastName: 'Name',
       phone: '0878787878',
-      email: 'holyg@barefoot.com',
+      email: 'holygee@barefoot.com',
       password: '123456'
     };
     chai

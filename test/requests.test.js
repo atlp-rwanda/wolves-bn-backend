@@ -70,7 +70,7 @@ describe('POST /trip', () => {
     chai
       .request(app)
       .post('/api/trips')
-      .set('token', token)
+      .set('token', usertoken)
       .send(
         {
           from: 5,
