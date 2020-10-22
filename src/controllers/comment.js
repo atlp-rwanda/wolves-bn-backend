@@ -44,7 +44,7 @@ export default class Comment {
     models.comment.destroy({ where: { id } })
       .then(num => {
         if (num === 1) {
-          res.status(200).send({ message: `Successfully Deleted comment with id=${id}` });
+          res.status(204).send({ message: `Successfully Deleted comment with id=${id}` });
         } else {
           res.status(404).send({ Error: `Cannot delete comment with id=${id}.maybe Not Found in Database` });
         }

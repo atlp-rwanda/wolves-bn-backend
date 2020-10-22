@@ -2,7 +2,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/index';
 import models from '../src/database/models';
-import { travelAdminToken } from './fixtures/users';
+import { travelAdminToken, dummyToken } from './fixtures/users';
 import { userValidate } from '../src/validators/userValidation';
 
 const { accomodation } = models;
@@ -17,9 +17,10 @@ describe('POST /api/accommodations', () => {
       name: 'Marriot',
       description: 'Marriot Hotel',
       longitude: '2.456789',
-      altitude: '1.234455667',
+      latitude: '1.234455667',
       photo: [],
-      facilities: ['Gym', 'Pool']
+      facilities: ['Gym', 'Pool'],
+      locationId: 1
     };
 
     chai.request(app)
@@ -55,12 +56,13 @@ describe('POST /api/accommodations', () => {
 describe('PUT /api/accommodations/:id', () => {
   it('should update an accomodation', (done) => {
     const createdAccomodation = {
-      name: 'Marriot H',
-      description: 'Marriot Hotel A',
+      name: 'Hotel Chez Anisie',
+      description: 'Mn Bagira pozo every now and then',
       longitude: '2.4567892',
-      altitude: '1.2344556673',
+      latitude: '1.2344556673',
       photo: [],
-      facilities: ['Gym', 'Pool']
+      facilities: ['Gym', 'Pool'],
+      locationId: 1
     };
     chai.request(app)
       .patch(`/api/accommodations/${acc_id}`)
@@ -78,15 +80,16 @@ describe('PUT /api/accommodations/:id', () => {
       description: 'Marriot Hotel',
       longitude: '2.456789',
       altitude: '1.234455667',
-      images: 'hello there',
-      facilities: ['Gym', 'Pool']
-
+      images: [],
+      facilities: ['Gym', 'Pool'],
+      locationId: 1
     };
     chai.request(app)
       .patch(`/api/accommodations/${acc_id}`)
+      .set('token', dummyToken)
       .send(createdAccomodation)
       .end((error, response) => {
-        response.should.have.status(400);
+        response.should.have.status(403);
         done();
       });
   });
@@ -179,8 +182,8 @@ describe('DELETE /api/accommodations/:id', () => {
       .set('token', travelAdminToken)
       .end((error, response) => {
         response.should.have.status(200);
+        done();
       });
-    done();
   });
 
   it('should NOT delete an accommodation', (done) => {

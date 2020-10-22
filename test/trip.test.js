@@ -1,28 +1,28 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/index';
+import { travelAdminToken } from './fixtures/users';
 
 chai.use(chaiHttp);
 chai.should();
-
 let token;
 let id;
-let requester_id;
 let manager_id;
+let accId;
 describe('signUp', () => {
   before((done) => {
-    const createdUser = {
+    const user = {
       firstName: 'Holy',
       lastName: 'Name',
-      phone: '0788888888',
-      email: 'name@gmail.com',
-      password: '123456',
+      phone: '0878787878',
+      email: 'holyg@barefoot.com',
+      password: '123456'
     };
-
-    chai.request(app)
+    chai
+      .request(app)
       .post('/api/users/signup')
-      .send(createdUser)
-      .end((req, res) => {
+      .send(user)
+      .end((err, response) => {
         done();
       });
   });
@@ -31,33 +31,49 @@ describe('signUp', () => {
       .request(app)
       .post('/api/users/signin')
       .send({
-        email: 'name@gmail.com',
-        password: '123456',
+        email: 'holygee@barefoot.com',
+        password: '123456'
       })
       .end((err, response) => {
-        token = response.body.token; // save the token!
+        id = response.body.id;
+        token = response.body.token;
         done();
       });
   });
+  before((done) => {
+    chai
+      .request(app)
+      .post('/api/accommodations/')
+      .set('token', `${travelAdminToken}`)
+      .send({
+        name: 'Hotel Chez Anisie',
+        locationId: 1,
+      })
+      .end((err, response) => {
+        accId = response.body.data.id;
+        done();
+      });
+  });
+
   // POST TRIP
   describe('POST /trip', () => {
     it('Should post a trip with status code 201', (done) => {
       chai
         .request(app)
         .post('/api/trips')
-        .set('token', token)
+        .set('token', `${token}`)
         .send({
+          requester_id: id,
+          manager_id,
           from: 4,
-          to: 2,
-          travel_date: '2020-9-30',
+          to: 1,
+          travel_date: '2020-09-30',
           return_date: '2020-11-30',
           travel_reason: 'new office',
-          accommodation: 1
+          accommodation: accId
         })
         .end((req, res) => {
           id = res.body.id;
-          requester_id = res.body.requester_id;
-          manager_id = res.body.manager_id;
           res.should.have.status(201);
           res.should.be.a('object');
           done();
@@ -91,14 +107,13 @@ describe('signUp', () => {
       chai
         .request(app)
         .patch(`/api/trips/${id}`)
-        .set('token', token)
+        .set('token', `${token}`)
         .send({
-          from: 5,
-          to: 4,
-          travel_date: '2020-9-30',
-          return_date: '2020-11-30',
+          from: 4,
+          to: 1,
+          travel_date: '2020-09-30',
           travel_reason: 'new office',
-          accommodation: 1
+          accommodation: accId
         })
         .end((req, res) => {
           res.should.have.status(200);
@@ -131,7 +146,7 @@ describe('signUp', () => {
       chai
         .request(app)
         .patch('/api/trips/0')
-        .set('token', token)
+        .set('token', `${token}`)
         .send({
           from: 5,
           to: 4,
@@ -150,7 +165,7 @@ describe('signUp', () => {
       chai
         .request(app)
         .patch(`/api/trips/${id}`)
-        .set('token', token)
+        .set('token', `${token}`)
         .send({
           from: '5',
           to: '',
@@ -172,7 +187,7 @@ describe('signUp', () => {
       chai
         .request(app)
         .delete(`/api/trips/${id}`)
-        .set('token', token)
+        .set('token', `${token}`)
         .end((req, res) => {
           res.should.have.status(201);
           res.should.be.a('object');
@@ -183,7 +198,7 @@ describe('signUp', () => {
       chai
         .request(app)
         .delete(`/api/trips/${id}`)
-        .set('token', token)
+        .set('token', `${token}`)
         .end((req, res) => {
           res.should.have.status(409);
           res.should.be.a('object');
@@ -194,7 +209,7 @@ describe('signUp', () => {
       chai
         .request(app)
         .delete(`/api/trips/${0}`)
-        .set('token', token)
+        .set('token', `${token}`)
         .end((req, res) => {
           res.should.have.status(409);
           res.should.be.a('object');

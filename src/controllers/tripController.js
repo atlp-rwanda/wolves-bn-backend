@@ -1,6 +1,5 @@
 import models from '../database/models';
 import emitter from '../helpers/events/eventEmitter';
-import { sock } from '../helpers/events/socket';
 
 const {
   trip, users, location, accomodation
@@ -122,7 +121,7 @@ export default class Trip {
                   ]
                 })
                 .then((result) => {
-                  emitter.emit('request-created', result);
+                  emitter.emit('request-updated', result);
                   res.status(200).send(data);
                 })
                 .catch((error) => res.status(500).send(error));

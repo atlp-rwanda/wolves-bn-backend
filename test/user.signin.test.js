@@ -10,7 +10,7 @@ const cleanAlltables = async () => {
   await users.destroy({ where: {} });
 };
 
-export let token;
+let token;
 
 describe('user login', () => {
   before(async () => {

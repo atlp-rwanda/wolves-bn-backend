@@ -36,7 +36,7 @@ router.get('/api/', (req, res) => res.send('Welcome to barefoot Nomad'));
 router.post('/api/users/signup', userValidate, usercontroller.signup);
 router.patch('/api/users/settings', isAdmin.verifyAdmin, roleValidate, rolesSettingsRoute.roleController);
 router.get('/api/profiles/:id', usercontroller.getProfile);
-router.put('/api/profiles/:id', userValidate, usercontroller.updateProfile);
+router.put('/api/profiles', checkAuth.verifyUser, userValidate, usercontroller.updateProfile);
 router.get('/api/users/logout', auth, usercontroller.logout);
 
 router.post('/api/users/forgotPassword', Password.forgotPassword);

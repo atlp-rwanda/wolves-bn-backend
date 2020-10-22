@@ -3,10 +3,14 @@ import chaiHTTP from 'chai-http';
 import { array } from 'joi';
 import app from '../src/index';
 import models from '../src/database/models';
+import { dummyToken, travelAdminToken } from './fixtures/users';
 
 let tripId;
 let userId;
+let accId;
+let manager_id;
 let token;
+let commentId;
 let id;
 const { users } = models;
 chai.should();
@@ -20,36 +24,34 @@ describe('Comments and delete', () => {
   before(async () => {
     await cleanAlltables();
   });
-  it('should POST a new User', (done) => {
-    const createdUser = {
-      firstName: 'Normal',
-      lastName: 'User',
-      phone: '0788314143',
-      email: 'test@gmail.com',
-      password: '123456',
+  before((done) => {
+    const user = {
+      firstName: 'Holy',
+      lastName: 'Name',
+      phone: '0878787878',
+      email: 'holy@barefoot.com',
+      password: '123456'
     };
-    chai.request(app)
+    chai
+      .request(app)
       .post('/api/users/signup')
-      .send(createdUser)
-      .end((error, response) => {
-        response.should.have.status(201);
+      .send(user)
+      .end((err, response) => {
+        token = response.body.token;
         done();
       });
   });
-  it('should return 200, ok status and token for a successful user sign in', (done) => {
+  before((done) => {
     chai
       .request(app)
-      .post('/api/users/signin')
+      .post('/api/accommodations/')
+      .set('token', `${travelAdminToken}`)
       .send({
-        email: 'test@gmail.com',
-        password: '123456'
+        name: 'Mariott Hotel',
+        locationId: 1,
       })
-      .end((err, res) => {
-        const ids = res.body.user.id;
-        userId = ids;
-        token = res.body.token; // save the token!
-        res.should.have.status(200);
-        res.body.should.have.property('token');
+      .end((err, response) => {
+        accId = response.body.data.id;
         done();
       });
   });
@@ -57,19 +59,21 @@ describe('Comments and delete', () => {
     chai
       .request(app)
       .post('/api/trips')
-      .set('token', token)
+      .set('token', `${token}`)
       .send({
+        requester_id: id,
+        manager_id,
         from: 4,
-        to: 2,
-        travel_date: '2020-9-30',
+        to: 1,
+        travel_date: '2020-09-30',
         return_date: '2020-11-30',
-        travel_reason: 'new office'
+        travel_reason: 'new office',
+        accommodation: accId
       })
       .end((req, res) => {
-        const ids = res.body.id;
-        tripId = ids;
+        id = res.body.id;
         res.should.have.status(201);
-        res.should.be.an('object');
+        res.should.be.a('object');
         done();
       });
   });
@@ -77,13 +81,13 @@ describe('Comments and delete', () => {
     const requestBody = {
       comment: 'comment from Requester: test@gmail.com'
     };
-    console.log(requestBody);
     chai.request(app)
-      .post(`/api/trips/${tripId}/comment`)
+      .post(`/api/trips/${id}/comment`)
       .set('token', token)
       .send(requestBody)
       .end((err, res) => {
-        tripId = res.body.saveComment.id;
+        commentId = res.body.saveComment.id;
+        tripId = res.body.saveComment.tripId;
         console.log(`this is trip id from comments ${tripId}`);
         res.should.have.status(201);
         done();
@@ -95,31 +99,30 @@ describe('Comments and delete', () => {
       .set('token', token)
       .end((err, res) => {
         res.should.have.status(200);
-        res.should.be.an(array);
         done();
       });
-    done();
   });
   it('should return 404 is no data found', (done) => {
     chai.request(app)
       .get(`/api/trips/${userId}/comments/${tripId}`)// user id is not the correct tripId
-      .set('token', token)
+      .set('token', dummyToken)
       .end((err, res) => {
         res.should.have.status(404);
+      });
+    done();
+  });
+  it('It should return 204 when comment is deleted', (done) => {
+    chai.request(app)
+      .delete(`/api/trips/${commentId}/comments`)
+      .set('token', token)
+      .end((err, res) => {
+        res.should.have.status(204);
         done();
       });
   });
-  it('It should return 200 when comment is deleted', (done) => {
+  it('It should return 404 when comment not found, already deleted', (done) => {
     chai.request(app)
-      .delete(`/api/trips/${tripId}/comments`)
-      .set('token', token)
-      .end((err, res) => {
-        res.should.have.status(200);
-        done();
-      });
-  }); it('It should return 404 when comment not found, already deleted', (done) => {
-    chai.request(app)
-      .delete(`/api/trips/${tripId}/comments`)
+      .delete(`/api/trips/${id}/comments`)
       .set('token', token)
       .end((err, res) => {
         res.should.have.status(404);

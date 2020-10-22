@@ -36,7 +36,7 @@ export default class TripNotification {
         const {
           firstName, lastName
         } = await users.findOne({ where: { id: tripRequest.requester_id } });
-        const message = `New ${tripRequest.travel_type} travelling on ${tripRequest.travel_date} have been requested by ${firstName} ${lastName}`;
+        const message = `New ${tripRequest.travel_type} with trip id ${tripRequest.id} travelling on ${tripRequest.travel_date} have been requested by ${firstName} ${lastName}`;
 
         const notificationData = await NotificationService.createNotification({
           message,
@@ -59,7 +59,7 @@ export default class TripNotification {
         const {
           firstName, lastName
         } = await users.findOne({ where: { id: data.requester_id } });
-        const message = `${data.travel_type} by ${firstName} ${lastName} has been updated to travel on ${data.travel_date}`;
+        const message = `${data.travel_type} with trip id ${data.id} by ${firstName} ${lastName} has been updated to travel on ${data.travel_date}`;
 
         const notificationData = await NotificationService.createNotification({
           message,
@@ -71,7 +71,7 @@ export default class TripNotification {
         const msg = emailNotification(managerNames, message, actionLink, unsubscribeUrl);
 
         SendingMail.sendGridMail(managerEmail, msg);
-        sock.emit('new-notification', notificationData);
+        sock.broadcast.emit('new-notification', notificationData);
       });
       await emitter.on('request-status-updated', async (data) => {
         const {
@@ -79,7 +79,7 @@ export default class TripNotification {
         } = await users.findOne({ where: { id: data.requester_id } });
         const userNames = `${firstName} ${lastName}`;
         const userEmail = `${email}`;
-        const message = `Your trip request has been ${data.request_status} by your manager`;
+        const message = `Your trip request with id ${data.id} has been ${data.request_status} by your manager`;
 
         const notificationData = await NotificationService.createNotification({
           message,
@@ -94,11 +94,13 @@ export default class TripNotification {
       });
       await emitter.on('comment-created', async (data) => {
         const { firstName, lastName, email } = await users.findOne({ where: { id: data.userId } });
-        const { travel_type, from, to } = await trip.findOne({ where: { id: data.tripId } });
+        const {
+          travel_type, from, to, id
+        } = await trip.findOne({ where: { id: data.tripId } });
 
         const userNames = `${firstName} ${lastName}`;
         const userEmail = `${email}`;
-        const message = `${userNames} has commented on ${travel_type} from ${from} to ${to}`;
+        const message = `${userNames} has commented on a trip request with trip id ${id} from ${from} to ${to}`;
 
         const notificationData = await NotificationService.createNotification({
           message,
