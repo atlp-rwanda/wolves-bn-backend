@@ -126,10 +126,9 @@ class Accommodation {
       } else {
         facilitiesArr.concat(fac);
       }
-      const { id } = req.user;
-      const user = await users.findOne({ where: { id } });
+      const { id, role } = req.user;
       if (findAccommodation) {
-        if (user.role === 'travel_admin' && findAccommodation.hostId === id) {
+        if (role === 'travel_admin' && findAccommodation.hostId === id) {
           let files;
           if (req.files != null) {
             files = req.files.photo;
@@ -217,10 +216,9 @@ class Accommodation {
        * Find an accomodation by Id
        * Delete the accommodation with that Id
        */
-      const { id } = req.user;
-      const user = await users.findOne({ where: { id } });
+      const { id, role } = req.user;
       if (findAccommodation) {
-        if (user.role === 'travel_admin' && findAccommodation.hostId === id) {
+        if (role === 'travel_admin' && findAccommodation.hostId === id) {
           room.destroy({ where: { accomodationId: req.params.acc_id } });
           return accomodation.destroy({ where: { id: req.params.acc_id } }).then(data => {
             if (data) {

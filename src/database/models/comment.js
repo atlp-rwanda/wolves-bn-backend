@@ -1,4 +1,4 @@
-/* eslint-disable valid-jsdoc */
+import emitter from '../../helpers/events/eventEmitter';
 
 const {
   Model
@@ -6,13 +6,14 @@ const {
 
 module.exports = (sequelize, DataTypes) => {
   class comment extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       // define association here
+      comment.belongsTo(models.users, {
+        foreignKey: 'userId'
+      });
+      comment.belongsTo(models.trip, {
+        foreignKey: 'tripId'
+      });
     }
   }
   comment.init({

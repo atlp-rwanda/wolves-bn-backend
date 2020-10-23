@@ -1,4 +1,5 @@
 import models from '../database/models';
+import emitter from '../helpers/events/eventEmitter';
 
 const {
   trip, users, location, accomodation
@@ -53,7 +54,10 @@ export default class Trip {
                   as: 'destination'
                 }
               ]
-            }).then(data => { res.status(201).send(data); })
+            }).then(data => {
+              emitter.emit('request-created', data);
+              res.status(201).send(data);
+            })
               .catch(error => res.status(400).send(error));
           });
         });
@@ -61,7 +65,7 @@ export default class Trip {
     });
   }
 
-  static updateTrip(req, res) {
+  static async updateTrip(req, res) {
     const {
       from, to, travel_date, return_date, travel_reason, accommodation
     } = req.body;
@@ -116,7 +120,10 @@ export default class Trip {
                     }
                   ]
                 })
-                .then(() => { res.status(200).send(data); })
+                .then((result) => {
+                  emitter.emit('request-updated', result);
+                  res.status(200).send(data);
+                })
                 .catch((error) => res.status(500).send(error));
             });
           });
@@ -127,7 +134,6 @@ export default class Trip {
   static deleteTrip(req, res) {
     const { id } = req.params;
     const { id: requester_id } = req.user;
-
     return models.trip
       .destroy({
         where: { id, requester_id }
@@ -162,6 +168,6 @@ export default class Trip {
         }]
     }).then((info) => {
       res.status(200).send(info);
-    }).catch(err => res.status(409).send(err));
+    }).catch(err => res.status(409).send(console.log(err)));
   }
 }

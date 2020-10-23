@@ -3,7 +3,7 @@ import sendingMail from './sendMail';
 import models from '../database/models';
 import { hashPassowrd, comparePassword, jwtToken } from '../utils/jwtToken';
 
-const { users } = models;
+const { users, preferences } = models;
 export const redisclient = redis.createClient();
 export default class User {
   static async signup(req, res) {
@@ -31,6 +31,11 @@ export default class User {
         password: hash,
         manager_id: 2
       });
+      await preferences.create({
+        requester_id: user.id,
+        emailnotification: true,
+        appnotification: true
+      });
       const userId = user.id;
       const token = jwtToken.createToken(user);
       const messaging = sendingMail(user.email);
@@ -43,7 +48,7 @@ export default class User {
         message: 'Please you may go confirm in your email'
       });
     } catch (error) {
-      return res.status(500).send(error);
+      return res.status(500).send(console.log(error));
     }
   }
 
@@ -73,9 +78,25 @@ export default class User {
   }
 
   static async updateProfile(req, res) {
-    const findUser = await users.findOne({ where: { id: req.params.id } });
-    try {
-      const {
+    const { id } = req.user;
+    const {
+      firstName,
+      lastName,
+      phone,
+      email,
+      gender,
+      birthdate,
+      language,
+      currency,
+      address,
+      role,
+      department,
+      manager,
+      profileimage
+    } = req.body;
+    const findUser = await users.findOne({ where: { id } });
+    if (findUser) {
+      const updatedUser = await users.update({
         firstName,
         lastName,
         phone,
@@ -89,41 +110,17 @@ export default class User {
         department,
         manager,
         profileimage
-      } = req.body;
-
-      if (findUser) {
-        const updatedUser = await users.update({
-          firstName,
-          lastName,
-          phone,
-          email,
-          gender,
-          birthdate,
-          language,
-          currency,
-          address,
-          role,
-          department,
-          manager,
-          profileimage
-        }, {
-          where: {
-            id: req.params.id
-          }
-        });
-        if (updatedUser) {
-          return res.status(200).send({
-            status: 200,
-            message: 'User profile is Updated'
-          });
+      }, {
+        where: {
+          id
         }
-        return res.status(400).send({
-          status: 400,
-          message: 'Bad request'
-        });
-      }
-    } catch (error) {
-      res.status(500).send({ error });
+      }).then((data) => {
+        if (data[0] > 0) {
+          return res.status(200).send({ status: 200, message: 'User profile updated' });
+        } return res.status(404).send({ message: 'Bad request' });
+      }).catch((err) => {
+        res.status(500).send({ err });
+      });
     }
   }
 

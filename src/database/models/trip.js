@@ -9,7 +9,6 @@ module.exports = (sequelize, DataTypes) => {
       trip.belongsTo(models.users, {
         foreignKey: 'requester_id',
         as: 'requester',
-        targetKey: 'id'
       });
       trip.belongsTo(models.location, {
         foreignKey: 'from',
@@ -22,6 +21,9 @@ module.exports = (sequelize, DataTypes) => {
       trip.belongsTo(models.accomodation, {
         foreignKey: 'accommodation',
         as: 'place_to_stay'
+      });
+      trip.hasMany(models.comment, {
+        foreignKey: 'tripId'
       });
     }
   }

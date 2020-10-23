@@ -3,7 +3,7 @@ import { hashPassowrd, jwtToken } from '../../src/utils/jwtToken';
 
 const { users } = models;
 export const travelAdmin = {
-  id: 1,
+  id: 100,
   firstName: 'travel',
   lastName: 'admin',
   email: 'traveladmin@barefoot.com',

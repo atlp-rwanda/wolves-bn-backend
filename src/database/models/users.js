@@ -8,10 +8,19 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       users.hasMany(models.trip, {
         foreignKey: 'requester_id',
-        as: 'trips',
+        as: 'trips'
       });
       users.belongsTo(models.users, {
         foreignKey: 'manager_id'
+      });
+      users.hasOne(models.preferences, {
+        foreignKey: 'requester_id',
+      });
+      users.hasMany(models.notification, {
+        foreignKey: 'notificationOwner'
+      });
+      users.hasMany(models.comment, {
+        foreignKey: 'userId'
       });
     }
   }

@@ -94,35 +94,33 @@ describe('GET /api/profiles/:id', () => {
   });
 });
 
-describe('PUT /api/profiles/:id', () => {
+describe('PUT /api/profiles', () => {
   it('should update the profile of the user', (done) => {
     const userDetails = {
       firstName: 'Crepin',
       lastName: 'Bosco',
-      phone: 89999999,
-      email: 'crepina@test.com',
+      email: 'uwa100@gmail.com',
       profileimage: 'https://www.google.com/search?q=random+image&tbm=isch&source=iu&ictx=1&fir=w_2Xay2IzNC0zM%252CYpYw_trHdY78IM%252C_&vet=1&usg=AI4_-kTvfEe00igI4nEu3c_MRnLncEGZVA&sa=X&ved=2ahUKEwjJ1J_B2YHsAhV1wuYKHaPyC7gQ9QF6BAgKEEQ#imgrc=w_2Xay2IzNC0zM',
       address: 'Kacyiru',
       gender: 'Male',
       language: 'French',
       currency: 'RWF',
-      role: 'ops manager',
       department: 'Operations',
       manager: 'David'
     };
     chai.request(app)
-      .put(`/api/profiles/${id}`)
+      .put('/api/profiles')
+      .set('token', token)
       .send(userDetails)
       .end((err, res) => {
         res.should.have.status(200);
+        done();
       });
-    done();
   });
   it('should not update the profile of the user', (done) => {
     const userDetails = {
       firstName: '',
       lastName: 'Bosco',
-      phone: 89999999,
       email: 'crepina@test.com',
       profileimage: 'https://www.google.com/search?q=random+image&tbm=isch&source=iu&ictx=1&fir=w_2Xay2IzNC0zM%252CYpYw_trHdY78IM%252C_&vet=1&usg=AI4_-kTvfEe00igI4nEu3c_MRnLncEGZVA&sa=X&ved=2ahUKEwjJ1J_B2YHsAhV1wuYKHaPyC7gQ9QF6BAgKEEQ#imgrc=w_2Xay2IzNC0zM',
       address: 'Kacyiru',
@@ -134,12 +132,13 @@ describe('PUT /api/profiles/:id', () => {
       manager: 'David'
     };
     chai.request(app)
-      .put(`/api/profiles/${id}`)
+      .put('/api/profiles')
+      .set('token', token)
       .send(userDetails)
       .end((err, res) => {
         res.should.have.status(400);
+        done();
       });
-    done();
   });
 });
 describe('GET /', () => {
@@ -150,65 +149,5 @@ describe('GET /', () => {
         response.should.have.status(200);
         done();
       });
-  });
-});
-
-describe('GET /api/profiles/:id', () => {
-  it('should return the user', (done) => {
-    chai.request(app)
-      .get(`/api/profiles/${id}`)
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.should.be.an('object');
-      });
-    done();
-  });
-});
-describe('PUT /api/profiles/:id', () => {
-  it('should update the profile of the user', (done) => {
-    const userDetails = {
-      firstName: 'Crepin',
-      lastName: 'Bosco',
-      phone: 899899999,
-      email: 'crepina@test.com',
-      profileimage: 'https://www.google.com/search?q=random+image&tbm=isch&source=iu&ictx=1&fir=w_2Xay2IzNC0zM%252CYpYw_trHdY78IM%252C_&vet=1&usg=AI4_-kTvfEe00igI4nEu3c_MRnLncEGZVA&sa=X&ved=2ahUKEwjJ1J_B2YHsAhV1wuYKHaPyC7gQ9QF6BAgKEEQ#imgrc=w_2Xay2IzNC0zM',
-      address: 'Kacyiru',
-      gender: 'Male',
-      language: 'French',
-      currency: 'RWF',
-      role: 'ops manager',
-      department: 'Operations',
-      manager: 'David'
-    };
-    chai.request(app)
-      .put(`/api/profiles/${id}`)
-      .send(userDetails)
-      .end((err, res) => {
-        res.should.have.status(200);
-      });
-    done();
-  });
-  it('should not update the profile of the user', (done) => {
-    const userDetails = {
-      firstName: '',
-      lastName: 'Bosco',
-      phone: '089999999',
-      email: 'crepina@test.com',
-      profileimage: 'https://www.google.com/search?q=random+image&tbm=isch&source=iu&ictx=1&fir=w_2Xay2IzNC0zM%252CYpYw_trHdY78IM%252C_&vet=1&usg=AI4_-kTvfEe00igI4nEu3c_MRnLncEGZVA&sa=X&ved=2ahUKEwjJ1J_B2YHsAhV1wuYKHaPyC7gQ9QF6BAgKEEQ#imgrc=w_2Xay2IzNC0zM',
-      address: 'Kacyiru',
-      gender: 'Male',
-      language: 'French',
-      currency: 'RWF',
-      role: 'ops manager',
-      department: 'Operations',
-      manager: 'David'
-    };
-    chai.request(app)
-      .put(`/api/profiles/${id}`)
-      .send(userDetails)
-      .end((err, res) => {
-        res.should.have.status(400);
-      });
-    done();
   });
 });

@@ -2,13 +2,14 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/index';
 import models from '../src/database/models';
-import { managerToken } from './fixtures/users';
+import { managerToken, travelAdminToken } from './fixtures/users';
 
 const { users } = models;
 let token;
 let manager_id;
 let requester_id;
 let id;
+let accId;
 let usertoken;
 
 chai.use(chaiHttp);
@@ -20,6 +21,20 @@ const cleanAlltables = async () => {
 describe('POST /trip', () => {
   before(async () => {
     await cleanAlltables();
+  });
+  it('It should create an accommodation', (done) => {
+    chai
+      .request(app)
+      .post('/api/accommodations/')
+      .set('token', `${travelAdminToken}`)
+      .send({
+        name: 'Hotel Chez Theo',
+        locationId: 1,
+      })
+      .end((err, response) => {
+        accId = response.body.data.id;
+        done();
+      });
   });
   it('It ahould sign up a new user', (done) => {
     const createdUser = {
@@ -55,14 +70,15 @@ describe('POST /trip', () => {
     chai
       .request(app)
       .post('/api/trips')
-      .set('token', token)
+      .set('token', usertoken)
       .send(
         {
           from: 5,
           to: 1,
           travel_date: '2020-9-30',
           return_date: '2020-11-30',
-          travel_reason: 'new office'
+          travel_reason: 'new offices ziriyo ni amasi',
+          accommodation: accId
         })
       .end((req, res) => {
         id = res.body.id;
@@ -93,10 +109,10 @@ describe('POST /trip', () => {
   });
 });
 
-describe('Testing the trip appove routes', () => {
+describe('Testing the trip approve routes', () => {
   it('it should 200, approve the requests', (done) => {
     chai.request(app)
-      .put(`/api/users/tripRequest/${id}`)
+      .put(`/api/trips/${id}`)
       .set('token', managerToken)
       .send(
         {
@@ -109,7 +125,7 @@ describe('Testing the trip appove routes', () => {
   });
   it('it should return bad request', (done) => {
     chai.request(app)
-      .put(`/api/users/tripRequest/${id}`)
+      .put(`/api/trips/${id}`)
       .set('token', managerToken)
       .send(
         {
@@ -122,7 +138,7 @@ describe('Testing the trip appove routes', () => {
   });
   it('it should is not managaer', (done) => {
     chai.request(app)
-      .put(`/api/users/tripRequest/${id}`)
+      .put(`/api/trips/${id}`)
       .set('token', token)
       .send(
         {
