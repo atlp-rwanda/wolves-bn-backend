@@ -19,11 +19,11 @@ class Destination {
           return Object.entries(obj).sort((a, b) => b[1] - a[1]);
         }
         const sortd = sortDestOcc(destOcc);
-        const cities = [];
+        const cities = {};
         for (let i = 0; i < 3; i++) {
           const city = sortd[i][0];
-          const visitors = sortd[i][1];
-          cities.push(city);
+          const visitor = sortd[i][1];
+          cities[city] = visitor;
         }
         res.send({
           cities

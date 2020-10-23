@@ -8,10 +8,10 @@ const { destination } = models;
 chai.use(chaiHttp);
 chai.should();
 
-describe('GET /api/destinations/visited/top', () => {
+describe('GET /api/topdestinations', () => {
   it('It should get top 3 travelled destinations up a new user', (done) => {
     chai.request(app)
-      .get('/api/destinations/visited/top')
+      .get('/api/topdestinations')
       .end((req, res) => {
         res.should.have.status(200);
         done();
@@ -20,7 +20,7 @@ describe('GET /api/destinations/visited/top', () => {
   it('It should NOT get top destinations  ', (done) => {
     chai
       .request(app)
-      .post('/api/destinations/top')
+      .post('/api/topdestination')
       .end((err, response) => {
         response.should.have.status(404);
         done();
