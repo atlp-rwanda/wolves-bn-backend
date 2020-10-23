@@ -6,3 +6,4 @@ coverage/
 .vscode/
 *.log
 tmp/
+src/public

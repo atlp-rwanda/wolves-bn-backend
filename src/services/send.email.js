@@ -16,7 +16,7 @@ export default class SendingMail {
       .then(() => {
         console.log('Email has been sent successfully');
       }).catch((err) => {
-        console.log('Email hasn\'t been sent');
+        console.log('Email not sent');
       });
   }
 }

@@ -13,25 +13,13 @@ const BASEURL = process.env.BASEURL || 'localhost';
 const PORT = process.env.PORT || 3000;
 
 export default class TripNotification {
-  static async findManagerToNotify(tripRequest) {
-    const manager = await users.findOne({ where: { id: tripRequest.manager_id } });
-    const {
-      emailnotification, appnotification
-    } = await preferences.findOne({ where: { requester_id: manager.id } });
-    const managerPreferences = { emailnotification, appnotification };
-    return {
-      managerEmail: manager.email,
-      managerNames: `${manager.firstName} ${manager.lastName}`
-    };
-  }
-
   static async sendTripNotification() {
     try {
       await emitter.on('request-created', async (tripRequest) => {
         const {
           managerEmail,
           managerNames
-        } = await this.findManagerToNotify(tripRequest);
+        } = await NotificationService.findManagerToNotify(tripRequest);
 
         const {
           firstName, lastName
@@ -48,13 +36,13 @@ export default class TripNotification {
         const msg = emailNotification(managerNames, message, actionLink, unsubscribeUrl);
 
         SendingMail.sendGridMail(managerEmail, msg);
-        sock.broadcast.emit('new-notification', notificationData);
+        sock.emit('new-notification', notificationData);
       });
       await emitter.on('request-updated', async (data) => {
         const {
           managerEmail,
           managerNames
-        } = await this.findManagerToNotify(data);
+        } = await NotificationService.findManagerToNotify(data);
 
         const {
           firstName, lastName
@@ -71,7 +59,7 @@ export default class TripNotification {
         const msg = emailNotification(managerNames, message, actionLink, unsubscribeUrl);
 
         SendingMail.sendGridMail(managerEmail, msg);
-        sock.broadcast.emit('new-notification', notificationData);
+        sock.emit('new-notification', notificationData);
       });
       await emitter.on('request-status-updated', async (data) => {
         const {
@@ -95,7 +83,7 @@ export default class TripNotification {
       await emitter.on('comment-created', async (data) => {
         const { firstName, lastName, email } = await users.findOne({ where: { id: data.userId } });
         const {
-          travel_type, from, to, id
+          from, to, id
         } = await trip.findOne({ where: { id: data.tripId } });
 
         const userNames = `${firstName} ${lastName}`;
@@ -113,7 +101,7 @@ export default class TripNotification {
         const msg = emailNotification(userNames, message, actionLink, unsubscribeUrl);
 
         SendingMail.sendGridMail(userEmail, msg);
-        sock.broadcast.emit('new-notification', notificationData);
+        sock.emit('new-notification', notificationData);
       });
     } catch (error) {
       console.log('Error is:', error.message);
