@@ -34,12 +34,53 @@ describe('POST /api/accommodations', () => {
       });
   });
 
+  it('should not create an accomodation', (done) => {
+    const createdAccomodation = {
+      name: '',
+      description: 'Marriot Hotel',
+      longitude: '2.456789',
+      latitude: '1.234455667',
+      photo: [],
+      facilities: ['Gym', 'Pool'],
+      locationId: 1
+    };
+
+    chai.request(app)
+      .post('/api/accommodations')
+      .set('token', travelAdminToken)
+      .send(createdAccomodation)
+      .end((error, response) => {
+        response.should.have.status(400);
+        done();
+      });
+  });
+
+  it('should not create an accomodation', (done) => {
+    const createdAccomodation = {
+      name: 'Marriot',
+      longitude: '2.456789',
+      latitude: '1.234455667',
+      photo: [],
+      facilities: ['Gym', 'Pool'],
+      locationId: 1
+    };
+
+    chai.request(app)
+      .post('/api/accommodations')
+      .set('token', travelAdminToken)
+      .send(createdAccomodation)
+      .end((error, response) => {
+        response.should.have.status(400);
+        done();
+      });
+  });
+
   it('should NOT POST an accommodation', (done) => {
     const createdAccomodation = {
       name: 'Marriot',
       description: 'Marriot Hotel',
       longitude: '2.456789',
-      altitude: '1.234455667',
+      latitude: '1.234455667',
       images: 'hello there',
       facilities: ['Gym', 'Pool']
 
@@ -60,18 +101,19 @@ describe('PUT /api/accommodations/:id', () => {
       description: 'Mn Bagira pozo every now and then',
       longitude: '2.4567892',
       latitude: '1.2344556673',
-      photo: [],
+      images: [],
       facilities: ['Gym', 'Pool'],
       locationId: 1
     };
     chai.request(app)
-      .patch(`/api/accommodations/${acc_id}`)
+      .put(`/api/accommodations/${acc_id}`)
       .set('token', travelAdminToken)
       .send(createdAccomodation)
       .end((error, response) => {
+        console.log(response.body);
         response.should.have.status(200);
+        done();
       });
-    done();
   });
 
   it('should NOT update an accommodation', (done) => {
@@ -79,13 +121,13 @@ describe('PUT /api/accommodations/:id', () => {
       name: 'Marriot',
       description: 'Marriot Hotel',
       longitude: '2.456789',
-      altitude: '1.234455667',
+      latitude: '1.234455667',
       images: [],
       facilities: ['Gym', 'Pool'],
       locationId: 1
     };
     chai.request(app)
-      .patch(`/api/accommodations/${acc_id}`)
+      .put(`/api/accommodations/${acc_id}`)
       .set('token', dummyToken)
       .send(createdAccomodation)
       .end((error, response) => {
@@ -111,9 +153,10 @@ describe('GET /api/accommodations/:acc_id', () => {
       .get(`/api/accommodations/${acc_id}`)
       .set('token', travelAdminToken)
       .end((error, response) => {
+        console.log(response.body);
         response.should.have.status(200);
+        done();
       });
-    done();
   });
 });
 describe('POST /api/accommodations/:acc_id/rooms', () => {

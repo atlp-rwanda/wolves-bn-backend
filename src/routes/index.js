@@ -109,5 +109,8 @@ router.delete('/api/reservations/:booking_id', checkAuth.verifyUser, isRequester
 
 // get stats of trips made in the last X timeframe
 router.get('/api/trips/statistics/:start_time/:end_time', checkAuth.verifyUser, Trip.statsTrips);
+router.get('/api/accommodation/:acc_id/likeOrUnlike', checkAuth.verifyUser, isRequester, like.likeOrUnlike);
+router.post('/api/accommodation/:acc_id/feedback', checkAuth.verifyUser, isRequester, feedbacks.feedback);
+router.post('/api/accommodation/:acc_id/rating', checkAuth.verifyUser, isRequester, rating.rating);
 router.get('/api/topdestinations', Destination.mostVisited);
 export default router;
