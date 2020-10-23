@@ -1,3 +1,8 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable max-len */
+/* eslint-disable camelcase */
+import { date } from 'joi';
+import { Op } from 'sequelize';
 import models from '../database/models';
 import emitter from '../helpers/events/eventEmitter';
 
@@ -169,5 +174,134 @@ export default class Trip {
     }).then((info) => {
       res.status(200).send(info);
     }).catch(err => res.status(409).send(console.log(err)));
+  }
+
+  // get stats of trips made in the last X timeframe
+  static async statsTrips(req, res) {
+    const { id } = req.user;
+    const start_time = new Date(req.params.start_time);
+    const end_time = new Date(req.params.end_time);
+    if (Object.prototype.toString.call(start_time) === '[object Date]') {
+      if (isNaN(start_time.getTime())) {
+        return res.status(400).json({ Message: 'Invalid start Date' });
+      } if (isNaN(end_time.getTime())) {
+        return res.status(400).json({ Message: 'Invalid End Date' });
+      }
+    }
+    const userExist = await models.users.findOne({ where: { id } });
+    const role = userExist.role;
+    if (role == null) { return res.status(400).json({ Error: `${userExist.FirstName} No Trip associated to you` }); }
+    if (userExist.role === 'requester') {
+      if (start_time > end_time) { return res.status(400).json({ Message: 'End Date should be greater that start Date' }); }
+      const tripExist = await models.trip.findAll({
+        where: {
+
+          travel_date: {
+            [Op.lte]: req.params.end_time,
+            [Op.gte]: req.params.start_time,
+          },
+          requester_id: id
+        }
+      });
+      // for the requester
+      if (!tripExist || tripExist == null || tripExist.length < 1 || tripExist === undefined) {
+        return res.status(404).send({ status: 404, error: `No Data Found between "${start_time}" and " ${end_time} ",  maybe No trip occurred during the given dates ` });
+      }
+      const tripcount = await models.trip.count({
+        where: {
+          travel_date: {
+            [Op.lte]: end_time,
+            [Op.gte]: start_time,
+          },
+          requester_id: id
+        }
+      });
+      const approvedTrips = await models.trip.count({
+        where: {
+          travel_date: {
+            [Op.lte]: end_time,
+            [Op.gte]: start_time,
+          },
+          request_status: 'approved',
+          requester_id: id
+        }
+      });
+      const rejectedTrips = await models.trip.count({
+        where: {
+          travel_date: {
+            [Op.lte]: end_time,
+            [Op.gte]: start_time,
+          },
+          request_status: 'rejected',
+          requester_id: id
+        }
+      });
+      const pendingTrips = tripcount - (approvedTrips + rejectedTrips);
+      return res.status(200).send({
+        Date: new Date(),
+        Report: `Dear "${userExist.role}" , from "${start_time}" to "${end_time}", is the SUMMARY of trips you made on: `,
+        First_Name: userExist.firstName,
+        last_Name: userExist.lastName,
+        phone: userExist.phone,
+        email: userExist.email,
+        tripNumber: tripcount,
+        Pending: pendingTrips,
+        Approved: approvedTrips,
+        Rejected: rejectedTrips,
+      });
+    }
+    // for Manager
+    if (start_time > end_time) { return res.status(400).json({ Message: 'End Date should be greater that start Date' }); }
+    const tripExist = await models.trip.findAll({
+      where: {
+
+        travel_date: {
+          [Op.lte]: req.params.end_time,
+          [Op.gte]: req.params.start_time,
+        },
+        manager_id: id
+      }
+    });
+    if (!tripExist || tripExist == null || tripExist.length < 1 || tripExist === undefined) {
+      return res.status(404).send({ status: 404, error: `No Data Found between "${start_time}" and " ${end_time} ",  maybe No trip occurred during the given dates ` });
+    }
+    const tripcount = await models.trip.count({
+      where: {
+        travel_date: {
+          [Op.lte]: end_time,
+          [Op.gte]: start_time,
+        },
+        manager_id: id
+      }
+    });
+    const approvedTrips = await models.trip.count({
+      where: {
+        travel_date: {
+          [Op.lte]: end_time,
+          [Op.gte]: start_time,
+        },
+        request_status: 'approved',
+        manager_id: id
+      }
+    });
+    const rejectedTrips = await models.trip.count({
+      where: {
+        travel_date: {
+          [Op.lte]: end_time,
+          [Op.gte]: start_time,
+        },
+        request_status: 'rejected',
+        manager_id: id
+      }
+    });
+    const pendingTrips = tripcount - (approvedTrips + rejectedTrips);
+    return res.status(200).send({
+      Date: new Date(),
+      Report: `Dear "${`${userExist.firstName} ${userExist.lastName}`}" , from "${start_time}" to "${end_time}",  is the SUMMARY of trips you reacted on: `,
+      tripNumber: tripcount,
+      Pending: pendingTrips,
+      Approved: approvedTrips,
+      Rejected: rejectedTrips,
+    });
   }
 }

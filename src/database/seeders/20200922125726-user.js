@@ -48,8 +48,8 @@ module.exports = {
     lastName: 'Rukumbuzi',
     phone: '0785887749',
     role: 'requester',
-    manager_id: '4',
-    email: 'manager3@barefoot.com',
+    manager_id: '2',
+    email: 'user@gmail.com',
     password: '$2a$10$iyFH3/jgULgC0sMJ/VST1uR/.GKnx5IGtVIPsbhpsoz.pxe2yWnL6',
     createdAt: new Date(),
     updatedAt: new Date()
@@ -71,7 +71,7 @@ module.exports = {
     phone: '0788314143',
     role: 'requester',
     manager_id: '2',
-    email: 'user@barefoot.com',
+    email: 'user1@gmail.com',
     password: '$2a$10$iyFH3/jgULgC0sMJ/VST1uR/.GKnx5IGtVIPsbhpsoz.pxe2yWnL6',
     createdAt: new Date(),
     updatedAt: new Date()

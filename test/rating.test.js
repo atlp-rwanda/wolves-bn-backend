@@ -12,6 +12,7 @@ describe('like endpoint', () => {
       .post('/api/accommodation/0/rating')
       .set('token', dummyToken)
       .end((err, res) => {
+        console.log(res.body);
         expect(res).to.have.status(404);
         done();
       });
