@@ -40,14 +40,19 @@ export default class Comment {
   }
 
   static async deleteComment(req, res) {
-    const id = req.params.id;
-    models.comment.destroy({ where: { id } })
+    const { tripId, id } = req.params;
+
+    const { id: userId } = req.user;
+    return models.comment.destroy({ where: { tripId, id, userId } })
       .then(num => {
         if (num === 1) {
-          res.status(204).send({ message: `Successfully Deleted comment with id=${id}` });
+          res.status(200).send({ message: `Successfully Deleted comment with id=${id}` });
         } else {
           res.status(404).send({ Error: `Cannot delete comment with id=${id}.maybe Not Found in Database` });
         }
+      })
+      .catch(error => {
+        res.status(500).send({ Error: 'internal server Error' });
       });
   }
 }
