@@ -55,6 +55,17 @@ module.exports = {
     updatedAt: new Date()
   },
   {
+    firstName: 'travel',
+    lastName: 'admin',
+    phone: '1234567898',
+    role: 'travel_admin',
+    manager_id: '1',
+    email: 'traveladmin@barefoot.com',
+    password: '$2a$10$45B3ulhrEikvm5GOVtc6QO6wTh8JPlx6ZX/Fg9O39TT5AFH2tdxKW',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
     firstName: 'Normal',
     lastName: 'User',
     phone: '0788314143',

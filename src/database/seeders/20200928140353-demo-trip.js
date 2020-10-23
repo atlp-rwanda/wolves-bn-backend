@@ -5,7 +5,7 @@ module.exports = {
     requester_id: 1,
     manager_id: 2,
     travel_type: 'one way trip',
-    request_status: 'pending',
+    request_status: 'approved',
     travel_date: new Date(),
     return_date: new Date(),
     travel_reason: 'Going to new Office',

@@ -16,12 +16,26 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         foreignKey: 'accomodationId',
         as: 'rooms'
+      });
 
-      },
       accomodation.belongsTo(models.location, {
         foreignKey: 'locationId',
         as: 'city'
-      }));
+      });
+
+      accomodation.hasMany(models.like, {
+        foreignKey: 'accomodationId',
+      });
+
+      accomodation.hasMany(models.feedbacks, {
+        foreignKey: 'accomodationId',
+        as: 'feedbacks'
+      });
+
+      accomodation.hasMany(models.ratings, {
+        foreignKey: 'accomodationId',
+        as: 'ratings'
+      });
     }
   }
   accomodation.init({

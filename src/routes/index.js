@@ -25,8 +25,10 @@ import search from '../controllers/search';
 import Notifications from '../controllers/notification';
 
 import commentController from '../controllers/comment';
-
 import commentValidator from '../validators/commentValidator';
+import like from '../controllers/like';
+import feedbacks from '../controllers/feedbacks';
+import rating from '../controllers/rating';
 
 const router = express.Router();
 router.use(express.json());
@@ -93,5 +95,9 @@ router.post('/api/accommodations', checkAuth.verifyUser, validateAccommodation, 
 router.get('/api/accommodations', checkAuth.verifyUser, Accomodation.getAccommodations);
 router.post('/api/accommodations/:acc_id/rooms', checkAuth.verifyUser, validateRoom, Room.createRoom);
 router.delete('/api/accommodations/:acc_id/rooms/:room_id', checkAuth.verifyUser, Room.deleteRoom);
+
+router.get('/api/accommodation/:acc_id/likeOrUnlike', checkAuth.verifyUser, isRequester, like.likeOrUnlike);
+router.post('/api/accommodation/:acc_id/feedback', checkAuth.verifyUser, isRequester, feedbacks.feedback);
+router.post('/api/accommodation/:acc_id/rating', checkAuth.verifyUser, isRequester, rating.rating);
 
 export default router;
