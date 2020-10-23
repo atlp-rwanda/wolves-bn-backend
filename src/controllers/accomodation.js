@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-undef */
+import Sequelize from 'sequelize';
 import models from '../database/models';
 
 const cloudinary = require('cloudinary').v2;
@@ -22,7 +23,23 @@ class Accommodation {
             model: models.room,
             as: 'rooms'
           },
-        ]
+          {
+            model: models.feedbacks,
+            as: 'feedbacks',
+            attributes: ['userId', 'message']
+          },
+          {
+            model: models.like,
+            // as: 'likes',
+            attributes: ['userId']
+          },
+          {
+            model: models.ratings,
+            as: 'ratings',
+            attributes: ['userId', 'rating']
+          },
+        ],
+        group: ['accomodation.id', 'rooms.id', 'feedbacks.id', 'likes.id', 'ratings.id']
       }).then((info) => {
         res.status(200).send(info);
       });

@@ -7,12 +7,12 @@ const { expect } = chai;
 chai.use(chaiHttp);
 
 describe('Feedback endpoint', () => {
-  it('should return 404 status code when accommodation passed is not found', (done) => {
+  it('should return 404 status code when you didn\'t stay in an accommodation', (done) => {
     chai.request(app)
-      .post('/api/accommodation/0/feedback')
+      .post('/api/accommodation/10/feedback')
       .set('token', dummyToken)
       .end((err, res) => {
-        expect(res).to.have.status(404);
+        expect(res).to.have.status(400);
         done();
       });
   });

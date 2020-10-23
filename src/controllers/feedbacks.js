@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import models from '../database/models';
 
-const { accomodation, feedbacks } = models;
+const { feedbacks, trip } = models;
 
 class Feedback {
   async feedback(req, res) {
@@ -11,28 +11,23 @@ class Feedback {
       body: { message },
     } = req;
 
-    return accomodation
-      .findOne({ where: { id: acc_id } })
-      .then((result) => {
-        if (result) {
-          return feedbacks
-            .create({
-              userId: id,
-              accomodationId: acc_id,
-              message,
-            })
-            .then((response) => res
-              .status(200)
-              .json({ status: 200, message: 'feedback posted successfully' })
-            );
-        }
+    const findTrip = await trip.findOne({ where: { accommodation: acc_id, request_status: 'approved' } });
 
-        return res
-          .status(404)
-          .json({ status: 404, Error: 'accommodation not found' });
-      })
-      .catch((error) => res.status(500).json({ status: 500, message: error.message })
-      );
+    if (findTrip) {
+      return feedbacks
+        .create({
+          userId: id,
+          accomodationId: acc_id,
+          message,
+        })
+        .then((response) => res
+          .status(200)
+          .json({ status: 200, message: 'feedback posted successfully' })
+        );
+    }
+    return res
+      .status(400)
+      .json({ status: 400, Error: 'you can\'t comment on an accommodation didn\'t stay in' });
   }
 }
 

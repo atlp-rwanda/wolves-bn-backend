@@ -25,12 +25,16 @@ module.exports = (sequelize, DataTypes) => {
 
       accomodation.hasMany(models.like, {
         foreignKey: 'accomodationId',
-        as: 'likes'
       });
 
       accomodation.hasMany(models.feedbacks, {
         foreignKey: 'accomodationId',
         as: 'feedbacks'
+      });
+
+      accomodation.hasMany(models.ratings, {
+        foreignKey: 'accomodationId',
+        as: 'ratings'
       });
     }
   }
