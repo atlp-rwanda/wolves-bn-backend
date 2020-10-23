@@ -37,7 +37,8 @@ module.exports = (sequelize, DataTypes) => {
     travel_date: DataTypes.DATE,
     return_date: DataTypes.DATE,
     travel_reason: DataTypes.STRING,
-    accommodation: DataTypes.INTEGER
+    accommodation: DataTypes.INTEGER,
+    Do_You_want_remember_info: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'trip',

@@ -20,6 +20,16 @@ module.exports = {
     updatedAt: new Date()
   },
   {
+    city: 'Kigali',
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    city: 'Nyamagabe',
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
     city: 'Cape Town',
     createdAt: new Date(),
     updatedAt: new Date()

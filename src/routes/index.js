@@ -55,7 +55,7 @@ router.get(
   userAuth.authUser
 );
 router.post('/api/accommodations', checkAuth.verifyUser,
-// multerUploads,
+  // multerUploads,
   Accomodation.createAccommodation);
 
 router.get(
@@ -80,12 +80,11 @@ router.delete('/api/trips/:id', checkAuth.verifyUser, isRequester, Trip.deleteTr
 
 router.get('/user/confirmation/:email', usercontroller.updateUser);
 router.put('/api/trips/:id', checkAuth.verifyUser, isManager, statusValidate, updateTripRequest);
-
 router.get('/api/trips/search', search.searchEngine);
 // comment
 router.post('/api/trips/:id/comment', checkAuth.verifyUser, commentValidator, commentController.postComment);
 router.get('/api/trips/:id/comments/:tripId', checkAuth.verifyUser, commentController.list);
-router.delete('/api/trips/:id/comments', checkAuth.verifyUser, commentController.deleteComment);
+router.delete('/api/trips/:tripId/comments/:id', checkAuth.verifyUser, commentController.deleteComment);
 
 router.patch('/api/accommodations/:acc_id', checkAuth.verifyUser, Accomodation.editAccommodation);
 router.get('/api/accommodations/:acc_id', checkAuth.verifyUser, Accomodation.getAccommodation);
@@ -100,4 +99,6 @@ router.get('/api/accommodation/:acc_id/likeOrUnlike', checkAuth.verifyUser, isRe
 router.post('/api/accommodation/:acc_id/feedback', checkAuth.verifyUser, isRequester, feedbacks.feedback);
 router.post('/api/accommodation/:acc_id/rating', checkAuth.verifyUser, isRequester, rating.rating);
 
+// get stats of trips made in the last X timeframe
+router.get('/api/trips/statistics/:start_time/:end_time', checkAuth.verifyUser, Trip.statsTrips);
 export default router;

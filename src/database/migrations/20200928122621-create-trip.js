@@ -44,6 +44,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
+      Do_You_want_remember_info: {
+        type: Sequelize.STRING,
+        defaultValue: 'no'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

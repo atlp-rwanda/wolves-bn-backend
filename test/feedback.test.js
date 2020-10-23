@@ -12,6 +12,7 @@ describe('Feedback endpoint', () => {
       .post('/api/accommodation/10/feedback')
       .set('token', dummyToken)
       .end((err, res) => {
+        console.log(res.body);
         expect(res).to.have.status(400);
         done();
       });

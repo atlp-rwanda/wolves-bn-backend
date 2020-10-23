@@ -464,7 +464,7 @@
                 }
             }
         },
-        "/api/trips/{id}/comments": {
+        "/api/trips/{tripId}/comments/{id}": {
             "delete": {
                 "tags": [
                     "Users"
@@ -479,6 +479,12 @@
                         "required": true,
                         "type": "string",
                         "description": "from sign in endpoint"
+                    },
+                    {
+                        "in": "path",
+                        "name": "tripId",
+                        "required": true,
+                        "description": "from trip table"
                     },
                     {
                         "in": "path",
@@ -502,6 +508,53 @@
                     },
                     "404": {
                         "description": "user not found"
+                    }
+                }
+            }
+        },
+        "/api/trips/statistics/{start_time}/{end_time}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "getting Stats of trips based on timeframe",
+                "description": "users can get trip requests",
+                "operationId": "tripstasts",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "required": true,
+                        "type": "string",
+                        "description": "token"
+                    },
+                    {
+                        "in": "path",
+                        "name": "start_time",
+                        "required": true,
+                        "type": "string",
+                        "description": "Enter the Date"
+                    },
+                    {
+                        "in": "path",
+                        "name": "end_time",
+                        "required": true,
+                        "type": "string",
+                        "description": "Enter the Date"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "trip request retrieved"
+                    },
+                    "401": {
+                        "description": "invalid token"
+                    },
+                    "400": {
+                        "description": "bad request"
                     }
                 }
             }
@@ -703,7 +756,6 @@
                 }
             }
         },
-
         "/api/users/tripRequest/{id}": {
             "put": {
                 "tags": [
@@ -749,7 +801,7 @@
                     }
                 }
             }
-    }
+        }
     },
     "definitions": {
         "getProfile": {
@@ -759,11 +811,11 @@
                 }
             }
         },
-        "tripApprove":{
+        "tripApprove": {
             "type": "object",
-            "properties":{
-                "request_status":{
-                    "type":"string"
+            "properties": {
+                "request_status": {
+                    "type": "string"
                 }
             }
         },
@@ -862,7 +914,7 @@
             }
         },
         "userSignUp": {
-            "type":"object",
+            "type": "object",
             "properties": {
                 "firstName": {
                     "type": "string"
@@ -919,6 +971,9 @@
                 },
                 "travel_reason": {
                     "type": "string"
+                },
+                "accommodation": {
+                    "type": "number"
                 }
             }
         }
