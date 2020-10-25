@@ -106,7 +106,6 @@ router.post('/api/reservations', checkAuth.verifyUser, isRequester, reserveValid
 router.patch('/api/reservations/:booking_id', checkAuth.verifyUser, isRequester, reserveValidator, reservation.updateReservation);
 router.get('/api/reservations', checkAuth.verifyUser, isRequester, reservation.getReservations);
 router.delete('/api/reservations/:booking_id', checkAuth.verifyUser, isRequester, reservation.deleteReservation);
-
 // get stats of trips made in the last X timeframe
 router.get('/api/trips/statistics/:start_time/:end_time', checkAuth.verifyUser, Trip.statsTrips);
 router.get('/api/accommodation/:acc_id/likeOrUnlike', checkAuth.verifyUser, isRequester, like.likeOrUnlike);
