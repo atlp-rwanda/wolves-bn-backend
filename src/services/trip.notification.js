@@ -59,7 +59,7 @@ export default class TripNotification {
         const msg = emailNotification(managerNames, message, actionLink, unsubscribeUrl);
 
         sock.emit('new-notification', notificationData);
-        // SendingMail.sendGridMail(managerEmail, msg);
+        SendingMail.sendGridMail(managerEmail, msg);
       });
       await emitter.on('request-status-updated', async (data) => {
         const {

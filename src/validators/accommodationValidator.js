@@ -8,10 +8,11 @@ function accommodationValidate(req, res, next) {
     latitude: Joi.string(),
     longitude: Joi.string(),
     images: Joi.array().items(Joi.string().uri()),
-    facilities: Joi.array().items(Joi.string())
+    facilities: Joi.array().items(Joi.string()),
+    locationId: Joi.number()
   });
   const result = accommodationValidation.validate(req.body);
-  if (result.error) return res.status(409).json({ Message: result.error.details[0].message });
+  if (result.error) return res.status(400).json({ Message: result.error.details[0].message });
   next();
 }
 export default accommodationValidate;

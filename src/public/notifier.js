@@ -5,6 +5,7 @@ const btn = document.getElementById('sendN');
 const Notification = window.Notification || window.mozNotification || window.webkitNotification;
 
 socket.on('new-notification', (data) => {
+  Notification.requestPermission();
   const notification = new Notification('Trip Request', {
     body: data.message
   });

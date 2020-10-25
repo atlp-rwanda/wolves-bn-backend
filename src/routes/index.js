@@ -11,6 +11,7 @@ import auth from '../middleware/auth';
 import usercontroller from '../controllers/user';
 import Accomodation from '../controllers/accomodation';
 import Room from '../controllers/room';
+import Destination from '../controllers/destination';
 import Password from '../controllers/password';
 import userAuth from '../controllers/userAuth';
 import rolesSettingsRoute from '../controllers/user.roles';
@@ -105,7 +106,10 @@ router.post('/api/reservations', checkAuth.verifyUser, isRequester, reserveValid
 router.patch('/api/reservations/:booking_id', checkAuth.verifyUser, isRequester, reserveValidator, reservation.updateReservation);
 router.get('/api/reservations', checkAuth.verifyUser, isRequester, reservation.getReservations);
 router.delete('/api/reservations/:booking_id', checkAuth.verifyUser, isRequester, reservation.deleteReservation);
-
 // get stats of trips made in the last X timeframe
 router.get('/api/trips/statistics/:start_time/:end_time', checkAuth.verifyUser, Trip.statsTrips);
+router.get('/api/accommodation/:acc_id/likeOrUnlike', checkAuth.verifyUser, isRequester, like.likeOrUnlike);
+router.post('/api/accommodation/:acc_id/feedback', checkAuth.verifyUser, isRequester, feedbacks.feedback);
+router.post('/api/accommodation/:acc_id/rating', checkAuth.verifyUser, isRequester, rating.rating);
+router.get('/api/topdestinations', checkAuth.verifyUser, Destination.mostVisited);
 export default router;

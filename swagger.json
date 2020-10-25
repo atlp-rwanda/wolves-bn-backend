@@ -122,6 +122,39 @@
                 }
             }
         },
+        "/api/topdestinations": {
+            "get": {
+                "tags": [
+                    "Destinations"
+                ],
+                "summary": "Get three top destinations",
+                "description": "Get top three visited destinations",
+                "operationId": "topDestinations",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "Token"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "404": {
+                        "description": "invalid request. check your url"
+                    },
+                    "401": {
+                        "description": "User not signed in"
+                    }
+                }
+            }
+        },
         "/api/profiles/{id}": {
             "get": {
                 "tags": [
