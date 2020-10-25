@@ -8,14 +8,9 @@ export const emailNotification = (managerNames, message, actionLink, unsubscribe
       <tr><td align="left" style="font-family: Arial, sans-serif; font-size: 24px; color: #050505;">
           <p>Dear ${managerNames},</p></td></tr><tr>
         <td align="left" style="color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-<<<<<<< HEAD
-          <p>${message}</p>   
-=======
           <p>${message}</p>
           <p>You can take action via this link <a href="${actionLink}">Review this request</a></p>
->>>>>>> Get destinations
         </td></tr>
-        <p>You can take action via this link <a href="${actionLink}">Review the Request</a></p>
         <p> You are receiving this email because you subscribed to receive email from Barefoot Nomad. </p>
         <p>Thank you for using Bare Foot Nomad</p>
         <p>Don't want to receive such emails from barefootNomad? <a href="${unsubscribeUrl}">Unsubscribe from email notification</a>
