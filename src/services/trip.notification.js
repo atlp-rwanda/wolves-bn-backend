@@ -35,8 +35,8 @@ export default class TripNotification {
         const actionLink = `http://${BASEURL}:${PORT}/api/trips/${tripRequest.id}`;
         const msg = emailNotification(managerNames, message, actionLink, unsubscribeUrl);
 
-        SendingMail.sendGridMail(managerEmail, msg);
         sock.emit('new-notification', notificationData);
+        SendingMail.sendGridMail(managerEmail, msg);
       });
       await emitter.on('request-updated', async (data) => {
         const {
@@ -58,8 +58,8 @@ export default class TripNotification {
         const actionLink = `http://${BASEURL}:${PORT}/api/trips/${data.id}`;
         const msg = emailNotification(managerNames, message, actionLink, unsubscribeUrl);
 
-        SendingMail.sendGridMail(managerEmail, msg);
         sock.emit('new-notification', notificationData);
+        // SendingMail.sendGridMail(managerEmail, msg);
       });
       await emitter.on('request-status-updated', async (data) => {
         const {
@@ -77,8 +77,8 @@ export default class TripNotification {
         const unsubscribeUrl = `http://${BASEURL}:${PORT}/api/notifications`;
         const msg = requestEmail(userNames, message, unsubscribeUrl);
 
+        sock.emit('new-notification', notificationData);
         SendingMail.sendGridMail(userEmail, msg);
-        sock.broadcast.emit('new-notification', notificationData);
       });
       await emitter.on('comment-created', async (data) => {
         const { firstName, lastName, email } = await users.findOne({ where: { id: data.userId } });
@@ -100,8 +100,8 @@ export default class TripNotification {
         const actionLink = `http://${BASEURL}:${PORT}/api/trips/${data.tripId}`;
         const msg = emailNotification(userNames, message, actionLink, unsubscribeUrl);
 
-        SendingMail.sendGridMail(userEmail, msg);
         sock.emit('new-notification', notificationData);
+        SendingMail.sendGridMail(userEmail, msg);
       });
     } catch (error) {
       console.log('Error is:', error.message);

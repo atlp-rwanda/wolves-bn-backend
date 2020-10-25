@@ -43,7 +43,7 @@ class Rating {
     }
     return res
       .status(404)
-      .json({ status: 404, Error: 'you can\'t rate on an accommodation didn\'t stay in' });
+      .json({ status: 404, Error: 'you can\'t rate on an accommodation you didn\'t stay in' });
   }
 }
 
