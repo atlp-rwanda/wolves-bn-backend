@@ -112,5 +112,5 @@ router.get('/api/trips/statistics/:start_time/:end_time', checkAuth.verifyUser, 
 router.get('/api/accommodation/:acc_id/likeOrUnlike', checkAuth.verifyUser, isRequester, like.likeOrUnlike);
 router.post('/api/accommodation/:acc_id/feedback', checkAuth.verifyUser, isRequester, feedbacks.feedback);
 router.post('/api/accommodation/:acc_id/rating', checkAuth.verifyUser, isRequester, rating.rating);
-router.get('/api/topdestinations', Destination.mostVisited);
+router.get('/api/topdestinations', checkAuth.verifyUser, Destination.mostVisited);
 export default router;
