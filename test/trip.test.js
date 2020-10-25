@@ -54,6 +54,7 @@ describe('Trip Tests', () => {
       })
       .end((err, response) => {
         accId = response.body.data.id;
+        console.log(accId);
         done();
       });
   });
