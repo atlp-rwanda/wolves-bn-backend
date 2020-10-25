@@ -125,8 +125,8 @@ export default class Trip {
                     }
                   ]
                 })
-                .then((result) => {
-                  emitter.emit('request-updated', result);
+                .then(() => {
+                  emitter.emit('request-updated', data);
                   res.status(200).send(data);
                 })
                 .catch((error) => res.status(500).send(error));
