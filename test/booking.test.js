@@ -7,7 +7,6 @@ chai.use(chaiHttp);
 chai.should();
 let token;
 let id;
-let userId;
 let roomId;
 let accId;
 let tripId;
@@ -38,7 +37,6 @@ describe('Reservation Tests', () => {
         password: '123456'
       })
       .end((err, response) => {
-        userId = response.body.id;
         token = response.body.token;
         done();
       });

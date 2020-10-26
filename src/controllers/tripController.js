@@ -1,7 +1,6 @@
 /* eslint-disable no-restricted-globals */
 /* eslint-disable max-len */
 /* eslint-disable camelcase */
-import { date } from 'joi';
 import { Op } from 'sequelize';
 import models from '../database/models';
 import emitter from '../helpers/events/eventEmitter';

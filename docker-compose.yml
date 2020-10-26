@@ -1,0 +1,18 @@
+version: "3.7"
+services:
+  node:
+    build: .
+    restart: always
+    depends_on: 
+      - db
+    ports: 
+      - '3000:3000'
+  db:
+    image: postgres
+    environment: 
+      DB_DEV_USERNAME: postgres
+      DB_DEV_NAME: teamproject
+      DB_DEV_PASSWORD: Umutekano
+    volumes: 
+      - db_data:/var/lib/postgresql/data
+  volumes: db_data

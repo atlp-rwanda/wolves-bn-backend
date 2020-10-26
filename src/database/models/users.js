@@ -41,7 +41,6 @@ module.exports = (sequelize, DataTypes) => {
     currency: DataTypes.STRING,
     department: DataTypes.STRING,
     manager_id: DataTypes.INTEGER,
-    manager: DataTypes.STRING,
     role: DataTypes.ENUM('super_admin', 'manager', 'travel_admin', 'requester')
   }, {
     sequelize,

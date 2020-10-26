@@ -9,7 +9,6 @@ export default class UserAuth {
       const {
         provider, name, emails, id
       } = req.user;
-      console.log(req.user);
       const user = {
         firstName: name.givenName,
         lastName: name.familyName,

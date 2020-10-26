@@ -2,12 +2,11 @@
 import express from 'express';
 import passport from 'passport';
 import { userValidate } from '../validators/userValidation';
-import { usersiginValidate } from '../validators/usersiginValidation';
-import validateTrip from '../validators/tripvalidator';
+import { userSignInValidate } from '../validators/userSignInValidation';
+import validateTrip from '../validators/tripValidator';
 import roleValidate from '../validators/roleValidator';
 import validateAccommodation from '../validators/accommodationValidator';
 import validateRoom from '../validators/roomValidator';
-import auth from '../middleware/auth';
 import usercontroller from '../controllers/user';
 import profileController from '../controllers/profile';
 import Accomodation from '../controllers/accomodation';
@@ -40,13 +39,16 @@ router.use(express.json());
 router.get('/api/', (req, res) => res.send('Welcome to barefoot Nomad'));
 
 router.post('/api/users/signup', userValidate, usercontroller.signup);
+
+router.post('/api/users/signin', userSignInValidate, usercontroller.signIn);
 router.patch('/api/users/settings', isAdmin.verifyAdmin, roleValidate, rolesSettingsRoute.roleController);
-router.get('/api/profiles/:p_id', checkAuth.verifyUser, profileController.getProfile);
-router.put('/api/profiles/:id', checkAuth.verifyUser, userValidate, profileController.updateProfile);
+router.get('/api/profiles', checkAuth.verifyUser, profileController.getProfile);
+router.put('/api/profiles', checkAuth.verifyUser, userValidate, profileController.updateProfile);
 router.get('/api/users/logout', checkAuth.verifyUser, usercontroller.logout);
 
 router.post('/api/users/forgotPassword', Password.forgotPassword);
 router.post('/api/users/resetPassword/:resetLinkToken', Password.resetPassword);
+router.get('/user/confirmation/:email', usercontroller.updateUser);
 
 router.get(
   '/auth/facebook',
@@ -58,9 +60,6 @@ router.get(
   passport.authenticate('facebook'),
   userAuth.authUser
 );
-router.post('/api/accommodations', checkAuth.verifyUser,
-  // multerUploads,
-  Accomodation.createAccommodation);
 
 router.get(
   '/auth/google',
@@ -72,25 +71,20 @@ router.get(
   passport.authenticate('google'),
   userAuth.authUser
 );
-// Notifications
 router.get('/api/notifications', checkAuth.verifyUser, Notifications.getAllNotifications);
 
-router.post('/api/users/signin', usersiginValidate, usercontroller.signIn);
 router.get('/api/trips', checkAuth.verifyUser, Trip.Requests);
-
 router.post('/api/trips', checkAuth.verifyUser, isRequester, validateTrip, Trip.createTrips);
 router.patch('/api/trips/:id', checkAuth.verifyUser, isRequester, validateTrip, Trip.updateTrip);
 router.delete('/api/trips/:id', checkAuth.verifyUser, isRequester, Trip.deleteTrip);
-
-router.get('/user/confirmation/:email', usercontroller.updateUser);
 router.put('/api/trips/:id', checkAuth.verifyUser, isManager, statusValidate, updateTripRequest);
-
 router.get('/api/trips/search', search.searchEngine);
-// comment
+
 router.post('/api/trips/:id/comment', checkAuth.verifyUser, commentValidator, commentController.postComment);
 router.get('/api/trips/:id/comments/:tripId', checkAuth.verifyUser, commentController.list);
 router.delete('/api/trips/:tripId/comments/:id', checkAuth.verifyUser, commentController.deleteComment);
 
+router.post('/api/accommodations', checkAuth.verifyUser, Accomodation.createAccommodation);
 router.patch('/api/accommodations/:acc_id', checkAuth.verifyUser, Accomodation.editAccommodation);
 router.get('/api/accommodations/:acc_id', checkAuth.verifyUser, Accomodation.getAccommodation);
 router.put('/api/accommodations/:acc_id', checkAuth.verifyUser, validateAccommodation, Accomodation.editAccommodation);
@@ -99,20 +93,21 @@ router.post('/api/accommodations', checkAuth.verifyUser, validateAccommodation, 
 router.get('/api/accommodations', checkAuth.verifyUser, Accomodation.getAccommodations);
 router.post('/api/accommodations/:acc_id/rooms', checkAuth.verifyUser, validateRoom, Room.createRoom);
 router.delete('/api/accommodations/:acc_id/rooms/:room_id', checkAuth.verifyUser, Room.deleteRoom);
-router.post('/api/users/signin', usersiginValidate, usercontroller.signIn);
-router.get('/user/confirmation/:email', usercontroller.updateUser);
 
 router.get('/api/accommodation/:acc_id/likeOrUnlike', checkAuth.verifyUser, isRequester, like.likeOrUnlike);
 router.post('/api/accommodation/:acc_id/feedback', checkAuth.verifyUser, isRequester, feedbacks.feedback);
 router.post('/api/accommodation/:acc_id/rating', checkAuth.verifyUser, isRequester, rating.rating);
+
 router.post('/api/reservations', checkAuth.verifyUser, isRequester, reserveValidator, reservation.reserveRoom);
 router.patch('/api/reservations/:booking_id', checkAuth.verifyUser, isRequester, reserveValidator, reservation.updateReservation);
 router.get('/api/reservations', checkAuth.verifyUser, isRequester, reservation.getReservations);
 router.delete('/api/reservations/:booking_id', checkAuth.verifyUser, isRequester, reservation.deleteReservation);
-// get stats of trips made in the last X timeframe
+
 router.get('/api/trips/statistics/:start_time/:end_time', checkAuth.verifyUser, Trip.statsTrips);
 router.get('/api/accommodation/:acc_id/likeOrUnlike', checkAuth.verifyUser, isRequester, like.likeOrUnlike);
 router.post('/api/accommodation/:acc_id/feedback', checkAuth.verifyUser, isRequester, feedbacks.feedback);
 router.post('/api/accommodation/:acc_id/rating', checkAuth.verifyUser, isRequester, rating.rating);
+
 router.get('/api/topdestinations', checkAuth.verifyUser, Destination.mostVisited);
+
 export default router;

@@ -18,7 +18,7 @@ describe('Trip Tests', () => {
       firstName: 'Holy',
       lastName: 'Name',
       phone: '0878787878',
-      email: 'holygee@barefoot.com',
+      email: 'holygangster@barefoot.com',
       password: '123456'
     };
     chai
@@ -34,11 +34,10 @@ describe('Trip Tests', () => {
       .request(app)
       .post('/api/users/signin')
       .send({
-        email: 'holygee@barefoot.com',
+        email: 'holygangster@barefoot.com',
         password: '123456'
       })
       .end((err, response) => {
-        id = response.body.id;
         token = response.body.token;
         done();
       });
@@ -54,7 +53,6 @@ describe('Trip Tests', () => {
       })
       .end((err, response) => {
         accId = response.body.data.id;
-        console.log(accId);
         done();
       });
   });
@@ -90,7 +88,6 @@ describe('Trip Tests', () => {
         .get(`/api/trips/statistics/${start_time}/${end_time}`)
         .set('token', token)
         .end((req, res) => {
-          console.log(res.body);
           res.should.have.status(200);
           res.should.be.a('object');
           done();
@@ -251,5 +248,4 @@ describe('Trip Tests', () => {
         });
     });
   });
-  // GET STATS OF TRIPS
 });

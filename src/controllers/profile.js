@@ -12,8 +12,8 @@ const { users } = models;
 
 export default class Profile {
   static async getProfile(req, res) {
-    const { p_id } = req.params;
-    const profile = await users.findOne({ where: { id: p_id } });
+    const { id } = req.user;
+    const profile = await users.findOne({ where: { id } });
     if (profile) {
       return res.status(200).send(profile);
     }
@@ -23,7 +23,7 @@ export default class Profile {
   static async updateProfile(req, res) {
     const { id } = req.user;
 
-    const findUser = await users.findOne({ where: { id: req.params.id } });
+    const findUser = await users.findOne({ where: { id } });
 
     if (findUser) {
       if (findUser.id === id) {
@@ -58,14 +58,12 @@ export default class Profile {
           birthdate: req.body.birthdate,
           department: req.body.department,
           profileimage: file.url,
-          manager: req.body.manager
         },
         {
           where: {
-            id: req.params.id
+            id
           }
-          // eslint-disable-next-line no-return-await
-        }).then(async (data) => await res.status(200).send({
+        }).then(async (data) => res.status(200).send({
           data,
           status: '200',
           message: 'Profile is updated'
