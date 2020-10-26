@@ -991,7 +991,7 @@
                 }
             }
         },
-        "/api/trips/tripRequest/{id}": {
+        "/api/trips/tripRequest/{id}": { //suggested by Denis
             "put": {
                 "tags": [
                     "Users"
