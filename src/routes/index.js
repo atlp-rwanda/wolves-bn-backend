@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable import/named */
 import express from 'express';
 import passport from 'passport';
