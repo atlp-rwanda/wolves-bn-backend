@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Chart room</title>
+   </head>
+   
+   <script src = "/socket.io/socket.io.js"></script>
+   <script>
+      var socket;
+      
+      function setTokenInit(){
+         const token = document.getElementById('token').value;
+         socket = io({query: 'auth_token='+token});
+         
+         socket.on('newmsg', function(data) {
+            document.getElementById('message-container').innerHTML += '<div><b>' + 
+               data.username + '</b>: ' + data.message+ ' | ' + data.date + '</div>'
+         })
+         
+         document.body.innerHTML = '<input type = "text" id = "message">\
+            <button type = "button" name = "button" onclick = "sendMessage()">Send</button>\
+            <div id = "message-container"></div>';
+
+      }
+
+      function sendMessage() {
+         var msg = document.getElementById('message').value;
+         if(msg) {
+            socket.emit('msg', {message: msg});
+         }
+      }
+        
+   </script>
+   
+   <body>
+      <input type="text" id="token" placeholder="token">
+      <button type="button" name="button" onclick="setTokenInit()">Set user</button>
+   </body>
+</html>

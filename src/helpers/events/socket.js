@@ -15,4 +15,4 @@ const socketSetup = (server) => {
   });
 };
 
-export { socketSetup, sock };
+export { socketSetup, sock, io };
