@@ -1,6 +1,3 @@
-/* eslint-disable class-methods-use-this */
-/* eslint-disable no-restricted-globals */
-/* eslint-disable no-undef */
 import models from '../database/models';
 
 const cloudinary = require('cloudinary').v2;
@@ -12,6 +9,7 @@ cloudinary.config({
 });
 const { accomodation, users, room } = models;
 class Room {
+  // eslint-disable-next-line class-methods-use-this
   async createRoom(req, res) {
     try {
       /**
@@ -78,6 +76,7 @@ class Room {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async deleteRoom(req, res) {
     const findAccommodation = await accomodation.findOne({ where: { id: req.params.acc_id } });
     const findRoom = await room.findOne({ where: { id: req.params.room_id } });

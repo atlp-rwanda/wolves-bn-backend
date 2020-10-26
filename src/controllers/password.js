@@ -1,5 +1,3 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable class-methods-use-this */
 import sgMail from '@sendgrid/mail';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
@@ -8,10 +6,9 @@ import { jwtToken } from '../utils/jwtToken';
 
 dotenv.config();
 const { users } = models;
-
 sgMail.setApiKey(process.env.SENDGRID_APIKEY);
-
 class Password {
+  // eslint-disable-next-line class-methods-use-this
   async forgotPassword(req, res) {
     const { email } = req.body;
     const user = await users.findOne({ where: { email } });
@@ -21,7 +18,6 @@ class Password {
         Error: 'No account associated with this email found'
       });
     }
-
     const token = jwtToken.createToken(user.id, user.email);
 
     const msg = {
@@ -42,6 +38,7 @@ class Password {
     }));
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async resetPassword(req, res) {
     const { newPassword } = req.body;
     jwt.verify(req.params.resetLinkToken, process.env.SECRET_OR_KEY, (err, decodeData) => {

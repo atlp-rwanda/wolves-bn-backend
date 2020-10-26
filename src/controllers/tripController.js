@@ -115,6 +115,16 @@ export default class Trip {
     });
   }
 
+  // check someone who need to be remembered!
+  static async remembering(req, res) {
+    const { email } = req.user;
+    return models.history.findOne({ where: { email } })
+      .then((userOne) => {
+        if (!userOne) { res.status(404).send('not found'); }
+        if (userOne) { res.status(200).send(userOne); }
+      }).catch((error) => res.status(400).send(error));
+  }
+
   static async updateTrip(req, res) {
     const {
       from, to, travel_date, return_date, travel_reason, accommodation
@@ -171,6 +181,7 @@ export default class Trip {
                   ]
                 })
                 .then((result) => {
+                  // eslint-disable-next-line no-undef
                   emitter.emit('request-updated', result);
                   res.status(200).send(data);
                 })

@@ -1,6 +1,3 @@
-/* eslint-disable class-methods-use-this */
-/* eslint-disable no-restricted-globals */
-/* eslint-disable no-undef */
 import Sequelize from 'sequelize';
 import models from '../database/models';
 
@@ -14,6 +11,7 @@ cloudinary.config({
 const { accomodation, users, room } = models;
 
 class Accommodation {
+  // eslint-disable-next-line class-methods-use-this
   async getAccommodations(req, res) {
     try {
       return models.accomodation.findAll({
@@ -48,6 +46,7 @@ class Accommodation {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async createAccommodation(req, res) {
     try {
       /**
@@ -126,6 +125,7 @@ class Accommodation {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async editAccommodation(req, res) {
     const findAccommodation = await accomodation.findOne({ where: { id: req.params.acc_id } });
     try {
@@ -199,6 +199,7 @@ class Accommodation {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async getAccommodation(req, res) {
     const findAccommodation = await accomodation.findOne({ where: { id: req.params.acc_id } });
     try {
@@ -224,6 +225,7 @@ class Accommodation {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async deleteAccommodation(req, res) {
     const findAccommodation = await accomodation.findOne({ where: { id: req.params.acc_id } });
     try {

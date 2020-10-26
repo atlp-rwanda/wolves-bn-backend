@@ -1,5 +1,3 @@
-/* eslint-disable no-shadow */
-/* eslint-disable no-undef */
 import models from '../database/models';
 import emitter from '../helpers/events/eventEmitter';
 
@@ -16,6 +14,7 @@ export default class Comment {
       return res.status(404).send({ status: 404, error: `The Trip Identification(from Trips): ${id} does not match to the specified trip Id from Comments: ${tripId}!` });
     }
     return models.comment.findAll({ where: { tripId } })
+      // eslint-disable-next-line no-shadow
       .then((models) => res.status(200).send(models));
   }
 

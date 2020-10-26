@@ -78,6 +78,9 @@ router.post('/api/trips', checkAuth.verifyUser, isRequester, validateTrip, Trip.
 router.patch('/api/trips/:id', checkAuth.verifyUser, isRequester, validateTrip, Trip.updateTrip);
 router.delete('/api/trips/:id', checkAuth.verifyUser, isRequester, Trip.deleteTrip);
 
+// remember somoene without needing to refill out the pieces of information
+router.get('/api/trips/history', checkAuth.verifyUser, isRequester, Trip.remembering);
+
 router.get('/user/confirmation/:email', usercontroller.updateUser);
 router.put('/api/trips/:id', checkAuth.verifyUser, isManager, statusValidate, updateTripRequest);
 router.get('/api/trips/search', search.searchEngine);
