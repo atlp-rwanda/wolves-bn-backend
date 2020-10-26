@@ -789,7 +789,7 @@
                 }
             }
         },
-        "/api/users/tripRequest/{id}": {
+        "/api/trips/tripRequest/{id}": {
             "put": {
                 "tags": [
                     "Users"
