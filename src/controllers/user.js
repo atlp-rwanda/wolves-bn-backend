@@ -68,62 +68,6 @@ export default class User {
     }
   }
 
-  static async getProfile(req, res) {
-    const { id } = req.params;
-    const profile = await users.findOne({ where: { id } });
-    if (profile) {
-      return res.status(200).send(profile);
-    }
-    return res.status(404).send({ message: 'User not found' });
-  }
-
-  static async updateProfile(req, res) {
-    const { id } = req.user;
-    const {
-      firstName,
-      lastName,
-      phone,
-      email,
-      gender,
-      birthdate,
-      language,
-      currency,
-      address,
-      role,
-      department,
-      manager,
-      profileimage
-    } = req.body;
-    const findUser = await users.findOne({ where: { id } });
-    if (findUser) {
-      const updatedUser = await users.update({
-        firstName,
-        lastName,
-        phone,
-        email,
-        gender,
-        birthdate,
-        language,
-        currency,
-        address,
-        role,
-        department,
-        manager,
-        profileimage
-      }, {
-        where: {
-          id
-        }
-      }).then((data) => {
-        if (data[0] > 0) {
-          return res.status(200).send({ status: 200, message: 'User profile updated' });
-        } return res.status(404).send({ message: 'Bad request' });
-      }).catch((err) => {
-        res.status(500).send({ err });
-      });
-    }
-  }
-
   static updateUser(req, res) {
     return users
       .findOne({ where: { email: req.params.email } })
