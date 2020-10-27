@@ -48,7 +48,7 @@ describe('user logout', () => {
       .get('/api/users/logout')
       .set('token', 'badtoken')
       .end((err, res) => {
-        expect(res).to.have.status(500);
+        expect(res).to.have.status(401);
         done();
       });
   });
@@ -58,7 +58,7 @@ describe('user logout', () => {
       .request(app)
       .get('/api/users/logout')
       .end((err, res) => {
-        expect(res).to.have.status(401);
+        expect(res).to.have.status(400);
         done();
       });
   });

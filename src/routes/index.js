@@ -43,7 +43,7 @@ router.post('/api/users/signup', userValidate, usercontroller.signup);
 router.patch('/api/users/settings', isAdmin.verifyAdmin, roleValidate, rolesSettingsRoute.roleController);
 router.get('/api/profiles/:p_id', checkAuth.verifyUser, profileController.getProfile);
 router.put('/api/profiles/:id', checkAuth.verifyUser, userValidate, profileController.updateProfile);
-router.get('/api/users/logout', auth, usercontroller.logout);
+router.get('/api/users/logout', checkAuth.verifyUser, usercontroller.logout);
 
 router.post('/api/users/forgotPassword', Password.forgotPassword);
 router.post('/api/users/resetPassword/:resetLinkToken', Password.resetPassword);
