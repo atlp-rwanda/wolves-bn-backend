@@ -86,6 +86,7 @@ describe('GET /api/profiles/:id', () => {
   it('should return the user', (done) => {
     chai.request(app)
       .get(`/api/profiles/${id}`)
+      .set('token', token)
       .end((err, res) => {
         res.should.have.status(200);
         res.should.be.an('object');
@@ -100,7 +101,7 @@ describe('PUT /api/profiles', () => {
       firstName: 'Crepin',
       lastName: 'Bosco',
       email: 'uwa100@gmail.com',
-      profileimage: 'https://www.google.com/search?q=random+image&tbm=isch&source=iu&ictx=1&fir=w_2Xay2IzNC0zM%252CYpYw_trHdY78IM%252C_&vet=1&usg=AI4_-kTvfEe00igI4nEu3c_MRnLncEGZVA&sa=X&ved=2ahUKEwjJ1J_B2YHsAhV1wuYKHaPyC7gQ9QF6BAgKEEQ#imgrc=w_2Xay2IzNC0zM',
+      images: 'https://www.google.com/search?q=random+image&tbm=isch&source=iu&ictx=1&fir=w_2Xay2IzNC0zM%252CYpYw_trHdY78IM%252C_&vet=1&usg=AI4_-kTvfEe00igI4nEu3c_MRnLncEGZVA&sa=X&ved=2ahUKEwjJ1J_B2YHsAhV1wuYKHaPyC7gQ9QF6BAgKEEQ#imgrc=w_2Xay2IzNC0zM',
       address: 'Kacyiru',
       gender: 'Male',
       language: 'French',

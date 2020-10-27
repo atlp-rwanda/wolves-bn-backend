@@ -17,7 +17,7 @@ export function userValidate(req, res, next) {
     role: Joi.string().trim(),
     department: Joi.string().trim(),
     manager: Joi.string().trim(),
-    profileimage: Joi.string().uri().trim()
+    profileimage: Joi.array().items(Joi.string().uri())
   });
   const result = userValiation.validate(req.body);
   if (result.error) return res.status(400).json({ Message: result.error.details[0].message });
