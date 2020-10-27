@@ -11,6 +11,7 @@ import router from './routes/index';
 import NotificationListener from './helpers/notifications/index';
 import socketAuth from './middleware/socketio.auth';
 import chatController from './controllers/chat';
+
 import passport from './config/passport';
 import swaggerDocument from '../swagger.json';
 import { socketSetup, io } from './helpers/events/socket';
@@ -18,18 +19,13 @@ import { socketSetup, io } from './helpers/events/socket';
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(passport.initialize());
-
-export const client = redis.createClient(process.env.DB_PORT, process.env.HOSTNAME, { no_ready_check: true });
-client.auth(process.env.PASSWORD, (err) => {
-
-});
-
+const client = redis.createClient(process.env.REDIS_PORT || 6379, process.env.REDIS_HOST, { no_ready_check: true });
 client.on('error', (err) => {
   console.log(`Error ${err}`);
 });
-
 client.on('connect', () => {
-
+  console.log('Connected to Redis');
+  app.set('redis', client);
 });
 NotificationListener();
 

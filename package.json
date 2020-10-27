@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "sequelize db:migrate && sequelize db:seed:undo:all && sequelize db:seed:all && babel-node src/index.js ",
+    "start": "sequelize db:migrate && babel-node src/index.js ",
     "dev": "sequelize db:migrate && nodemon --exec babel-node src/index.js ",
     "test": "npm run createtables && npm run seed:test && cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha --require @babel/register  ./test/*.test.js --timeout 15000 --exit || true && npm run droptables",
     "coverage": "nyc report --reporter=text-lcov | coveralls",

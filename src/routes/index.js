@@ -25,7 +25,6 @@ import statusValidate from '../validators/statusValidator';
 import isAdmin from '../middleware/isAdmin';
 import search from '../controllers/search';
 import Notifications from '../controllers/notification';
-
 import commentController from '../controllers/comment';
 import commentValidator from '../validators/commentValidator';
 import like from '../controllers/like';
@@ -97,6 +96,7 @@ router.post('/api/accommodations', checkAuth.verifyUser, validateAccommodation, 
 router.get('/api/accommodations', checkAuth.verifyUser, Accomodation.getAccommodations);
 router.post('/api/accommodations/:acc_id/rooms', checkAuth.verifyUser, validateRoom, Room.createRoom);
 router.delete('/api/accommodations/:acc_id/rooms/:room_id', checkAuth.verifyUser, Room.deleteRoom);
+router.get('/user/confirmation/:email', usercontroller.updateUser);
 
 router.get('/api/accommodation/:acc_id/likeOrUnlike', checkAuth.verifyUser, isRequester, like.likeOrUnlike);
 router.post('/api/accommodation/:acc_id/feedback', checkAuth.verifyUser, isRequester, feedbacks.feedback);
@@ -108,6 +108,7 @@ router.get('/api/reservations', checkAuth.verifyUser, isRequester, reservation.g
 router.delete('/api/reservations/:booking_id', checkAuth.verifyUser, isRequester, reservation.deleteReservation);
 
 router.get('/api/trips/statistics/:start_time/:end_time', checkAuth.verifyUser, Trip.statsTrips);
+router.post('/api/accommodation/:acc_id/rating', checkAuth.verifyUser, isRequester, rating.rating);
 router.get('/api/topdestinations', checkAuth.verifyUser, Destination.mostVisited);
 
 export default router;
