@@ -55,6 +55,239 @@
                 }
             }
         },
+        "/api/accommodation/{acc_id}/feedback": {
+            "post": {
+                "tags": [
+                    "Accommodation"
+                ],
+                "summary": "feedback",
+                "description": "add a feedback on accommodation",
+                "operationId": "feedback",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "acc_id",
+                        "type": "number",
+                        "required": true
+                    },
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "Token"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/feedback"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "bad request"
+                    },
+                    "403": {
+                        "description": "forbidden"
+                    },
+                    "404": {
+                        "description": "Invalid URL"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/accommodation/{acc_id}/rating": {
+            "post": {
+                "tags": [
+                    "Accommodation"
+                ],
+                "summary": "rating",
+                "description": "add a rating on accommodation",
+                "operationId": "rating",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "acc_id",
+                        "type": "number",
+                        "required": true
+                    },
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "Token"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/rating"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "bad request"
+                    },
+                    "403": {
+                        "description": "forbidden"
+                    },
+                    "404": {
+                        "description": "Invalid URL"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/accommodation/{acc_id}/likeOrUnlike": {
+            "get": {
+                "tags": [
+                    "Accommodation"
+                ],
+                "summary": "like",
+                "description": "like an accommodation",
+                "operationId": "like",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "acc_id",
+                        "type": "number",
+                        "required": true
+                    },
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "Token"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "bad request"
+                    },
+                    "403": {
+                        "description": "forbidden"
+                    },
+                    "404": {
+                        "description": "Invalid URL"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/notifications/markRead/{notif_id}": {
+            "get": {
+                "tags": [
+                    "Notifications"
+                ],
+                "summary": "notification",
+                "description": "mark notification read",
+                "operationId": "notificationSingle",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "notif_id",
+                        "type": "number",
+                        "required": true
+                    },
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "Token"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "bad request"
+                    },
+                    "403": {
+                        "description": "forbidden"
+                    },
+                    "404": {
+                        "description": "Invalid URL"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/notifications/markReadAll/": {
+            "get": {
+                "tags": [
+                    "Notifications"
+                ],
+                "summary": "notification",
+                "description": "like an accommodation",
+                "operationId": "notificationAll",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "Token"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "bad request"
+                    },
+                    "403": {
+                        "description": "forbidden"
+                    },
+                    "404": {
+                        "description": "Invalid URL"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
         "/api/users/forgotPassword": {
             "post": {
                 "tags": [
@@ -862,6 +1095,20 @@
         "forgotPassword": {
             "properties": {
                 "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "feedback": {
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "rating": {
+            "properties": {
+                "rating": {
                     "type": "string"
                 }
             }
