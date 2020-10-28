@@ -3,7 +3,7 @@ import express from 'express';
 import passport from 'passport';
 import { userValidate } from '../validators/userValidation';
 import { userSignInValidate } from '../validators/userSignInValidation';
-import validateTrip from '../validators/tripValidator';
+import validateTrip from '../validators/tripvalidator';
 import roleValidate from '../validators/roleValidator';
 import validateAccommodation from '../validators/accommodationValidator';
 import validateRoom from '../validators/roomValidator';
