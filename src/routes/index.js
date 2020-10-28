@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 /* eslint-disable import/named */
 import express from 'express';
 import passport from 'passport';
@@ -36,8 +35,23 @@ import readNotifications from '../controllers/readNotifications';
 
 const router = express.Router();
 router.use(express.json());
+router.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 
-router.get('/', (req, res) => res.send('Welcome to barefoot Nomad'));
+router.get('/jokes/random', (req, res) => {
+  req(
+    { url: 'https://joke-api-strict-cors.appspot.com/jokes/random' },
+    (error, response, body) => {
+      if (error || response.statusCode !== 200) {
+        return res.status(500).json({ error });
+      }
+      res.json(JSON.parse(body));
+    }
+  );
+});
+// router.get('/', (req, res) => res.send('Welcome to barefoot Nomad'));
 
 router.post('/api/users/signup', userValidate, usercontroller.signup);
 

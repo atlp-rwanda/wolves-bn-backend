@@ -1,3 +1,4 @@
+import redis from 'redis';
 import sendingMail from './sendMail';
 import models from '../database/models';
 import { hashPassowrd, comparePassword, jwtToken } from '../utils/jwtToken';
