@@ -3,7 +3,6 @@ import chaiHttp from 'chai-http';
 import app from '../src/index';
 import models from '../src/database/models';
 import { travelAdminToken, dummyToken } from './fixtures/users';
-import { userValidate } from '../src/validators/userValidation';
 
 const { accomodation } = models;
 
@@ -110,7 +109,6 @@ describe('PUT /api/accommodations/:id', () => {
       .set('token', travelAdminToken)
       .send(createdAccomodation)
       .end((error, response) => {
-        console.log(response.body);
         response.should.have.status(200);
         done();
       });
@@ -153,7 +151,6 @@ describe('GET /api/accommodations/:acc_id', () => {
       .get(`/api/accommodations/${acc_id}`)
       .set('token', travelAdminToken)
       .end((error, response) => {
-        console.log(response.body);
         response.should.have.status(200);
         done();
       });

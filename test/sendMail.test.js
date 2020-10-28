@@ -22,14 +22,12 @@ describe('POST /api/users/signup', () => {
       lastName: 'Anisieshere',
       email: 'theoneste99@gmail.com',
       password: '123456',
-
     };
     chai.request(app)
       .post('/api/users/signup')
       .send(createdUser)
       .end((error, response) => {
         email = response.body.user.email;
-        console.log(response.body.user.email);
         response.should.have.status(201);
         token = response.body.token;
         response.should.be.an('object');

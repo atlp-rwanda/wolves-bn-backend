@@ -35,7 +35,9 @@ export default class TripNotification {
         const actionLink = `http://${BASEURL}:${PORT}/api/trips/${tripRequest.id}`;
         const msg = emailNotification(managerNames, message, actionLink, unsubscribeUrl);
 
-        sock.emit('new-notification', notificationData);
+        if (sock !== undefined) {
+          sock.emit('new-notification', notificationData);
+        }
         SendingMail.sendGridMail(managerEmail, msg);
       });
       await emitter.on('request-updated', async (data) => {
@@ -58,7 +60,10 @@ export default class TripNotification {
         const actionLink = `http://${BASEURL}:${PORT}/api/trips/${data.id}`;
         const msg = emailNotification(managerNames, message, actionLink, unsubscribeUrl);
 
-        sock.emit('new-notification', notificationData);
+        if (sock !== undefined) {
+          sock.emit('new-notification', notificationData);
+        }
+
         SendingMail.sendGridMail(managerEmail, msg);
       });
       await emitter.on('request-status-updated', async (data) => {
@@ -77,7 +82,9 @@ export default class TripNotification {
         const unsubscribeUrl = `http://${BASEURL}:${PORT}/api/notifications`;
         const msg = requestEmail(userNames, message, unsubscribeUrl);
 
-        sock.emit('new-notification', notificationData);
+        if (sock !== undefined) {
+          sock.emit('new-notification', notificationData);
+        }
         SendingMail.sendGridMail(userEmail, msg);
       });
       await emitter.on('comment-created', async (data) => {
@@ -100,7 +107,9 @@ export default class TripNotification {
         const actionLink = `http://${BASEURL}:${PORT}/api/trips/${data.tripId}`;
         const msg = emailNotification(userNames, message, actionLink, unsubscribeUrl);
 
-        sock.emit('new-notification', notificationData);
+        if (sock !== undefined) {
+          sock.emit('new-notification', notificationData);
+        }
         SendingMail.sendGridMail(userEmail, msg);
       });
     } catch (error) {

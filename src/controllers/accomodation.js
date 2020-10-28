@@ -30,7 +30,6 @@ class Accommodation {
           },
           {
             model: models.like,
-            // as: 'likes',
             attributes: ['userId']
           },
           {
@@ -107,7 +106,6 @@ class Accommodation {
                 data
               });
             }).catch(err => {
-              console.log(err);
               res.status(400).send({ error: err });
             });
           } else {
@@ -117,11 +115,9 @@ class Accommodation {
             });
           }
         }).catch(error => {
-          console.log(error);
           res.send({ error });
         });
     } catch (error) {
-      console.log(error);
       return res.status(500).send(error);
     }
   }
@@ -250,7 +246,6 @@ class Accommodation {
               });
             }
           }).catch(err => {
-            console.log(err);
             res.status(409).send(err);
           });
         }
@@ -265,7 +260,6 @@ class Accommodation {
         });
       }
     } catch (error) {
-      console.log(error);
       res.status(500).send({ error });
     }
   }

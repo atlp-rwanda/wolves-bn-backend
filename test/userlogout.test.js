@@ -22,7 +22,6 @@ const testUserInfo = {
 let token;
 
 describe('user logout', () => {
-  // beforeEach(function(){
   before(async () => {
     const testUser = await models.users.findOne({ where: { email: testUserInfo.email } });
     if (testUser) {

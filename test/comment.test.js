@@ -1,6 +1,5 @@
 import chai from 'chai';
 import chaiHTTP from 'chai-http';
-import { array } from 'joi';
 import app from '../src/index';
 import models from '../src/database/models';
 import { dummyToken, travelAdminToken } from './fixtures/users';

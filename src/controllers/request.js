@@ -11,10 +11,9 @@ module.exports = {
         if (!userRequest) {
           return res.status(404).send({ message: 'request Not Found' });
         }
-        const { id, role } = req.user;
+        const { id } = req.user;
         let status;
-        // return userRequest.update({
-        return trip.update({
+        return userRequest.update({
           request_status: req.body.request_status,
         },
         { where: { id: req.params.id } }
