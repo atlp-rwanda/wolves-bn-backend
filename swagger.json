@@ -3,7 +3,7 @@
     "info": {
         "version": "1.0.0",
         "title": "Barefoot Nomad APIS",
-        "description": "Testing endpoints"
+        "description": "Barefoot endpoints"
     },
     "schemes": [
         "http",
@@ -38,7 +38,7 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "OK"
+                        "description": "user created"
                     },
                     "400": {
                         "description": "bad request"
@@ -842,6 +842,9 @@
                 "tags": [
                     "Users"
                 ],
+                "summary": "Post trip",
+                "description": "users can post trip",
+                "operationId": "createTrip",
                 "parameters": [
                     {
                         "in": "header",
@@ -913,6 +916,9 @@
                 "tags": [
                     "Users"
                 ],
+                "summary": "Post trip",
+                "description": "users can Patch trip",
+                "operationId": "patchTrip",
                 "parameters": [
                     {
                         "in": "header",
@@ -957,6 +963,9 @@
                 "tags": [
                     "Users"
                 ],
+                "summary": "Delete trip",
+                "description": "users can delete trip",
+                "operationId": "deleteTrip",
                 "parameters": [
                     {
                         "in": "header",
@@ -991,11 +1000,14 @@
                 }
             }
         },
-        "/api/users/tripRequest/{id}": {
+        "/api/trips/tripRequest/{id}": {
             "put": {
                 "tags": [
                     "Users"
                 ],
+                "summary": "Aprove/reject Trip",
+                "description": "Manager can Approve or reject a trip",
+                "operationId": "createTrip",
                 "parameters": [
                     {
                         "in": "header",
@@ -1033,6 +1045,132 @@
                     },
                     "404": {
                         "description": "user not found"
+                    }
+                }
+            }
+        },
+        "/api/reservations":{
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "room reservation",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "required": true,
+                        "type": "string",
+                        "description": "token"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/RoomBooking"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Room reservation saved"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": " view room reservations",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "required": true,
+                        "type": "string",
+                        "description": "token"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "404": {
+                        "description": "No room reservations found"
+                    }
+                }
+
+            }    
+        },
+        "/api/reservations/{id}":{
+            "patch": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "update a reservation",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "required": true,
+                        "type": "string",
+                        "description": "token"
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "number",
+                        "required": true
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/RoomBooking"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "reservation updated"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "delete a reservation",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "required": true,
+                        "type": "string",
+                        "description": "token"
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "number",
+                        "required": true
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "reservation deleted"
                     }
                 }
             }
@@ -1198,6 +1336,20 @@
                 },
                 "accommodation": {
                     "type": "number"
+                }
+            }
+        },
+        "RoomBooking":{
+            "type":"object",
+            "properties": {
+                "check_in":{
+                    "type":"string"
+                },
+                "check_out":{
+                    "type":"string"
+                },
+                "room_id":{
+                    "type":"number"
                 }
             }
         }

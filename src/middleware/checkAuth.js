@@ -1,5 +1,4 @@
 import { verifyingToken } from '../utils/jwtToken';
-import { redisclient } from '../controllers/user';
 
 const checkAuth = {
   verifyUser: (req, res, next) => {
@@ -8,6 +7,7 @@ const checkAuth = {
       return res.status(400).send({ error: 'no token provided' });
     }
     if (token) {
+      const redisclient = req.app.get('redis');
       redisclient.get(token, (err, value) => {
         if (value !== null) {
           return res.status(401).send({ message: 'user already logged out' });
