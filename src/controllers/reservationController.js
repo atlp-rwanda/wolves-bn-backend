@@ -133,7 +133,7 @@ export default class Reservation {
   static deleteReservation(req, res) {
     const { id } = req.user;
     const { booking_id } = req.params;
-    reservation.destroy({
+    return reservation.destroy({
       where: {
         id: booking_id, requester_id: id
       }

@@ -1,3 +1,4 @@
+/* eslint-disable no-inner-declarations */
 /* eslint-disable max-len */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-plusplus */
@@ -14,7 +15,6 @@ class Destination {
         const destinationsName = destinations.map((destObj) => destObj.name);
         const countOccurrences = arrO => arrO.reduce((prev, curr) => (prev[curr] = ++prev[curr] || 1, prev), {});
         const destOcc = countOccurrences(destinationsName);
-        // eslint-disable-next-line no-inner-declarations
         function sortDestOcc(obj) {
           return Object.entries(obj).sort((a, b) => b[1] - a[1]);
         }

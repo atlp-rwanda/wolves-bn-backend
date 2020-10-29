@@ -4,7 +4,7 @@ import sgMail from '@sendgrid/mail';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import models from '../database/models';
-import { jwtToken } from '../utils/jwtToken';
+import { hashPassowrd, jwtToken } from '../utils/jwtToken';
 
 dotenv.config();
 const { users } = models;
@@ -44,6 +44,7 @@ class Password {
 
   async resetPassword(req, res) {
     const { newPassword } = req.body;
+    const hashedPassword = hashPassowrd(newPassword);
     jwt.verify(req.params.resetLinkToken, process.env.SECRET_OR_KEY, (err, decodeData) => {
       if (err) {
         return res.status(401).json({
@@ -63,7 +64,7 @@ class Password {
       });
     }
 
-    await user.update({ password: newPassword, resetLink: '' });
+    await user.update({ password: hashedPassword, resetLink: '' });
 
     return res.status(200).json({
       status: 200,

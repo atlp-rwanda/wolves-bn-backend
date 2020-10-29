@@ -6,14 +6,13 @@ import { dummyToken } from './fixtures/users';
 const { expect } = chai;
 chai.use(chaiHttp);
 
-describe('like endpoint', () => {
-  it('should return 404 status code when accommodation passed is not found', (done) => {
+describe('rate accommodation endpoint', () => {
+  it('should return 400 status code when accommodation passed is not found', (done) => {
     chai.request(app)
       .post('/api/accommodation/0/rating')
       .set('token', dummyToken)
       .end((err, res) => {
-        console.log(res.body);
-        expect(res).to.have.status(404);
+        expect(res).to.have.status(400);
         done();
       });
   });

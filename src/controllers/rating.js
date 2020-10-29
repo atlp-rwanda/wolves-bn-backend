@@ -42,8 +42,8 @@ class Rating {
         .json({ status: 200, message: 'Rated Again Successfully' });
     }
     return res
-      .status(404)
-      .json({ status: 404, Error: 'you can\'t rate on an accommodation you didn\'t stay in' });
+      .status(400)
+      .json({ status: 400, Error: 'you can\'t rate on an accommodation you didn\'t stay in' });
   }
 }
 

@@ -24,7 +24,7 @@ export default class rolesController {
         return res.status(403).send({ message: 'User is a super admin' });
       } return res.status(404).send({ message: 'User not found' });
     } catch (error) {
-      return res.status(500).send({ error: 'server error' });
+      return res.status(500).send({ error });
     }
   }
 }

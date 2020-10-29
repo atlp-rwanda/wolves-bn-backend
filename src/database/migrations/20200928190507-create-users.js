@@ -56,9 +56,6 @@ module.exports = {
       manager_id: {
         type: Sequelize.INTEGER,
       },
-      manager: {
-        type: Sequelize.STRING
-      },
       role: {
         type: Sequelize.ENUM('super_admin', 'manager', 'travel_admin', 'requester')
       },
