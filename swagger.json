@@ -1048,6 +1048,132 @@
                     }
                 }
             }
+        },
+        "/api/reservations":{
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "room reservation",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "required": true,
+                        "type": "string",
+                        "description": "token"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/RoomBooking"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Room reservation saved"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": " view room reservations",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "required": true,
+                        "type": "string",
+                        "description": "token"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "404": {
+                        "description": "No room reservations found"
+                    }
+                }
+
+            }    
+        },
+        "/api/reservations/{id}":{
+            "patch": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "update a reservation",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "required": true,
+                        "type": "string",
+                        "description": "token"
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "number",
+                        "required": true
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/RoomBooking"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "reservation updated"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "delete a reservation",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "required": true,
+                        "type": "string",
+                        "description": "token"
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "number",
+                        "required": true
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "reservation deleted"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -1210,6 +1336,20 @@
                 },
                 "accommodation": {
                     "type": "number"
+                }
+            }
+        },
+        "RoomBooking":{
+            "type":"object",
+            "properties": {
+                "check_in":{
+                    "type":"string"
+                },
+                "check_out":{
+                    "type":"string"
+                },
+                "room_id":{
+                    "type":"number"
                 }
             }
         }
