@@ -37,7 +37,7 @@ import readNotifications from '../controllers/readNotifications';
 const router = express.Router();
 router.use(express.json());
 
-router.get('/api/', (req, res) => res.send('Welcome to barefoot Nomad'));
+router.get('/', (req, res) => res.send('Welcome to barefoot Nomad'));
 
 router.post('/api/users/signup', userValidate, usercontroller.signup);
 
