@@ -136,7 +136,7 @@ describe('PUT /api/profiles', () => {
 describe('GET /', () => {
   it('should return Get endpoint is working', (done) => {
     chai.request(app)
-      .get('/api/')
+      .get('/')
       .end((error, response) => {
         response.should.have.status(200);
         done();

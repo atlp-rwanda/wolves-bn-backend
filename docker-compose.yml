@@ -1,18 +1,36 @@
 version: "3.7"
 services:
-  node:
+  db:
+    container_name: postgres
+    restart: always
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: ${DB_DEV_PASSWORD}
+      POSTGRES_USER: ${DB_DEV_USERNAME}
+      POSTGRES_DB: ${DB_DEV_NAME}
+    # volumes:
+    #   - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - '5431:5432'
+
+  redis:
+    container_name: redis
+    restart: always
+    image: redis
+    command: redis-server
+    ports:
+       - '6378:6379'
+
+  web:
+    container_name: nomad
     build: .
     restart: always
-    depends_on: 
-      - db
-    ports: 
-      - '3000:3000'
-  db:
-    image: postgres
-    environment: 
-      DB_DEV_USERNAME: postgres
-      DB_DEV_NAME: teamproject
-      DB_DEV_PASSWORD: Umutekano
-    volumes: 
-      - db_data:/var/lib/postgresql/data
-  volumes: db_data
+    ports:
+      - "3000:3000"
+    environment:
+      - POSTGRES_PASSWORD=${DB_DEV_PASSWORD}
+      - POSTGRES_USER=${DB_DEV_USERNAME}
+      - POSTGRES_DB=${DB_DEV_NAME}
+      - NODE_ENV=production
+      - DB_HOST=db
+      - REDIS_HOST=redis

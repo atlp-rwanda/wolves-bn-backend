@@ -20,6 +20,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(passport.initialize());
 const client = redis.createClient(process.env.REDIS_PORT || 6379, process.env.REDIS_HOST, { no_ready_check: true });
+client.auth(process.env.REDIS_PASSWORD, (err) => err);
 client.on('error', (err) => {
   console.log(`Error ${err}`);
 });
