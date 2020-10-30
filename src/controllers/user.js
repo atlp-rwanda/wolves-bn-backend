@@ -88,8 +88,15 @@ export default class User {
 
   static async logout(req, res) {
     const redisclient = req.app.get('redis');
-    const token = req.header('token');
+    const token = req.headers.token;
     redisclient.set(token, 1);
     return res.status(200).send({ message: 'User Loged out' });
   }
+  // logout
+  // static async logout(req, res) {
+  //   const redisclient = req.app.get('redis');
+  //   const token = req.header('token');
+  //   redisclient.set(token, 1);
+  //   return res.status(200).send({ message: 'User Loged out' });
+  // }
 }

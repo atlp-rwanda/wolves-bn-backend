@@ -209,8 +209,8 @@ describe('Reservation Tests', () => {
         .post('/api/reservations')
         .set('token', `${token}`)
         .send({
-          check_in: '2020-10-29',
-          check_out: '2020-12-25',
+          check_in: '2021-10-29',
+          check_out: '2021-12-25',
           room_id: 0
         })
         .end((req, res) => {
@@ -364,8 +364,8 @@ describe('Reservation Tests', () => {
         .patch(`/api/reservations/${id}`)
         .set('token', `${token}`)
         .send({
-          check_in: '2020-10-29',
-          check_out: '2020-12-25',
+          check_in: '2021-10-29',
+          check_out: '2021-12-25',
           room_id: 0
         })
         .end((req, res) => {

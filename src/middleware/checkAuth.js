@@ -11,8 +11,9 @@ const checkAuth = {
       redisclient.get(token, (err, value) => {
         if (value) {
           return res.status(401).send({ message: 'user already logged out' });
+        } if (err) {
+          return res.send(err);
         }
-
         try {
           const user = verifyingToken(token);
           req.user = user;

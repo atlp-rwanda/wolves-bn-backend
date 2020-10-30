@@ -916,7 +916,7 @@
                 "tags": [
                     "Users"
                 ],
-                "summary": "Post trip",
+                "summary": "Update  trip",
                 "description": "users can Patch trip",
                 "operationId": "patchTrip",
                 "parameters": [
@@ -1049,7 +1049,7 @@
                 }
             }
         },
-        "/api/reservations":{
+        "/api/reservations": {
             "post": {
                 "tags": [
                     "Users"
@@ -1105,10 +1105,9 @@
                         "description": "No room reservations found"
                     }
                 }
-
-            }    
+            }
         },
-        "/api/reservations/{id}":{
+        "/api/reservations/{id}": {
             "patch": {
                 "tags": [
                     "Users"
@@ -1339,17 +1338,17 @@
                 }
             }
         },
-        "RoomBooking":{
-            "type":"object",
+        "RoomBooking": {
+            "type": "object",
             "properties": {
-                "check_in":{
-                    "type":"string"
+                "check_in": {
+                    "type": "string"
                 },
-                "check_out":{
-                    "type":"string"
+                "check_out": {
+                    "type": "string"
                 },
-                "room_id":{
-                    "type":"number"
+                "room_id": {
+                    "type": "number"
                 }
             }
         }

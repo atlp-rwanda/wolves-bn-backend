@@ -18,9 +18,9 @@ module.exports = {
   production: {
     username: process.env.DB_DEV_USERNAME,
     password: process.env.DB_DEV_PASSWORD,
-    database: process.env.DB_DEV_POSTGRES,
+    database: process.env.POSTGRES_DB,
     dialect: 'postgres',
-    use_env_variable: 'DATABASE_URL',
+    host: process.env.DB_HOST,
   },
   facebook: {
     clientID: process.env.FB_CLIENT_ID,
