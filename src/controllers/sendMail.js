@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 const BASEURL = process.env.BASEURL || 'localhost';
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 sgMail.setApiKey(process.env.SENDGRID_APIKEY);
 
 // function to send email
@@ -14,7 +14,7 @@ const sendingMail = (emailAddress) => {
     to: emailAddress,
     from: process.env.SENDER_EMAIL,
     subject: 'Barefoot Email Verfication',
-    html: `<p>Please comfirm Your Email by: <a href="${url}">Click here please</a></p>`
+    html: `<p>Please confirm Your Email by: <a href="${url}">Click here please</a></p>`
   };
   sgMail.send(msg)
     .then(() => {
