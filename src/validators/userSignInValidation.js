@@ -10,6 +10,6 @@ export function userSignInValidate(req, res, next) {
 
   });
   const result = userSignIn.validate(req.body);
-  if (result.error) return res.status(400).json({ Message: result.error.details[0].message });
+  if (result.error) return res.status(400).json({ error: result.error.details[0].message });
   next();
 }

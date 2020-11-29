@@ -1,25 +1,43 @@
-/* eslint-disable import/no-cycle */
-/* eslint-disable max-len */
 import express from 'express';
 import 'regenerator-runtime/runtime';
 import 'dotenv/config';
 import swaggerUi from 'swagger-ui-express';
 import fileupload from 'express-fileupload';
-import path from 'path';
 import redis from 'redis';
+import cors from 'cors';
 import router from './routes/index';
 import NotificationListener from './helpers/notifications/index';
 import socketAuth from './middleware/socketio.auth';
 import chatController from './controllers/chat';
-
 import passport from './config/passport';
 import swaggerDocument from '../swagger.json';
 import { socketSetup, io } from './helpers/events/socket';
 
 const app = express();
+
+app.use(cors());
+
+app.use(
+  cors({
+    origin: '*',
+    methods: 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  }),
+);
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept',
+  );
+  next();
+});
 const PORT = process.env.PORT || 3000;
 app.use(passport.initialize());
-const client = redis.createClient(process.env.REDIS_PORT || 6379, process.env.REDIS_HOST, { no_ready_check: true });
+const client = redis.createClient(
+  process.env.REDIS_PORT || 6379, process.env.REDIS_HOST, { no_ready_check: true });
 client.auth(process.env.REDIS_PASSWORD, (err) => err);
 client.on('error', (err) => {
   console.log(`Error ${err}`);
