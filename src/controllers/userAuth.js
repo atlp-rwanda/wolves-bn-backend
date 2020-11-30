@@ -41,8 +41,7 @@ export default class UserAuth {
         managerId: 1,
         role: 'requester',
       });
-
-      return res.status(200).send({ token });
+      return res.status(200).redirect(`http://localhost:8080/login?token=${token}`);
     } catch (error) {
       return res.status(400);
     }
