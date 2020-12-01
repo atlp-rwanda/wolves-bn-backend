@@ -1,6 +1,3 @@
-/* eslint-disable no-restricted-globals */
-/* eslint-disable max-len */
-/* eslint-disable camelcase */
 import { Op } from 'sequelize';
 import models from '../database/models';
 import emitter from '../helpers/events/eventEmitter';
@@ -12,7 +9,7 @@ const {
 export default class Trip {
   static createTrips(req, res) {
     const {
-      from, to, travel_date, return_date, travel_reason, accommodation
+      from, to, travel_date, return_date, travel_reason, accommodation, Do_You_want_remember_info
     } = req.body;
     const { id, manager_id } = req.user;
     let travelType;
@@ -47,6 +44,7 @@ export default class Trip {
               return_date,
               travel_reason,
               accommodation,
+              Do_You_want_remember_info
             }, {
               include: [
                 {
@@ -71,7 +69,7 @@ export default class Trip {
 
   static async updateTrip(req, res) {
     const {
-      from, to, travel_date, return_date, travel_reason, accommodation
+      from, to, travel_date, return_date, travel_reason, accommodation, Do_You_want_remember_info
     } = req.body;
     const { id: requester_id } = req.user;
     const { id } = req.params;
@@ -111,7 +109,8 @@ export default class Trip {
                   travel_date,
                   return_date: return_date || null,
                   travel_reason,
-                  accommodation
+                  accommodation,
+                  Do_You_want_remember_info
                 }, {
                   include: [
                     {

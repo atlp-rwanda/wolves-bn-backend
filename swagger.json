@@ -1112,7 +1112,9 @@
                 "tags": [
                     "Users"
                 ],
-                "summary": "update a reservation",
+                "summary": "Approve/reject a trip",
+                "description": "Approve or reject a trip",
+                "operationId": "Approve or reject a trip",
                 "parameters": [
                     {
                         "in": "header",
@@ -1335,6 +1337,9 @@
                 },
                 "accommodation": {
                     "type": "number"
+                },
+                "Do_You_want_remember_info":{
+                    "type":"string"
                 }
             }
         },

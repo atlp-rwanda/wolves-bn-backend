@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-duplicates
 import models from '../database/models';
 import { jwtToken } from '../utils/jwtToken';
 

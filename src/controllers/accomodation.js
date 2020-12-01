@@ -1,6 +1,4 @@
 /* eslint-disable class-methods-use-this */
-/* eslint-disable no-restricted-globals */
-/* eslint-disable no-undef */
 import Sequelize from 'sequelize';
 import models from '../database/models';
 
@@ -49,12 +47,6 @@ class Accommodation {
 
   async createAccommodation(req, res) {
     try {
-      /**
-     * step 1: Get the logged in user (id)
-     * step 2: Verifying if the logged in user is travel admin
-     * step 3: Deal with images using cloudinary
-     * step 4: Create accommodation
-     */
       const { id, role } = req.user;
       const fac = req.body.facilities;
       let facilitiesArr = [];

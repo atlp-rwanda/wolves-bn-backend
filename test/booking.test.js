@@ -66,6 +66,7 @@ describe('Reservation Tests', () => {
       })
       .end((err, response) => {
         roomId = response.body.id;
+        console.log(`This is a rom id ${roomId}`);
         done();
       });
   });
@@ -84,6 +85,7 @@ describe('Reservation Tests', () => {
       })
       .end((err, response) => {
         tripId = response.body.id;
+        console.log(`This is a ${tripId}`);
         done();
       });
   });
