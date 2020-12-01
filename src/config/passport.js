@@ -13,7 +13,7 @@ passport.use(new FacebookStrategy(
   {
     clientID: config.facebook.clientID,
     clientSecret: config.facebook.clientSecret,
-    callbackURL: 'http://localhost:5000/auth/facebook/callback' || 'https://wolves-bn-backend.herokuapp.com/auth/facebook/callback',
+    callbackURL: 'http://localhost:3000/auth/facebook/callback' || 'https://wolves-bn-backend.herokuapp.com/auth/facebook/callback',
     profileFields: ['id', 'displayName', 'name', 'email'],
   },
   (accessToken, refreshToken, profile, cb) => {
@@ -24,7 +24,7 @@ passport.use(new GoogleStrategy(
   {
     clientID: config.google.clientID,
     clientSecret: config.google.clientSecret,
-    callbackURL: 'http://localhost:5000/auth/google/cb' || 'https://wolves-bn-backend.herokuapp.com/auth/google/cb',
+    callbackURL: 'http://localhost:3000/auth/google/cb' || 'https://wolves-bn-backend.herokuapp.com/auth/google/cb',
   },
   (accessToken, refreshToken, profile, cb) => {
     cb(null, profile);

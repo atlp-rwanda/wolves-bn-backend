@@ -26,20 +26,11 @@ app.use(
     optionsSuccessStatus: 204,
   }),
 );
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept',
-  );
-  next();
-});
 app.use(passport.initialize());
 const client = redis.createClient(
   process.env.REDIS_PORT || 6379, process.env.REDIS_HOST, { no_ready_check: true });
 client.auth(process.env.REDIS_PASSWORD, (err) => err);
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 client.on('error', (err) => {
   console.log(`Error ${err}`);
 });
@@ -50,13 +41,6 @@ client.on('connect', () => {
 // removing  Cors Policy.
 // .............................................................................................
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept',
-  );
-  next();
-}); app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
     'Access-Control-Allow-Headers',
@@ -74,15 +58,6 @@ app.use(express.json());
 app.use(fileupload({
   useTempFiles: true
 }));
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept',
-  );
-  next();
-});
 
 app.get('/testchat', (req, res) => {
   res.sendFile(`${__dirname}/testchat.html`);
