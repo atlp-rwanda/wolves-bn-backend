@@ -33,6 +33,7 @@ import rating from '../controllers/rating';
 import reservation from '../controllers/reservationController';
 import reserveValidator from '../validators/reservationValidator';
 import readNotifications from '../controllers/readNotifications';
+import Locations from '../controllers/locations';
 
 const router = express.Router();
 router.use(express.json());
@@ -77,6 +78,7 @@ router.get('/api/notifications/markRead/:notif_id', checkAuth.verifyUser, readNo
 router.get('/api/notifications/markReadAll/', checkAuth.verifyUser, readNotifications.readAllNotification);
 
 router.get('/api/trips', checkAuth.verifyUser, Trip.Requests);
+router.get('/api/trips/:id', checkAuth.verifyUser, Trip.getRequest);
 router.post('/api/trips', checkAuth.verifyUser, isRequester, validateTrip, Trip.createTrips);
 router.patch('/api/trips/:id', checkAuth.verifyUser, isRequester, validateTrip, Trip.updateTrip);
 router.delete('/api/trips/:id', checkAuth.verifyUser, isRequester, Trip.deleteTrip);
@@ -110,5 +112,7 @@ router.delete('/api/reservations/:booking_id', checkAuth.verifyUser, isRequester
 router.get('/api/trips/statistics/:start_time/:end_time', checkAuth.verifyUser, Trip.statsTrips);
 router.post('/api/accommodation/:acc_id/rating', checkAuth.verifyUser, isRequester, rating.rating);
 router.get('/api/topdestinations', checkAuth.verifyUser, Destination.mostVisited);
+
+router.get('/api/locations', checkAuth.verifyUser, Locations.getLocations);
 
 export default router;

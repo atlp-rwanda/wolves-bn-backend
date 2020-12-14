@@ -237,6 +237,48 @@ module.exports = {
     accommodation: 2,
     createdAt: new Date(),
     updatedAt: new Date()
+  },
+  {
+    from: 3,
+    to: 4,
+    requester_id: 1,
+    manager_id: 2,
+    request_status: 'pending',
+    travel_type: 'one way trip',
+    travel_date: '2022-09-30',
+    return_date: '2022-11-30',
+    travel_reason: 'I am going in vacation',
+    accommodation: 2,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    from: 4,
+    to: 3,
+    requester_id: 1,
+    manager_id: 2,
+    request_status: 'approved',
+    travel_type: 'one way trip',
+    travel_date: '2022-09-30',
+    return_date: '2022-11-30',
+    travel_reason: 'I am going in vacation',
+    accommodation: 2,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    from: 4,
+    to: 3,
+    requester_id: 1,
+    manager_id: 2,
+    request_status: 'approved',
+    travel_type: 'one way trip',
+    travel_date: '2022-09-30',
+    return_date: '2022-11-30',
+    travel_reason: 'I am going in vacation',
+    accommodation: 2,
+    createdAt: new Date(),
+    updatedAt: new Date()
   }
   ]),
   down: (queryInterface, Sequelize) => queryInterface.bulkDelete('trips', null, {})

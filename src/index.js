@@ -8,6 +8,7 @@ import fileupload from 'express-fileupload';
 import path from 'path';
 import redis from 'redis';
 import router from './routes/index';
+import cors from 'cors';
 import NotificationListener from './helpers/notifications/index';
 import socketAuth from './middleware/socketio.auth';
 import chatController from './controllers/chat';
@@ -17,8 +18,28 @@ import swaggerDocument from '../swagger.json';
 import { socketSetup, io } from './helpers/events/socket';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
+app.use(cors());
 app.use(passport.initialize());
+
+app.use(
+  cors({
+      origin: "*",
+      methods: "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS",
+      preflightContinue: false,
+      optionsSuccessStatus: 204
+  })
+);
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept',
+  );
+  next();
+});
+
 const client = redis.createClient(process.env.REDIS_PORT || 6379, process.env.REDIS_HOST, { no_ready_check: true });
 client.auth(process.env.REDIS_PASSWORD, (err) => err);
 client.on('error', (err) => {
